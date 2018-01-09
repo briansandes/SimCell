@@ -24,4 +24,34 @@ function rand(min, max) {
     }
 };
 
+function randStr(length = 32) {
+  var text = '';
+  var possible = "ABCDEF0123456789";
+
+  for (var i = 0; i < length; i++)
+    text += possible.charAt(Math.round(Math.random() * possible.length));
+
+  return text;
+}
+
+function coordToPixel(coord) {
+    return coord * Sim.config.map.tileSize;
+}
+
+function pixelToCoord(coord) {
+    return Math.floor(coord / Sim.config.map.tileSize);
+}
+
+function correctAngle(angle) {
+    if (angle < 0) {
+        angle = angle + 360;
+    } else
+    if (angle > 359) {
+        angle = angle - 360;
+    }
+    return angle;
+}
+
 const TO_RADIANS = Math.PI / 180;
+
+const FULL_CIRCLE = 2 * Math.PI;

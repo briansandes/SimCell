@@ -1,26 +1,6 @@
-var Sim = {
-    config: {
-        map: {
-            name: '',
-            width: 160,
-            height: 100,
-            tileSize: 25,
-            chunkSize: 20
-        },
-        screen: {
-            width: 800,
-            height: 600,
-            scale: 1
-        },
-        cells: {
-            radius: 10,
-            border: 2.5,
-            width: 25,
-            height: 25
-        }
-    },
-    
+var Sim = {    
     init: function () {
+        // inits screen reference
         this.Screen.init();
         
         this.World.init();
@@ -29,14 +9,16 @@ var Sim = {
         
         this.Cells.init();
         
-        for(let i = 0; i < 20; i++) {
-            this.Cells.add(Sim.World.width / 2, Sim.World.height / 2);
-        }
-
-        this.Cells.add(0, 0);
+        this.World.draw();
         
+        for(let i = 0; i < 1000; i++) {
+            //this.Cells.add(Math.floor(Sim.World.width / 2), Math.floor(Sim.World.height / 2));
+            this.Cells.add(Math.floor(rand(Sim.World.width)), Math.floor(rand(Sim.World.height)));
+        }
         
         this.Clock.start();
+
+        //this.Cells.add(0, 0);
         
         /* binding resize event */
         window.addEventListener('resize', function() {
@@ -55,6 +37,9 @@ var Sim = {
     },
     
     tick: function() {
+        this.Screen.tick();
         this.Cells.tick();
+        this.World.tick();
+        this.Screen.moved = false;
     }
 };

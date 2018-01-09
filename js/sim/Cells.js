@@ -1,134 +1,144 @@
 Sim.Cells = {
     alive: [],
     bag: [],
+    species: [],
+    cache: {
+
+    },
+    // context to the cells canvas
     context: null,
+
     init: function () {
+        // adds cells canvas
         Sim.Canvas.add('cells', {
             zIndex: 3
         });
+        // sets context
         this.context = Sim.Canvas.layers['cells'].context;
     },
 
+    // adds new cell
     add: function (x, y) {
-        let obj = {
-            coords: {
-                x: x,
-                y: y
-            },
-            centerCoords: {
-                x: Sim.World.coordToPixel(x) + (Sim.config.cells.width / 2),
-                y: Sim.World.coordToPixel(y) + (Sim.config.cells.height / 2)
-            },
-            color: '#dd0000',
-            angle: rand(359),
-            speed: 1,
-            vision: 20
-            
-        };
-
-        this.bag.push(obj);
+        this.bag.push(new Cell(x, y));
 
         this.alive.push(this.bag.length - 1);
+
+        // possible function for checking cache shall be added here
     },
-    
+
+    addCache: function (specie) {
+        // cells shouldnt be drawn here, but..
+        this.cache[specie] = [];
+
+        // angle of changing of each image
+        var angleStep = 360 / Sim.config.cells.numberOfAnglesToCache;
+
+        // loops on numberOfAnglesToCache
+        for (let i = 0; i < Sim.config.cells.numberOfAnglesToCache; i++) {
+            // setting up canvas
+            this.cache[specie].push(document.createElement('canvas'));
+            this.cache[specie][i].width = Sim.config.cells.width;
+            this.cache[specie][i].height = Sim.config.cells.height;
+
+            var tempContext = this.cache[specie][i].getContext('2d');
+
+            // drawing circle on cache
+            tempContext.beginPath();
+
+            tempContext.arc(
+                    Sim.config.cells.half,
+                    Sim.config.cells.half,
+                    Sim.config.cells.radius,
+                    0,
+                    FULL_CIRCLE,
+                    false
+                    );
+
+            tempContext.closePath();
+            // circle drawn
+
+            // fills circle
+            tempContext.fillStyle = specie;
+            tempContext.fill();
+
+            // draws border
+            tempContext.strokeStyle = '#000000';
+            tempContext.lineWidth = Sim.config.cells.border;
+            tempContext.stroke();
+
+            // draws cell direction line
+            let radians = angleStep * i * TO_RADIANS;
+
+            tempContext.moveTo(Sim.config.cells.half, Sim.config.cells.half);
+            tempContext.lineTo(
+                    Sim.config.cells.half + (Sim.config.cells.radius * Math.cos(radians)),
+                    Sim.config.cells.half + (Sim.config.cells.radius * Math.sin(radians))
+                    );
+            tempContext.stroke();
+        }
+    },
+
+    registerSpecie: function (specie) {
+        this.species.push(specie);
+        this.addCache(specie);
+    },
+
     resize: function () {
         Sim.Canvas.layers['cells'].canvas.width = Sim.Screen.width;
         Sim.Canvas.layers['cells'].canvas.height = Sim.Screen.height;
     },
-    
-    tick: function() {
+
+    tick: function () {
         this.moveAll();
         this.draw();
     },
-    
-    moveAll: function() {
+
+    moveAll: function () {
         for (let i = 0; i < this.alive.length; i++) {
-            this.move(this.bag[this.alive[i]]);
+            this.bag[this.alive[i]].move();
         }
     },
 
+    // drawing from cache
     draw: function () {
         this.context.clearRect(0, 0, Sim.Screen.width, Sim.Screen.height);
 
-        for (let i = 0; i < this.alive.length; i++) {
-            let cell = this.bag[this.alive[i]];
-            
-            let screenCoords = {
-                x: cell.centerCoords.x - Sim.Screen.pixelCoords.x,
-                y: cell.centerCoords.y - Sim.Screen.pixelCoords.y
-            };
-            
-            this.context.beginPath();
+        let startX = Sim.Screen.coords.x;
+        let startY = Sim.Screen.coords.y;
 
-            this.context.strokeStyle = 'rgba(0, 0, 0, 1)';
-            this.context.lineWidth = Sim.config.cells.border;
-            this.context.arc(
-                    screenCoords.x,
-                    screenCoords.y,
-                    Sim.config.cells.radius,
-                    0,
-                    2 * Math.PI,
-                    false
-                    );
-            this.context.fillStyle = cell.color;
-            this.context.fill();
-            this.context.stroke();
-            this.context.closePath();
-            
-            let radians = cell.angle * Math.PI / 180;
-            
-            this.context.moveTo(screenCoords.x, screenCoords.y);
-            this.context.lineTo(screenCoords.x + (Sim.config.cells.radius * Math.cos(radians)), screenCoords.y + (Sim.config.cells.radius * Math.sin(radians)));
-            this.context.stroke();
-            this.context.closePath();
+        let endX = Sim.Screen.coords.x + Sim.Screen.tiles.x;
+        let endY = Sim.Screen.coords.y + Sim.Screen.tiles.y;
+        
+        if(startX > 0) {
+            startX--;
         }
-    },
-    
-    move: function (cell) {
-        var center_x, center_y;
-
-        let vision = Math.round(cell.vision % 2 === 1 ? cell.vision -1 : cell.vision);
-
-        /* Cell 'deciding' which angle should it move */
-        let angle_variation = Math.round(rand(0, vision) - (vision / 2));
-        
-        let new_angle = cell.angle + angle_variation;
-
-        /* Correcting angle */
-        if (new_angle < 0) {
-            new_angle = new_angle + 360;
-        } else
-        if (new_angle > 359) {
-            new_angle = new_angle - 360;
+        if(startY > 0) {
+            startY--;
         }
-
-        /* Converting angle to radians in order to calc sen and cos */
-        let radians_angle = new_angle * TO_RADIANS;
-
-        /* distance of next point related to angle */
-        let point_x = Math.cos(radians_angle) * cell.speed;
-        let point_y = Math.sin(radians_angle) * cell.speed;
-
-        /* new drawing coordinates */
-        center_x = cell.centerCoords.x + point_x;
-        center_y = cell.centerCoords.y + point_y;
         
-        let top_x = center_x - (Sim.config.cells.width / 2);
-        let top_y = center_y - (Sim.config.cells.height / 2);
-        
-        /* prevents cells from running out of map */
-        if (!Sim.World.isIn(top_x, top_y, Sim.config.cells.width, Sim.config.cells.height, Sim.config.cells.border)) {
-            top_x = Sim.World.boundMovement('x', top_x, Sim.config.cells.width, Sim.config.cells.height, Sim.config.cells.border);
-            top_y = Sim.World.boundMovement('y', top_y, Sim.config.cells.width, Sim.config.cells.height, Sim.config.cells.border);
-            
-            center_x = top_x + (Sim.config.cells.width / 2);
-            center_y = top_y + (Sim.config.cells.height / 2);
+        if(endX < Sim.config.map.width -1) {
+            endX++;
+        }
+        if(endY < Sim.config.map.height -1) {
+            endY++;
         }
         
 
-        /* updating cell info */
-        cell.angle = new_angle;
-        cell.centerCoords.x = center_x;
-        cell.centerCoords.y = center_y;
+        for (let r = startY; r < endY; r++) {
+            for (let c = startX; c < endX; c++) {
+                if (r + '_' + c in Sim.World.entities) {
+                    for (let i = 0; i < Sim.World.entities[r + '_' + c].length; i++) {
+                        let cell = this.bag[Sim.World.entities[r + '_' + c][i]];
+                        let drawingAngle = Math.floor(cell.angle / Sim.config.cells.angleStep);
+
+                        this.context.drawImage(
+                            this.cache[cell.specie][drawingAngle],
+                            cell.drawingCoords.x - Sim.Screen.pixelCoords.x,
+                            cell.drawingCoords.y - Sim.Screen.pixelCoords.y
+                        );
+                    }
+                }
+            }
+        }
     }
 };
