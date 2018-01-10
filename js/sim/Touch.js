@@ -55,6 +55,7 @@ var Touch = {
     end: function(e) {
         Touch.startCoords.x = Touch.endCoords.x = 0;
         Touch.startCoords.y = Touch.endCoords.y = 0;
+        Touch.direction.x = Touch.direction.y = '';
         Touch.pressed = false;
     },
     isPressed: function() {
