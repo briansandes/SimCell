@@ -97,5 +97,49 @@ Sim.Screen = {
                 }
             }
         }
+        
+        if(Touch.isPressed() === true) {
+            if(Touch.direction.x === 'left') {
+                this.coords.x--;
+                this.pixelCoords.x -= Sim.config.map.tileSize;
+                this.moved = true;
+            } else
+            if(Touch.direction.x === 'right') {
+                this.coords.x++;
+                this.pixelCoords.x += Sim.config.map.tileSize;
+                this.moved = true;
+            }
+            
+            if(Touch.direction.y === 'up') {
+                this.coords.y--;
+                this.pixelCoords.y -= Sim.config.map.tileSize;
+                this.moved = true;
+            } else
+            if(Touch.direction.y === 'down') {
+                this.coords.y++;
+                this.pixelCoords.y += Sim.config.map.tileSize;
+                this.moved = true;
+            }
+        
+            if(this.moved === true) {
+                if(this.coords.x < 0) {
+                    this.coords.x = 0;
+                    this.pixelCoords.x = 0;
+                } else
+                if(this.coords.x > this.maxCoords.x) {
+                   this.coords.x = this.maxCoords.x; 
+                   this.pixelCoords.x = this.maxCoords.x * Sim.config.map.tileSize;
+                }
+                
+                if(this.coords.y < 0) {
+                    this.coords.y = 0;
+                    this.pixelCoords.y = 0;
+                } else
+                if(this.coords.y > this.maxCoords.y) {
+                   this.coords.y = this.maxCoords.y; 
+                   this.pixelCoords.y = this.maxCoords.y * Sim.config.map.tileSize;
+                }
+            }
+        }
     }
 };

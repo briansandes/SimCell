@@ -11,7 +11,9 @@ var Sim = {
         
         this.World.draw();
         
-        for(let i = 0; i < 1000; i++) {
+        Touch.init();
+        
+        for(let i = 0; i < 500; i++) {
             //this.Cells.add(Math.floor(Sim.World.width / 2), Math.floor(Sim.World.height / 2));
             this.Cells.add(Math.floor(rand(Sim.World.width)), Math.floor(rand(Sim.World.height)));
         }
