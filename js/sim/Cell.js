@@ -4,9 +4,18 @@ function Cell(x, y, o) {
     
     /* tile coords corresponding to the center of the cell */
     this.coords = {
-        x: typeof x === 'number' ? x : Math.floor(rand(Sim.config.map.width)),
-        y: typeof y === 'number' ? y : Math.floor(rand(Sim.config.map.height))
+        x: 0,
+        y: 0
     };
+    
+    if(x && y) {
+        this.coords.x = x;
+        this.coords.y = y;
+    } else {
+        let tile = pickOne(Sim.World.tileTypes.dirt);
+        this.coords.x = tile[0];
+        this.coords.y = tile[1];
+    }
 
     /* pixel coords corresponding to the center of the cell */
     this.pixelCoords = {
@@ -26,11 +35,22 @@ function Cell(x, y, o) {
         y: this.coords.y
     };
 
-    this.specie = '#dd0000';
-    this.color = '#dd0000';
+    if(o) {
+        if('parent' in o) {
+            this.specie = o.parent.specie;
+        }
+    }
+
+    if(!this.specie) {
+        this.specie = '#'+randStr(6);
+    }
+
+    this.color = this.specie;
+    this.energy = Sim.config.cells.initialEnergy;
+    
     this.angle = parseInt(rand(359));
     this.speed = 1;
-    this.vision = 20;
+    this.vision = Sim.config.cells.visionAngle;
 
     this.visionVariation = {
         left: this.vision / -2,
@@ -99,4 +119,25 @@ Cell.prototype.move = function () {
             this.coords.y = newCoords.y;
             
         }
+};
+
+Cell.prototype.live = function() {
+    this.energy -= Sim.config.cells.energyPerTick;
+    if(this.energy > Sim.config.cells.energyForDividing) {
+        Sim.Cells.add(this.coords.x, this.coords.y, {parent: this});
+        this.energy = Sim.config.cells.initialEnergy;
+    }
+};
+
+Cell.prototype.eat = function() {
+    if('food' in Sim.World.tiles[this.coords.y][this.coords.x]) {
+        if(Sim.World.tiles[this.coords.y][this.coords.x].food > Sim.config.cells.foodPerTick) {
+            this.energy += Sim.config.cells.foodPerTick;
+            Sim.World.removeFood(this.coords.x, this.coords.y, Sim.config.cells.foodPerTick);
+        } else
+        if(Sim.World.tiles[this.coords.y][this.coords.x].food > 0) {
+            this.energy += Sim.World.tiles[this.coords.y][this.coords.x].food;
+            Sim.World.removeFood(this.coords.x, this.coords.y, Sim.World.tiles[this.coords.y][this.coords.x].food);
+        }
+    }
 };

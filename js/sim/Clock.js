@@ -5,7 +5,6 @@ Sim.Clock = {
     busy: false,
     ticks: 0,
     start: function () {
-        console.log('clock running');
         this.running = true;
         this.tick();
     },
@@ -26,8 +25,10 @@ Sim.Clock = {
                 Sim.tick(Sim.Clock.ticks);
             }
 
-            // Request next tick
-            requestAnimationFrame(Sim.Clock.tick);
+            // Request next tick if value of running hasnt been changed
+            if (Sim.Clock.running === true) {
+                requestAnimationFrame(Sim.Clock.tick);
+            }
         }
     },
 

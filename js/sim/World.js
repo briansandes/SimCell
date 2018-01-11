@@ -5,13 +5,18 @@ Sim.World = {
     pixelHeight: 0,
 
     data: [],
+    tiles: [],
+    tileTypes: {
+        food: [],
+        dirt: []
+    },
     entities: {},
 
     init: function () {
         // TODO add options to initialize worlds
         this.width = Sim.config.map.width;
         this.height = Sim.config.map.height;
-        this.data = WorldMap.data;
+        this.importMap({data: WorldMap.data});
 
         // adds map canvas to screen
         Sim.Canvas.add('map', {
@@ -27,11 +32,36 @@ Sim.World = {
         this.resize();
     },
 
+    importMap: function (o) {
+        this.data = unpack(o.data);
+        for (let r = 0; r < this.data.length; r++) {
+            this.tiles.push([]);
+            for (let c = 0; c < this.data[r].length; c++) {
+                let tile = this.data[r][c];
+                if (Sim.Tiles[tile].name === 'food') {
+                    this.tileTypes.food.push([c, r]);
+                    this.tiles[r].push({
+                        food: Sim.config.map.initialFood,
+                        tileId: tile
+                    });
+                } else
+                if(Sim.Tiles[tile].name === 'dirt') {
+                    this.tileTypes.dirt.push([c, r]);
+                    this.tiles[r].push({});
+                } else {
+                    this.tiles[r].push({
+                        tileId: tile
+                    });
+                }
+            }
+        }
+    },
+
     resize: function () {
         Sim.Canvas.setSize('map',
-            this.pixelWidth < Sim.Screen.width ? this.pixelWidth : Sim.Screen.width,
-            this.pixelHeight < Sim.Screen.height ? this.pixelHeight : Sim.Screen.height
-        );
+                this.pixelWidth < Sim.Screen.width ? this.pixelWidth : Sim.Screen.width,
+                this.pixelHeight < Sim.Screen.height ? this.pixelHeight : Sim.Screen.height
+                );
         this.draw();
     },
 
@@ -90,8 +120,19 @@ Sim.World = {
             if (this.entities[pastTileId].length === 0) {
                 delete this.entities[pastTileId];
             }
-
         }
+    },
+    removeEntity: function (id, coords) {
+        let pastTileId = coords.y + '_' + coords.x;
+        this.entities[pastTileId].splice(this.entities[pastTileId].indexOf(id), 1);
+
+        // I wonder whether does this actually collect some garbage
+        if (this.entities[pastTileId].length === 0) {
+            delete this.entities[pastTileId];
+        }
+    },
+    removeFood: function(x, y, food) {
+        this.tiles[y][x].food -= food;
     },
     draw: function () {
         let startX = Sim.Screen.coords.x;
@@ -99,36 +140,46 @@ Sim.World = {
 
         let endX = Sim.Screen.coords.x + Sim.Screen.tiles.x;
         let endY = Sim.Screen.coords.y + Sim.Screen.tiles.y;
-        
-        if(startX > 0) {
+
+        if (startX > 0) {
             startX--;
         }
-        if(startY > 0) {
+        if (startY > 0) {
             startY--;
         }
-        
-        if(endX < Sim.config.map.width -1) {
+
+        if (endX < Sim.config.map.width - 1) {
             endX++;
         }
-        if(endY < Sim.config.map.height -1) {
+        if (endY < Sim.config.map.height - 1) {
             endY++;
         }
-        
+
 
         for (let r = startY; r < endY; r++) {
             for (let c = startX; c < endX; c++) {
                 this.context.fillStyle = 'rgb(' + Sim.Tiles[this.data[r][c]].rgb + ')';
                 this.context.fillRect(
-                    (c - Sim.Screen.coords.x) * Sim.config.map.tileSize,
-                    (r - Sim.Screen.coords.y) * Sim.config.map.tileSize,
-                    Sim.config.map.tileSize,
-                    Sim.config.map.tileSize
-                );
+                        (c - Sim.Screen.coords.x) * Sim.config.map.tileSize,
+                        (r - Sim.Screen.coords.y) * Sim.config.map.tileSize,
+                        Sim.config.map.tileSize,
+                        Sim.config.map.tileSize
+                        );
             }
         }
     },
+    
+    growFood: function() {
+        for(let i = 0; i < this.tileTypes.food.length; i++) {
+            let tile = this.tileTypes.food[i];
+            this.tiles[tile[1]][tile[0]].food += Sim.config.map.foodGrows;
+        }
+    },
+    
     tick: function () {
-        if (Sim.Screen.moved === true) {
+        this.growFood();
+
+        if (Sim.Screen.moved === true && Sim.Screen.drawing === true) {
             this.draw();
         }
     }

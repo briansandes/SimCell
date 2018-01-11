@@ -1,12 +1,4 @@
 Sim.Tiles = [
-    /* Water tile */
-    {
-        name: 'water',
-        rgb: '64, 164, 223',
-        has_shades: false,
-        changes: false,
-        speed: 0.3
-    },
     /* Dirt tile */
     {
         name: 'dirt',
@@ -14,6 +6,14 @@ Sim.Tiles = [
         has_shades: false,
         changes: false,
         speed: 1
+    },
+    /* Water tile */
+    {
+        name: 'water',
+        rgb: '64, 164, 223',
+        has_shades: false,
+        changes: false,
+        speed: 0.1
     },
     /* Food tile */
     {

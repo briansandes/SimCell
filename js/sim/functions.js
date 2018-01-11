@@ -24,12 +24,16 @@ function rand(min, max) {
     }
 };
 
+function pickOne(array) {
+    return array[Math.floor(rand(0, array.length))];
+}
+
 function randStr(length = 32) {
   var text = '';
   var possible = "ABCDEF0123456789";
 
   for (var i = 0; i < length; i++)
-    text += possible.charAt(Math.round(Math.random() * possible.length));
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
 
   return text;
 }

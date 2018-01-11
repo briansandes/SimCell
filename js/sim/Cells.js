@@ -18,8 +18,8 @@ Sim.Cells = {
     },
 
     // adds new cell
-    add: function (x, y) {
-        this.bag.push(new Cell(x, y));
+    add: function (x, y, o) {
+        this.bag.push(new Cell(x, y, o));
 
         this.alive.push(this.bag.length - 1);
 
@@ -89,13 +89,20 @@ Sim.Cells = {
     },
 
     tick: function () {
-        this.moveAll();
-        this.draw();
-    },
-
-    moveAll: function () {
-        for (let i = 0; i < this.alive.length; i++) {
+        for (let i = this.alive.length - 1; i > -1; i--) {
+            this.bag[this.alive[i]].eat();
             this.bag[this.alive[i]].move();
+            this.bag[this.alive[i]].live();
+            
+            if(this.bag[this.alive[i]].energy < 1) {
+                Sim.World.removeEntity(this.bag[this.alive[i]].cellId, this.bag[this.alive[i]].coords);
+                this.bag[this.alive[i]].energy = 0;
+                this.alive.splice(i, 1);
+            }
+        }
+        
+        if(Sim.Screen.drawing === true) {
+            this.draw();
         }
     },
 

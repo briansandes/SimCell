@@ -13,9 +13,9 @@ var Sim = {
         
         Touch.init();
         
-        for(let i = 0; i < 500; i++) {
+        for(let i = 0; i < 100; i++) {
             //this.Cells.add(Math.floor(Sim.World.width / 2), Math.floor(Sim.World.height / 2));
-            this.Cells.add(Math.floor(rand(Sim.World.width)), Math.floor(rand(Sim.World.height)));
+            this.Cells.add();
         }
         
         this.Clock.start();
@@ -43,5 +43,16 @@ var Sim = {
         this.Cells.tick();
         this.World.tick();
         this.Screen.moved = false;
+    },
+    fastTicks: function(ticks) {
+        this.Clock.stop();
+        this.Screen.drawing = false;
+        for(let i = 0; i < ticks; i++) {
+            this.tick();
+        }
+        setTimeout(function() {
+            Sim.Screen.drawing = true;
+            Sim.Clock.start();
+        }, 100);
     }
 };

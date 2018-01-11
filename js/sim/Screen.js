@@ -4,6 +4,7 @@ Sim.Screen = {
     width: 0,
     height: 0,
     moved: false,
+    drawing: true,
     // screen map coords
     coords: {
         x: 0,
