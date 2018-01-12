@@ -47,9 +47,18 @@ var Sim = {
     fastTicks: function(ticks) {
         this.Clock.stop();
         this.Screen.drawing = false;
+        let percentage = 0;
         for(let i = 0; i < ticks; i++) {
+            this.Clock.ticks++;
             this.tick();
+            
+            let newPercentage = Math.floor((i / ticks) * 100);
+            if(newPercentage !== percentage) {
+                percentage = newPercentage;
+                console.log(percentage + '%');
+            }
         }
+        console.log(this.Clock.ticks + ' ticks ellapsed');
         setTimeout(function() {
             Sim.Screen.drawing = true;
             Sim.Clock.start();

@@ -1,6 +1,8 @@
 function Cell(x, y, o) {
     this.width = Sim.config.cells.width;
     this.height = Sim.config.cells.height;
+    this.ticks = 0;
+    this.ticksOnWater = 0;
     
     /* tile coords corresponding to the center of the cell */
     this.coords = {
@@ -12,7 +14,8 @@ function Cell(x, y, o) {
         this.coords.x = x;
         this.coords.y = y;
     } else {
-        let tile = pickOne([pickOne(Sim.World.tileTypes.dirt), pickOne(Sim.World.tileTypes.food)]);
+        //let tile = pickOne([pickOne(Sim.World.tileTypes.dirt), pickOne(Sim.World.tileTypes.food)]);
+        let tile = pickOne(Sim.World.tileTypes.food);
         this.coords.x = tile[0];
         this.coords.y = tile[1];
     }
@@ -36,6 +39,7 @@ function Cell(x, y, o) {
     };
 
     this.speed = 1;
+    this.speedOnWater = 1;
     this.vision = Sim.config.cells.visionAngle;
 
     if(o) {
@@ -43,6 +47,7 @@ function Cell(x, y, o) {
             this.parent = o.parent.cellId;
             this.specie = o.parent.specie;
             this.speed = o.parent.speed + parseFloat((rand(-o.parent.speed * Sim.config.cells.mutationRate, o.parent.speed * Sim.config.cells.mutationRate)).toFixed(2));
+            this.speedOnWater = o.parent.speedOnWater + parseFloat(((o.parent.ticksOnWater / o.parent.ticks) * o.parent.speed).toFixed(2));
             this.vision = o.parent.vision + parseFloat((rand(-o.parent.vision * Sim.config.cells.mutationRate, o.parent.vision * Sim.config.cells.mutationRate)).toFixed(2));
         }
     }
@@ -73,6 +78,10 @@ function Cell(x, y, o) {
 
 Cell.prototype.move = function () {
         let currentTile = Sim.Tiles[Sim.World.data[this.coords.y][this.coords.x]];
+        
+        if(currentTile.name === 'water') {
+            this.ticksOnWater++;
+        }
     
         /* Cell 'deciding' which angle should it move */
         let angleVariation = Math.round(rand(this.visionVariation.left, this.visionVariation.right));
@@ -126,6 +135,7 @@ Cell.prototype.move = function () {
 };
 
 Cell.prototype.live = function() {
+    this.ticks++;
     this.energy -= Sim.config.cells.energyPerTick;
     if(this.energy > Sim.config.cells.energyForDividing) {
         Sim.Cells.add(this.coords.x, this.coords.y, {parent: this});

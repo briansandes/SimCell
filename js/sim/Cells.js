@@ -2,6 +2,9 @@ Sim.Cells = {
     alive: [],
     bag: [],
     species: [],
+    speciesData: {
+        
+    },
     cache: {
 
     },

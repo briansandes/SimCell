@@ -173,6 +173,10 @@ Sim.World = {
         for(let i = 0; i < this.tileTypes.food.length; i++) {
             let tile = this.tileTypes.food[i];
             this.tiles[tile[1]][tile[0]].food += Sim.config.map.foodGrows;
+            
+            if(this.tiles[tile[1]][tile[0]].food > Sim.config.map.maxFood)  {
+                this.tiles[tile[1]][tile[0]].food = Sim.config.map.maxFood;
+            }
         }
     },
     
