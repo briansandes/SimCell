@@ -12,7 +12,7 @@ function Cell(x, y, o) {
         this.coords.x = x;
         this.coords.y = y;
     } else {
-        let tile = pickOne(Sim.World.tileTypes.dirt);
+        let tile = pickOne([pickOne(Sim.World.tileTypes.dirt), pickOne(Sim.World.tileTypes.food)]);
         this.coords.x = tile[0];
         this.coords.y = tile[1];
     }
@@ -35,9 +35,15 @@ function Cell(x, y, o) {
         y: this.coords.y
     };
 
+    this.speed = 1;
+    this.vision = Sim.config.cells.visionAngle;
+
     if(o) {
         if('parent' in o) {
+            this.parent = o.parent.cellId;
             this.specie = o.parent.specie;
+            this.speed = o.parent.speed + parseFloat((rand(-o.parent.speed * Sim.config.cells.mutationRate, o.parent.speed * Sim.config.cells.mutationRate)).toFixed(2));
+            this.vision = o.parent.vision + parseFloat((rand(-o.parent.vision * Sim.config.cells.mutationRate, o.parent.vision * Sim.config.cells.mutationRate)).toFixed(2));
         }
     }
 
@@ -49,8 +55,6 @@ function Cell(x, y, o) {
     this.energy = Sim.config.cells.initialEnergy;
     
     this.angle = parseInt(rand(359));
-    this.speed = 1;
-    this.vision = Sim.config.cells.visionAngle;
 
     this.visionVariation = {
         left: this.vision / -2,

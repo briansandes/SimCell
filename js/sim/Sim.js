@@ -13,7 +13,7 @@ var Sim = {
         
         Touch.init();
         
-        for(let i = 0; i < 100; i++) {
+        for(let i = 0; i < 10; i++) {
             //this.Cells.add(Math.floor(Sim.World.width / 2), Math.floor(Sim.World.height / 2));
             this.Cells.add();
         }

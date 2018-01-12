@@ -14,9 +14,9 @@ Sim.World = {
 
     init: function () {
         // TODO add options to initialize worlds
+        this.importMap({data: WorldMap.data});
         this.width = Sim.config.map.width;
         this.height = Sim.config.map.height;
-        this.importMap({data: WorldMap.data});
 
         // adds map canvas to screen
         Sim.Canvas.add('map', {
