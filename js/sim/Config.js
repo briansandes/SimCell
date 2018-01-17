@@ -8,8 +8,8 @@ Sim.config = {
         tileSize: 25,
         chunkSize: 20,
         initialFood: 2000,
-        maxFood: 16000,
-        foodGrows: 2
+        maxFood: 20000,
+        foodGrows: 25
     },
     screen: {
         width: 800,
@@ -26,10 +26,12 @@ Sim.config = {
         energyForDividing: 200000,
         visionAngle: 48, // never gonna forget that name again
         numberOfAnglesToCache: 30, // never gonna forget that name again
-        angleStep: 360 / 30,
+        angleStep: 360 / 30, // has to be one of the 24 divisors of 360 https://en.wikipedia.org/wiki/360_(number)
         foodPerTick: 180,
-        energyPerTick: 20,
-        mutationRate: 0.1
-        // has to be one of the 24 divisors of 360 https://en.wikipedia.org/wiki/360_(number)
+        energyPerTick: 50,
+        mutationRate: {min: 0.03, max: 0.1},
+        xp: {
+            divide: 10
+        }
     }
 };

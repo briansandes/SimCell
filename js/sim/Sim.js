@@ -13,14 +13,19 @@ var Sim = {
         
         Touch.init();
         
-        for(let i = 0; i < 10; i++) {
+//        for(let i = 0; i < 0; i++) {
             //this.Cells.add(Math.floor(Sim.World.width / 2), Math.floor(Sim.World.height / 2));
-            this.Cells.add();
-        }
+//            this.Cells.add();
+//        }
         
         this.Clock.start();
 
         //this.Cells.add(0, 0);
+        
+        document.addEventListener('dblclick', function(e) {
+            Sim.Cells.add(pixelToCoord(e.pageX) + Sim.Screen.coords.x, pixelToCoord(e.pageY) + Sim.Screen.coords.y);
+        });
+        
         
         /* binding resize event */
         window.addEventListener('resize', function() {
@@ -59,6 +64,9 @@ var Sim = {
             }
         }
         console.log(this.Clock.ticks + ' ticks ellapsed');
+        console.log(this.Cells.alive.length + ' cells alive');
+        console.log('newest cell:', this.Cells.getLast());
+        console.log('oldest cell:', this.Cells.getOldest());
         setTimeout(function() {
             Sim.Screen.drawing = true;
             Sim.Clock.start();

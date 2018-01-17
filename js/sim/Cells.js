@@ -150,5 +150,11 @@ Sim.Cells = {
                 }
             }
         }
+    },
+    getLast: function() {
+        return this.bag[this.bag.length -1];
+    },
+    getOldest: function() {
+        return this.bag[this.alive[0]];
     }
 };

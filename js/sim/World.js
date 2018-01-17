@@ -181,7 +181,9 @@ Sim.World = {
     },
     
     tick: function () {
-        this.growFood();
+        if(Sim.Clock.ticks % 10 === 0) {
+            this.growFood();
+        }
 
         if (Sim.Screen.moved === true && Sim.Screen.drawing === true) {
             this.draw();

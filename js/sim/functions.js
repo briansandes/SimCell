@@ -22,20 +22,48 @@ function rand(min, max) {
 
         return rand * (max - min) + min;
     }
-};
+}
+;
+function randInt(start, end) {
+    if (start > end) {
+        throw new Exception("Start shall be smaller than the end");
+    }
+
+    var Rand = 0;
+
+    /* negative numbers */
+    if (start < 1 && end < 1) {
+        Rand = Math.floor((Math.random() * (start * -1)) + (end * -1));
+        Rand = Rand * -1;
+    } else
+    /* positive numbers */
+    if (start > -1 && end > -1) {
+        Rand = Math.floor(Math.random() * (end - start + 1) + start);
+    } else
+    /* both positive and numbers */
+    if (start < 0 && end > 0) {
+        Rand = Math.floor((Math.random() * (end + (start * -1))) + start);
+    }
+
+    if (Rand === -0) {
+        Rand = 0;
+    }
+
+    return Rand;
+}
 
 function pickOne(array) {
-    return array[Math.floor(rand(0, array.length))];
+    return array[Math.floor(randInt(0, array.length))];
 }
 
 function randStr(length = 32) {
-  var text = '';
-  var possible = "ABCDEF0123456789";
+    var text = '';
+    var possible = "ABCDEF0123456789";
 
-  for (var i = 0; i < length; i++)
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
+    for (var i = 0; i < length; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
 
-  return text;
+    return text;
 }
 
 function coordToPixel(coord) {
@@ -59,3 +87,34 @@ function correctAngle(angle) {
 const TO_RADIANS = Math.PI / 180;
 
 const FULL_CIRCLE = 2 * Math.PI;
+
+function randTest() {
+
+
+    var min = 0;
+    var max = 10;
+    var loop = 1000;
+
+    var r1 = {}, r2 = {};
+
+    for (let i = 0; i < loop; i++) {
+        var n1 = Math.floor(rand(min, max));
+        var n2 = rand2(min, max);
+
+        if (n1 in r1) {
+            r1[n1]++;
+        } else {
+            r1[n1] = 1;
+        }
+
+        if (n2 in r2) {
+            r2[n2]++;
+        } else {
+            r2[n2] = 1;
+        }
+    }
+    ;
+
+    console.table(r1);
+    console.table(r2);
+}

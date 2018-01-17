@@ -13,7 +13,7 @@ Sim.Tiles = [
         rgb: '64, 164, 223',
         has_shades: false,
         changes: false,
-        speed: 0.1
+        speed: 0.2
     },
     /* Food tile */
     {
