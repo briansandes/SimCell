@@ -14,12 +14,12 @@
                 touch-action: none;
                 font-family: 'Press Start 2P';
             }
-            
+
             #canvas-holder {
                 width: 100%;
                 height: 100vh;
             }
-            
+
             #canvas-holder canvas {
                 position: absolute;
             }
@@ -42,6 +42,30 @@
                 margin: 8px 8px;
                 float: right;
             }
+
+            #coords {
+                position: absolute;
+                color: white;
+                bottom: 5px;
+                left: 5px;
+                z-index: 9999;
+                font-size: 16px;
+                width: 240px;
+                line-height: 20px;
+            }
+
+            #sidebar {
+                background-color: #1c1a9a;
+                position: absolute;
+                width: 320px;
+                height: 100vh;
+                right: 0;
+                top: 0;
+                z-index: 9999;
+                -webkit-box-shadow: -5px 5px 0px 0px rgba(0,0,0,0.75);
+                -moz-box-shadow: -5px 5px 0px 0px rgba(0,0,0,0.75);
+                box-shadow: -5px 5px 0px 0px rgba(0,0,0,0.75);
+            }
         </style>
     </head>
     <body>
@@ -49,7 +73,11 @@
             <div id="actions">
                 <button class="btn" onclick="Sim.fastTicks(2000);">+2K Ticks</button>
             </div>
+            <div id="coords">
+                Screen 0x0 Mouse 0x0
+            </div>
             <div id="canvas-holder"></div>
+            <div id="sidebar"></div>
         </div>
         <script src="js/sim/functions.js" type="text/javascript"></script>
         <script src="js/sim/Mapacker.js" type="text/javascript"></script>
@@ -67,14 +95,14 @@
         <script src="js/sim/World.js" type="text/javascript"></script>
         <script src="js/sim/Tiles.js" type="text/javascript"></script>
         <script type="text/javascript">
-            
-            let tempData = unpack(WorldMap.data);
-            Sim.config.map.width = tempData[0].length;
-            Sim.config.map.pixelWidth = tempData[0].length * Sim.config.map.tileSize;
-            Sim.config.map.height = tempData.length;
-            Sim.config.map.pixelHeight = tempData.length * Sim.config.map.tileSize;
-            
-            Sim.init();
+
+                    let tempData = unpack(WorldMap.data);
+                    Sim.config.map.width = tempData[0].length;
+                    Sim.config.map.pixelWidth = tempData[0].length * Sim.config.map.tileSize;
+                    Sim.config.map.height = tempData.length;
+                    Sim.config.map.pixelHeight = tempData.length * Sim.config.map.tileSize;
+
+                    Sim.init();
         </script>
     </body>
 </html>

@@ -28,9 +28,48 @@ Sim.Screen = {
         y: 0
     },
     
+    mouse: {
+        moved: false,
+        coords: {
+            x: 0,
+            y: 0
+        },
+        position: {
+            x: 0,
+            y: 0
+        },
+        handleMovement: function(e) {
+            Sim.Screen.mouse.position.x = pixelToCoord(e.pageX);
+            Sim.Screen.mouse.position.y = pixelToCoord(e.pageY);
+            Sim.Screen.mouse.update();
+        },
+        update: function() {
+            let coords = {
+                x: Sim.Screen.mouse.position.x + Sim.Screen.coords.x,
+                y: Sim.Screen.mouse.position.y + Sim.Screen.coords.y
+            };
+            
+            if(coords.x !== Sim.Screen.mouse.coords.x || coords.y !== Sim.Screen.mouse.coords.y) {
+                Sim.Screen.mouse.coords.x = coords.x;
+                Sim.Screen.mouse.coords.y = coords.y;
+                Sim.Screen.mouse.moved = true;
+            }
+        }
+    },
+    log: {
+        element: null,
+        init: function() {
+            this.element = document.getElementById('coords')
+        },
+        print: function() {
+            this.element.textContent = 'Screen: ' + Sim.Screen.coords.x + 'x' + Sim.Screen.coords.y + ' Mouse: ' + Sim.Screen.mouse.coords.x + 'x' +  Sim.Screen.mouse.coords.y;
+        }
+    },
+    
     init: function () {
         // setting screen sizes
         this.setSize();
+        this.log.init();
     },
     
     // sets available size of screen
@@ -141,6 +180,11 @@ Sim.Screen = {
                    this.pixelCoords.y = this.maxCoords.y * Sim.config.map.tileSize;
                 }
             }
+        }
+        
+        if(this.moved === true || this.mouse.moved === true) {
+            Sim.Screen.mouse.update();
+            this.log.print();
         }
     }
 };

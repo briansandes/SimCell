@@ -144,8 +144,26 @@ Cell.prototype.move = function () {
 Cell.prototype.live = function () {
     this.ticks++;
     this.energy -= Sim.config.cells.energyPerTick;
-    if (this.energy > Sim.config.cells.energyForDividing) {
-        this.divide();
+    
+    if(this.energy < 1) {
+        Sim.World.removeEntity(this.cellId, this.coords);
+        this.energy = 0;
+        Sim.Cells.alive.splice(Sim.Cells.alive.indexOf(this.cellId), 1);
+    } else {
+        let keepMoving = true;
+        if(this.isOn('food')) {
+            if(Sim.World.tiles[this.coords.y][this.coords.x].food > 0) {
+                this.eat();
+                keepMoving = true;
+            }
+        }
+        if(keepMoving) {
+            this.move();
+        }
+
+        if (this.energy > Sim.config.cells.energyForDividing) {
+            this.divide();
+        }
     }
 };
 
@@ -173,3 +191,7 @@ Cell.prototype.divide = function() {
 Cell.prototype.addXp = function(xp) {
     this.experience += xp;
 };
+
+Cell.prototype.isOn = function(tileType) {
+    return Sim.Tiles[Sim.World.data[this.coords.x][this.coords.y]].name === tileType;
+}

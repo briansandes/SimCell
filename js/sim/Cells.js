@@ -93,15 +93,7 @@ Sim.Cells = {
 
     tick: function () {
         for (let i = this.alive.length - 1; i > -1; i--) {
-            this.bag[this.alive[i]].eat();
-            this.bag[this.alive[i]].move();
             this.bag[this.alive[i]].live();
-            
-            if(this.bag[this.alive[i]].energy < 1) {
-                Sim.World.removeEntity(this.bag[this.alive[i]].cellId, this.bag[this.alive[i]].coords);
-                this.bag[this.alive[i]].energy = 0;
-                this.alive.splice(i, 1);
-            }
         }
         
         if(Sim.Screen.drawing === true) {

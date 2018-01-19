@@ -26,6 +26,8 @@ var Sim = {
             Sim.Cells.add(pixelToCoord(e.pageX) + Sim.Screen.coords.x, pixelToCoord(e.pageY) + Sim.Screen.coords.y);
         });
         
+        document.addEventListener('mousemove', Sim.Screen.mouse.handleMovement);
+        
         
         /* binding resize event */
         window.addEventListener('resize', function() {
@@ -48,6 +50,7 @@ var Sim = {
         this.Cells.tick();
         this.World.tick();
         this.Screen.moved = false;
+        this.Screen.mouse.moved = false;
     },
     fastTicks: function(ticks) {
         this.Clock.stop();
