@@ -193,5 +193,5 @@ Cell.prototype.addXp = function(xp) {
 };
 
 Cell.prototype.isOn = function(tileType) {
-    return Sim.Tiles[Sim.World.data[this.coords.x][this.coords.y]].name === tileType;
-}
+    return Sim.Tiles[Sim.World.data[this.coords.y][this.coords.x]].name === tileType;
+};

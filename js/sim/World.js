@@ -23,7 +23,10 @@ Sim.World = {
             zIndex: 1
         });
 
+        Sim.Canvas.add('map-buffer');
+
         this.context = Sim.Canvas.layers['map'].context;
+        this.bufferContext = Sim.Canvas.layers['map-buffer'].context;
 
         this.pixelWidth = coordToPixel(this.width);
         this.pixelHeight = coordToPixel(this.height);
@@ -45,7 +48,7 @@ Sim.World = {
                         tileId: tile
                     });
                 } else
-                if(Sim.Tiles[tile].name === 'dirt') {
+                if (Sim.Tiles[tile].name === 'dirt') {
                     this.tileTypes.dirt.push([c, r]);
                     this.tiles[r].push({});
                 } else {
@@ -131,7 +134,7 @@ Sim.World = {
             delete this.entities[pastTileId];
         }
     },
-    removeFood: function(x, y, food) {
+    removeFood: function (x, y, food) {
         this.tiles[y][x].food -= food;
     },
     draw: function () {
@@ -168,20 +171,20 @@ Sim.World = {
             }
         }
     },
-    
-    growFood: function() {
-        for(let i = 0; i < this.tileTypes.food.length; i++) {
+
+    growFood: function () {
+        for (let i = 0; i < this.tileTypes.food.length; i++) {
             let tile = this.tileTypes.food[i];
             this.tiles[tile[1]][tile[0]].food += Sim.config.map.foodGrows;
-            
-            if(this.tiles[tile[1]][tile[0]].food > Sim.config.map.maxFood)  {
+
+            if (this.tiles[tile[1]][tile[0]].food > Sim.config.map.maxFood) {
                 this.tiles[tile[1]][tile[0]].food = Sim.config.map.maxFood;
             }
         }
     },
-    
+
     tick: function () {
-        if(Sim.Clock.ticks % 10 === 0) {
+        if (Sim.Clock.ticks % 10 === 0) {
             this.growFood();
         }
 
