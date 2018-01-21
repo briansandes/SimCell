@@ -1,4 +1,5 @@
 Sim.config = {
+    cache: true,
     map: {
         name: '',
         width: 1600,
@@ -9,7 +10,7 @@ Sim.config = {
         chunkSize: 20,
         initialFood: 2000,
         maxFood: 20000,
-        foodGrows: 25
+        foodGrows: 30
     },
     screen: {
         width: 800,
@@ -27,8 +28,8 @@ Sim.config = {
         visionAngle: 48, // never gonna forget that name again
         numberOfAnglesToCache: 30, // never gonna forget that name again
         angleStep: 360 / 30, // has to be one of the 24 divisors of 360 https://en.wikipedia.org/wiki/360_(number)
-        foodPerTick: 180,
-        energyPerTick: 50,
+        foodPerTick: 250,
+        energyPerTick: 60,
         mutationRate: {min: 0.03, max: 0.1},
         xp: {
             divide: 10

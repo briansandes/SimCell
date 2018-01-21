@@ -8,9 +8,11 @@ Sim.World = {
     tiles: [],
     tileTypes: {
         food: [],
-        dirt: []
+        dirt: [],
+        water: []
     },
     entities: {},
+    tileChanges: [],
 
     init: function () {
         // TODO add options to initialize worlds
@@ -23,10 +25,7 @@ Sim.World = {
             zIndex: 1
         });
 
-        Sim.Canvas.add('map-buffer');
-
         this.context = Sim.Canvas.layers['map'].context;
-        this.bufferContext = Sim.Canvas.layers['map-buffer'].context;
 
         this.pixelWidth = coordToPixel(this.width);
         this.pixelHeight = coordToPixel(this.height);
@@ -45,15 +44,28 @@ Sim.World = {
                     this.tileTypes.food.push([c, r]);
                     this.tiles[r].push({
                         food: Sim.config.map.initialFood,
-                        tileId: tile
+                        tileId: tile,
+                        changed: false,
+                        lerp: parseFloat((Sim.config.map.initialFood / Sim.config.map.maxFood).toFixed('1'))
                     });
                 } else
                 if (Sim.Tiles[tile].name === 'dirt') {
                     this.tileTypes.dirt.push([c, r]);
-                    this.tiles[r].push({});
+                    this.tiles[r].push({
+                        tileId: tile,
+                        changed: false
+                    });
+                } else
+                if (Sim.Tiles[tile].name === 'water') {
+                    this.tileTypes.water.push([c, r]);
+                    this.tiles[r].push({
+                        tileId: tile,
+                        changed: false
+                    });
                 } else {
                     this.tiles[r].push({
-                        tileId: tile
+                        tileId: tile,
+                        changed: false
                     });
                 }
             }
@@ -134,9 +146,6 @@ Sim.World = {
             delete this.entities[pastTileId];
         }
     },
-    removeFood: function (x, y, food) {
-        this.tiles[y][x].food -= food;
-    },
     draw: function () {
         let startX = Sim.Screen.coords.x;
         let startY = Sim.Screen.coords.y;
@@ -161,26 +170,93 @@ Sim.World = {
 
         for (let r = startY; r < endY; r++) {
             for (let c = startX; c < endX; c++) {
-                this.context.fillStyle = 'rgb(' + Sim.Tiles[this.data[r][c]].rgb + ')';
-                this.context.fillRect(
-                        (c - Sim.Screen.coords.x) * Sim.config.map.tileSize,
-                        (r - Sim.Screen.coords.y) * Sim.config.map.tileSize,
-                        Sim.config.map.tileSize,
-                        Sim.config.map.tileSize
-                        );
+                this.drawTile(c, r);
+                /* this.context.fillStyle = 'rgb(' + Sim.Tiles[this.data[r][c]].rgb + ')';
+                 this.context.fillRect(
+                 (c - Sim.Screen.coords.x) * Sim.config.map.tileSize,
+                 (r - Sim.Screen.coords.y) * Sim.config.map.tileSize,
+                 Sim.config.map.tileSize,
+                 Sim.config.map.tileSize
+                 );*/
             }
         }
+    },
+    drawTile: function (x, y, clear) {
+        let dx = (x - Sim.Screen.coords.x) * Sim.config.map.tileSize;
+        let dy = (y - Sim.Screen.coords.y) * Sim.config.map.tileSize;
+
+        if (clear === true) {
+            this.context.clearRect(dx, dy, Sim.config.map.tileSize, Sim.config.map.tileSize);
+        }
+
+        if (Sim.Tiles[this.data[y][x]].name === 'food') {
+            let color = lerpColor(Sim.Tiles[0].hex, Sim.Tiles[2].hex, this.tiles[y][x].lerp);
+            this.context.fillStyle = color;
+        } else {
+            this.context.fillStyle = 'rgb(' + Sim.Tiles[this.data[y][x]].rgb + ')';
+        }
+        this.context.fillRect(
+                dx,
+                dy,
+                Sim.config.map.tileSize,
+                Sim.config.map.tileSize
+                );
     },
 
     growFood: function () {
         for (let i = 0; i < this.tileTypes.food.length; i++) {
             let tile = this.tileTypes.food[i];
-            this.tiles[tile[1]][tile[0]].food += Sim.config.map.foodGrows;
+            this.addFood(tile[0], tile[1], Sim.config.map.foodGrows);
+        }
+    },
+    addFood: function (x, y, food) {
+        var newFood = this.tiles[y][x].food + food;
 
-            if (this.tiles[tile[1]][tile[0]].food > Sim.config.map.maxFood) {
-                this.tiles[tile[1]][tile[0]].food = Sim.config.map.maxFood;
+        if (newFood > Sim.config.map.maxFood) {
+            newFood = Sim.config.map.maxFood;
+        }
+
+        if (this.tiles[y][x].food !== newFood) {
+            this.tiles[y][x].food = newFood;
+            let lerp = parseFloat((this.tiles[y][x].food / Sim.config.map.maxFood).toFixed(1));
+
+            if (lerp !== this.tiles[y][x].lerp) {
+                this.tiles[y][x].lerp = lerp;
+                if (Sim.Screen.drawing === true) {
+                    if (Sim.Screen.isInViewPort(x, y) && this.tiles[y][x].changed === false) {
+                        this.addChange(x, y);
+                    }
+                }
             }
         }
+    },
+    removeFood: function (x, y, food) {
+        var newFood = this.tiles[y][x].food - food;
+
+        if (newFood < 0) {
+            newFood = 0;
+        }
+
+        if (this.tiles[y][x].food !== newFood) {
+            this.tiles[y][x].food = newFood;
+            let lerp = parseFloat((this.tiles[y][x].food / Sim.config.map.maxFood).toFixed(1));
+
+            if (lerp !== this.tiles[y][x].lerp) {
+                this.tiles[y][x].lerp = lerp;
+                if (Sim.Screen.drawing === true) {
+                    if (Sim.Screen.isInViewPort(x, y) && this.tiles[y][x].changed === false) {
+                        this.addChange(x, y);
+                    }
+                }
+            }
+        }
+    },
+    addChange: function (x, y) {
+        this.tiles[y][x].changed = true;
+        this.tileChanges.push({
+            x: x,
+            y: y
+        });
     },
 
     tick: function () {
@@ -188,8 +264,17 @@ Sim.World = {
             this.growFood();
         }
 
-        if (Sim.Screen.moved === true && Sim.Screen.drawing === true) {
-            this.draw();
+        if (Sim.Screen.drawing === true) {
+            if (Sim.Screen.moved === true) {
+                this.draw();
+            }
+            if (this.tileChanges.length > 0) {
+                for (let i = 0; i < this.tileChanges.length; i++) {
+                    this.drawTile(this.tileChanges[i].x, this.tileChanges[i].y, true);
+                    this.tiles[this.tileChanges[i].y][this.tileChanges[i].x].changed = false;
+                }
+            }
         }
+        this.tileChanges = [];
     }
 };

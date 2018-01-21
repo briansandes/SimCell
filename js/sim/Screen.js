@@ -62,7 +62,20 @@ Sim.Screen = {
             this.element = document.getElementById('coords')
         },
         print: function() {
-            this.element.textContent = 'Screen: ' + Sim.Screen.coords.x + 'x' + Sim.Screen.coords.y + ' Mouse: ' + Sim.Screen.mouse.coords.x + 'x' +  Sim.Screen.mouse.coords.y;
+            if(Sim.Screen.mouse.coords.x > -1 && Sim.Screen.mouse.coords.x < Sim.config.map.width
+                    &&
+            Sim.Screen.mouse.coords.y > -1 && Sim.Screen.mouse.coords.y < Sim.config.map.height) {
+                let currentTile = Sim.World.tiles[Sim.Screen.mouse.coords.y][Sim.Screen.mouse.coords.x];
+                var food = '';
+                if('food' in currentTile) {
+                    food = ' ' + currentTile.food;
+                }
+                    
+                this.element.textContent = 'Screen: ' + Sim.Screen.coords.x + 'x' + Sim.Screen.coords.y +
+                        ' Mouse: ' + Sim.Screen.mouse.coords.x + 'x' +  Sim.Screen.mouse.coords.y +
+                ' Tile: ' + Sim.Tiles[Sim.World.data[Sim.Screen.mouse.coords.y][Sim.Screen.mouse.coords.x]].name + food;
+            }
+            
         }
     },
     
@@ -186,5 +199,9 @@ Sim.Screen = {
             Sim.Screen.mouse.update();
             this.log.print();
         }
+    },
+    isInViewPort: function(x, y) {
+        return (x >= Sim.Screen.coords.x && x < Sim.Screen.coords.x + Sim.Screen.tiles.x) &&
+               (y >= Sim.Screen.coords.y && y < Sim.Screen.coords.y + Sim.Screen.tiles.y);
     }
 };
