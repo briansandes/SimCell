@@ -12,6 +12,10 @@ Sim.config = {
         maxFood: 20000,
         foodGrows: 30
     },
+    minimap: {
+        width: 280,
+        height: 160
+    },
     screen: {
         width: 800,
         height: 600,
