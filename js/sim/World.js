@@ -260,7 +260,7 @@ Sim.World = {
     },
 
     tick: function () {
-        if (Sim.Clock.ticks % 20 === 0) {
+        if (Sim.Clock.ticks % 30 === 0) {
             this.growFood();
         }
 

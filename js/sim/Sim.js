@@ -50,6 +50,10 @@ var Sim = {
         this.World.tick();
         this.Screen.moved = false;
         this.Screen.mouse.moved = false;
+        
+        if(Sim.Clock.ticks % 1000 === 0) {
+            Sim.History.log();
+        }
     },
     fastTicks: function (ticks) {
         this.Clock.stop();

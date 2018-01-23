@@ -10,7 +10,7 @@ Sim.config = {
         chunkSize: 20,
         initialFood: 2000,
         maxFood: 20000,
-        foodGrows: 30
+        foodGrows: 50
     },
     minimap: {
         width: 280,

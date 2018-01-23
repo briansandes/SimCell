@@ -73,9 +73,9 @@ function Cell(x, y, o) {
         right: this.vision / 2
     };
 
-    if (Sim.Cells.species.indexOf(this.specie) === -1) {
+    if (Sim.Cells.species.list.indexOf(this.specie) === -1) {
         // generates cache
-        Sim.Cells.registerSpecie(this.specie);
+        Sim.Cells.species.register(this.specie);
     }
 
     this.entityId = 'cell_' + Sim.Cells.bag.length;
@@ -145,10 +145,17 @@ Cell.prototype.live = function () {
     this.ticks++;
     this.energy -= Sim.config.cells.energyPerTick;
     
+    // TODO implement kill function
     if(this.energy < 1) {
         Sim.World.removeEntity(this.cellId, this.coords);
         this.energy = 0;
         Sim.Cells.alive.splice(Sim.Cells.alive.indexOf(this.cellId), 1);
+        
+        Sim.Cells.species.alive[this.specie].splice(Sim.Cells.species.alive[this.specie].indexOf(this.cellId), 1);
+        if(Sim.Cells.species.alive[this.specie].length === 0) {
+            delete Sim.Cells.species.alive[this.specie];
+            Sim.Cells.species.aliveList.splice(Sim.Cells.species.aliveList.indexOf(this.specie), 1);
+        }
     } else {
         let keepMoving = true;
         if(this.isOn('food')) {

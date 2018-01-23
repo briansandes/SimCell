@@ -1,9 +1,23 @@
 Sim.Cells = {
     alive: [],
     bag: [],
-    species: [],
+    species: {
+        // item keys are 'specie'. each item is an array of alive cells
+        alive: {},
+        // list of species that contain alive cells
+        aliveList: [],
+        // item keys are 'specie'. each item is an array of members
+        members: {},
+        // list of species
+        list: [],
+        register: function (specie) {
+            this.list.push(specie);
+            this.members[specie] = [];
+            Sim.Cells.addCache(specie);
+        }
+    },
     speciesData: {
-        
+
     },
     cache: {
 
@@ -24,7 +38,20 @@ Sim.Cells = {
     add: function (x, y, o) {
         this.bag.push(new Cell(x, y, o));
 
-        this.alive.push(this.bag.length - 1);
+        let cellId = this.bag.length - 1;
+
+        let cell = this.bag[cellId];
+
+        this.alive.push(cellId);
+
+        this.species.members[cell.specie].push(cellId);
+        if(cell.specie in this.species.alive) {
+            this.species.alive[cell.specie].push(cellId);
+        } else {
+            this.species.aliveList.push(cell.specie);
+            this.species.alive[cell.specie] = [];
+            this.species.alive[cell.specie].push(cellId);
+        }
 
         // possible function for checking cache shall be added here
     },
@@ -81,11 +108,6 @@ Sim.Cells = {
         }
     },
 
-    registerSpecie: function (specie) {
-        this.species.push(specie);
-        this.addCache(specie);
-    },
-
     resize: function () {
         Sim.Canvas.layers['cells'].canvas.width = Sim.Screen.width;
         Sim.Canvas.layers['cells'].canvas.height = Sim.Screen.height;
@@ -95,8 +117,8 @@ Sim.Cells = {
         for (let i = this.alive.length - 1; i > -1; i--) {
             this.bag[this.alive[i]].live();
         }
-        
-        if(Sim.Screen.drawing === true) {
+
+        if (Sim.Screen.drawing === true) {
             this.draw();
         }
     },
@@ -110,21 +132,21 @@ Sim.Cells = {
 
         let endX = Sim.Screen.coords.x + Sim.Screen.tiles.x;
         let endY = Sim.Screen.coords.y + Sim.Screen.tiles.y;
-        
-        if(startX > 0) {
+
+        if (startX > 0) {
             startX--;
         }
-        if(startY > 0) {
+        if (startY > 0) {
             startY--;
         }
-        
-        if(endX < Sim.config.map.width -1) {
+
+        if (endX < Sim.config.map.width - 1) {
             endX++;
         }
-        if(endY < Sim.config.map.height -1) {
+        if (endY < Sim.config.map.height - 1) {
             endY++;
         }
-        
+
 
         for (let r = startY; r < endY; r++) {
             for (let c = startX; c < endX; c++) {
@@ -134,19 +156,19 @@ Sim.Cells = {
                         let drawingAngle = Math.floor(cell.angle / Sim.config.cells.angleStep);
 
                         this.context.drawImage(
-                            this.cache[cell.specie][drawingAngle],
-                            cell.drawingCoords.x - Sim.Screen.pixelCoords.x,
-                            cell.drawingCoords.y - Sim.Screen.pixelCoords.y
-                        );
+                                this.cache[cell.specie][drawingAngle],
+                                cell.drawingCoords.x - Sim.Screen.pixelCoords.x,
+                                cell.drawingCoords.y - Sim.Screen.pixelCoords.y
+                                );
                     }
                 }
             }
         }
     },
-    getLast: function() {
-        return this.bag[this.bag.length -1];
+    getLast: function () {
+        return this.bag[this.bag.length - 1];
     },
-    getOldest: function() {
+    getOldest: function () {
         return this.bag[this.alive[0]];
     }
 };
