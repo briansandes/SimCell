@@ -5,122 +5,71 @@
         <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=0">
         <title></title>
         <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
-        <style>
-            body {
-                margin: 0;
-                overflow-x: hidden;
-                font-size: 0;
-                overflow-y: hidden;
-                touch-action: none;
-                font-family: 'Press Start 2P';
-                -webkit-touch-callout: none; /* iOS Safari */
-                -webkit-user-select: none; /* Safari */
-                -khtml-user-select: none; /* Konqueror HTML */
-                -moz-user-select: none; /* Firefox */
-                -ms-user-select: none; /* Internet Explorer/Edge */
-                user-select: none; /* Non-prefixed version, currently
-                                      supported by Chrome and Opera */
-            }
-
-            #canvas-holder {
-                width: 100%;
-                height: 100vh;
-            }
-
-            #canvas-holder canvas {
-                position: absolute;
-            }
-
-            #actions {
-                position: fixed;
-                bottom: 0;
-                z-index: 50;
-                width: 100%;
-            }
-
-            #actions  .btn {
-                background-color: rgba(6, 6, 232, 0.76);
-                color: white;
-                border: none;
-                border-bottom: solid 5px darkblue;
-                font-family: 'Press Start 2P';
-                padding: 10px 10px;
-                font-size: 12px;
-                margin: 8px 8px;
-                float: right;
-            }
-
-            #coords {
-                position: absolute;
-                color: white;
-                bottom: 5px;
-                left: 5px;
-                z-index: 50;
-                font-size: 16px;
-                width: 280px;
-                line-height: 20px;
-            }
-
-            #sidebar {
-                display: none;
-                background-color: #1c1a9a;
-                position: absolute;
-                width: 320px;
-                height: 100vh;
-                right: 0;
-                top: 0;
-                z-index: 50;
-                -webkit-box-shadow: -5px 5px 0px 0px rgba(0,0,0,0.9);
-                -moz-box-shadow: -5px 5px 0px 0px rgba(0,0,0,0.9);
-                box-shadow: -5px 5px 0px 0px rgba(0,0,0,0.9);
-            }
-            
-            #sidebar .title {
-                font-size: 20px;
-                text-align: center;
-                color: white;
-                text-shadow: -3px 3px 0px rgba(0, 0, 0, 1);
-            }
-            
-            #sidebar #minimap {
-                margin: 20px auto;
-                width: 280px;
-            }
-
-            #loading-overlay {
-                display: none;
-                position: fixed;
-                width: 100%;
-                height: 100%;
-                z-index: 100;
-                background-color: rgba(0, 0, 0, 0.2);
-                background-image: url('img/pixel.gif');
-                color: white;
-                text-align: center;
-                vertical-align: middle;
-                cursor: wait;
-                font-size: 16px;
-            }
-        </style>
+        <link href="css/sim.css" rel="stylesheet">
     </head>
     <body>
         <div id="SimCell">
+            <!--loading overlay-->
             <div id="loading-overlay">
                 <div style="display: table-cell;vertical-align: middle;">
                     Loading...
                 </div>
             </div>
+            <!--loading overlay-->
+
+            <!--nothing-->
             <div id="actions">
                 <button class="btn" onclick="Sim.fastTicks(2000);">+2K Ticks</button>
             </div>
+            <!--nothing-->
+
+            <!--overscreen coords-->
             <div id="coords">
                 Screen 0x0 Mouse 0x0
             </div>
+            <!--overscreen coords-->
+
+            <!--canvases-->
             <div id="canvas-holder"></div>
+            <!--canvases-->
+
+
+            <!--sidebar-->
             <div id="sidebar">
                 <h1 class="title">SimCell Alpha</h1>
+                <div id="species">
+                    <div class="sec-title">
+                        Alive Cells: <span id="aliveCells">0</span>
+                    </div>
+
+                    <div id="specieList">
+                    </div>
+                </div>
+                
+                
                 <div id="minimap"></div>
+
+                <div id="actions">
+                    <button id="stopButton" class="btn danger" onclick="Sim.Clock.stop();">
+                        Stop
+                    </button>
+                    <button onclick="Sim.Clock.start();" class="btn green">
+                        Start
+                    </button>
+                    <div class="clear"></div>
+                    
+                    <button onclick="Sim.fastTicks(200000);" class="btn">
+                        +200K
+                    </button>
+                    <button onclick="Sim.fastTicks(20000);" class="btn">
+                        +20K
+                    </button>
+                    <button onclick="Sim.fastTicks(2000);" class="btn">
+                        +2K
+                    </button>
+                </div>
             </div>
+            <!--sidebar-->
         </div>
         <script src="js/sim/functions.js" type="text/javascript"></script>
         <script src="js/sim/Mapacker.js" type="text/javascript"></script>
@@ -140,14 +89,13 @@
         <script src="js/sim/Tiles.js" type="text/javascript"></script>
         <script src="js/sim/History.js" type="text/javascript"></script>
         <script type="text/javascript">
+            let tempData = unpack(WorldMap.data);
+            Sim.config.map.width = tempData[0].length;
+            Sim.config.map.pixelWidth = tempData[0].length * Sim.config.map.tileSize;
+            Sim.config.map.height = tempData.length;
+            Sim.config.map.pixelHeight = tempData.length * Sim.config.map.tileSize;
 
-                    let tempData = unpack(WorldMap.data);
-                    Sim.config.map.width = tempData[0].length;
-                    Sim.config.map.pixelWidth = tempData[0].length * Sim.config.map.tileSize;
-                    Sim.config.map.height = tempData.length;
-                    Sim.config.map.pixelHeight = tempData.length * Sim.config.map.tileSize;
-
-                    Sim.init();
+            Sim.init();
         </script>
     </body>
 </html>

@@ -132,6 +132,15 @@ function lerpColor(a, b, amount) {
     return '#' + ((1 << 24) + (rr << 16) + (rg << 8) + rb | 0).toString(16).slice(1);
 }
 
-Array.prototype.clone = function() {
+Array.prototype.clone = function () {
     return this.slice(0);
+};
+
+HTMLCanvasElement.prototype.mouseCoords = function (event) {
+    var rect = this.getBoundingClientRect();
+    
+    return {
+        x: Math.round(event.clientX - rect.left),
+        y: Math.round(event.clientY - rect.top)
+    };
 };

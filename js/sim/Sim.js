@@ -1,5 +1,9 @@
 var Sim = {
+    running: true,
+    logging: true,
     init: function () {
+        this.Loading.show();
+        
         // inits screen reference
         this.Screen.init();
 
@@ -13,14 +17,20 @@ var Sim = {
         
         this.World.draw();
         
-//        this.Minimap.draw();
+        this.Minimap.draw();
 
         Touch.init();
 
+        this.History.init();
+        
         this.Clock.start();
+        
+        this.Loading.hide();
 
         document.addEventListener('dblclick', function (e) {
-            Sim.Cells.add(pixelToCoord(e.pageX) + Sim.Screen.coords.x, pixelToCoord(e.pageY) + Sim.Screen.coords.y);
+            if(e.target.id === 'canvas-cells') {
+                Sim.Cells.add(pixelToCoord(e.pageX) + Sim.Screen.coords.x, pixelToCoord(e.pageY) + Sim.Screen.coords.y);
+            }
         });
 
         document.addEventListener('mousemove', Sim.Screen.mouse.handleMovement);
@@ -33,6 +43,10 @@ var Sim = {
 
             // resizes world canvas
             Sim.World.resize();
+            
+            // Resize minimap
+            Sim.Minimap.resize();
+        
 
             // resizes grid canvas
             Sim.Grid.resize();
@@ -51,6 +65,11 @@ var Sim = {
         this.Screen.moved = false;
         this.Screen.mouse.moved = false;
         
+        if(Sim.logging === true) {
+            if(Sim.Clock.ticks % 30 === 0) {
+                Sim.History.updateScreen();
+            }
+        }
         if(Sim.Clock.ticks % 1000 === 0) {
             Sim.History.log();
         }
@@ -59,6 +78,7 @@ var Sim = {
         this.Clock.stop();
         this.Loading.show();
         this.Screen.drawing = false;
+        this.logging = false;
         
         setTimeout(function(){
             let percentage = 0;
@@ -80,6 +100,8 @@ var Sim = {
                 Sim.Screen.drawing = true;
                 Sim.Clock.start();
                 Sim.World.draw();
+                Sim.logging = true;
+                Sim.History.updateScreen();
                 Sim.Loading.hide();
             }, 200);
         }, 100);

@@ -39,9 +39,11 @@ Sim.Screen = {
             y: 0
         },
         handleMovement: function(e) {
-            Sim.Screen.mouse.position.x = pixelToCoord(e.pageX);
-            Sim.Screen.mouse.position.y = pixelToCoord(e.pageY);
-            Sim.Screen.mouse.update();
+            if(e.pageX < Sim.Screen.width && e.pageY < Sim.Screen.height) {
+                Sim.Screen.mouse.position.x = pixelToCoord(e.pageX);
+                Sim.Screen.mouse.position.y = pixelToCoord(e.pageY);
+                Sim.Screen.mouse.update();
+            }
         },
         update: function() {
             let coords = {
@@ -85,9 +87,13 @@ Sim.Screen = {
         this.log.init();
     },
     
+    sidebarWidth: function() {
+        return window.innerWidth < 768 ? 0 : 330 ;
+    },
+    
     // sets available size of screen
     setSize: function() {
-        Sim.Screen.width = window.innerWidth;
+        Sim.Screen.width = window.innerWidth - this.sidebarWidth();
         Sim.Screen.height = window.innerHeight;
             
         Sim.Screen.tiles.x = Math.ceil(Sim.Screen.width / Sim.config.map.tileSize);
@@ -104,6 +110,14 @@ Sim.Screen = {
         } else {
             Sim.Screen.maxCoords.y = Sim.config.map.height - Sim.Screen.tiles.y;
         }
+    },
+    
+    setCoords: function(x, y) {
+       this.coords.x = x;
+       this.pixelCoords.x = x * Sim.config.map.tileSize;
+       
+       this.coords.y = y; 
+       this.pixelCoords.y = y * Sim.config.map.tileSize;
     },
     
     tick: function() {
@@ -197,6 +211,7 @@ Sim.Screen = {
         
         if(this.moved === true || this.mouse.moved === true) {
             Sim.Screen.mouse.update();
+            Sim.Minimap.tick();
             this.log.print();
         }
     },
