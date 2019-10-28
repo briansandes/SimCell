@@ -91,10 +91,16 @@ Sim.Screen = {
         return window.innerWidth < 768 ? 0 : 330 ;
     },
     
+    /* TODO find a better way to get this value
+     * because geez, we arent even considering box shadow */
+    topbarHeight: function() {
+        return 37 ;
+    },
+    
     // sets available size of screen
     setSize: function() {
         Sim.Screen.width = window.innerWidth - this.sidebarWidth();
-        Sim.Screen.height = window.innerHeight;
+        Sim.Screen.height = window.innerHeight - this.topbarHeight();
             
         Sim.Screen.tiles.x = Math.ceil(Sim.Screen.width / Sim.config.map.tileSize);
         Sim.Screen.tiles.y = Math.ceil(Sim.Screen.height / Sim.config.map.tileSize);
