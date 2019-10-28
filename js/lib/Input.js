@@ -126,33 +126,3 @@ window.Input = {
         Input.bindKeys();
     }
 };
-
-
-/* binding keyboard arrows */
-
-(function() {
-    var keys = [
-        {
-            id: 'left_arrow',
-            group: 'arrows',
-            keyCode: 37
-        },
-        {
-            id: 'up_arrow',
-            group: 'arrows',
-            keyCode: 38
-        },
-        {
-            id: 'right_arrow',
-            group: 'arrows',
-            keyCode: 39
-        },
-        {
-            id: 'down_arrow',
-            group: 'arrows',
-            keyCode: 40
-        }
-    ];
-
-    Input.init(keys);
-})();

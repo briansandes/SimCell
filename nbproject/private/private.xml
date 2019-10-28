@@ -3,14 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp3/htdocs/SimCell/js/sim/Minimap.js</file>
-            <file>file:/C:/xampp3/htdocs/SimCell/js/sim/Cell.js</file>
-            <file>file:/C:/xampp3/htdocs/SimCell/js/sim/Screen.js</file>
-            <file>file:/C:/xampp3/htdocs/SimCell/js/sim/History.js</file>
-            <file>file:/C:/xampp3/htdocs/SimCell/index.html</file>
-            <file>file:/C:/xampp3/htdocs/SimCell/js/sim/Cells.js</file>
-            <file>file:/C:/xampp3/htdocs/SimCell/js/sim/Sim.js</file>
-            <file>file:/C:/xampp3/htdocs/SimCell/js/sim/World.js</file>
+            <file>file:/C:/xampp/htdocs/SimCell/js/sim/Init.js</file>
+            <file>file:/C:/xampp/htdocs/SimCell/index.html</file>
+            <file>file:/C:/xampp/htdocs/SimCell/css/screen-intro.css</file>
+            <file>file:/C:/xampp/htdocs/SimCell/css/sim.css</file>
+            <file>file:/C:/xampp/htdocs/SimCell/css/menu.css</file>
         </group>
     </open-files>
 </project-private>
