@@ -21,8 +21,8 @@
                             </a>
                             <ul class="submenu">
                                 <li>
-                                    <a onclick="Sim.newMap();">
-                                        New
+                                    <a onclick="Interface.goTo('new-map');">
+                                        New World
                                     </a>
                                 </li>
                                 <li>
@@ -69,6 +69,8 @@
             <!--loading overlay-->
 
             <div id="interface-screens">
+                
+                <!--intro-->
                 <div id="screen-intro" class="screen screen-intro">
                     <div class="pixel-overlay"></div>
                     <div class="fullscreen-content">
@@ -101,7 +103,7 @@
                                                 <div class="col-sm-push-1 col-sm-10 col-xs-12">
                                                     <div class="row">
                                                         <div class="col-xs-6 col-sm-4">
-                                                            <a onclick="Interface.goTo('game');" class="btn box-btn">
+                                                            <a onclick="Interface.goTo('new-map');" class="btn box-btn">
                                                                 <span class="img-holder">
                                                                     <img src="img/new-game.gif" class="img-responsive"/>
                                                                 </span>
@@ -121,7 +123,7 @@
                                                                 <span class="img-holder">
                                                                     <img src="img/import.png" class="img-responsive"/>
                                                                 </span>
-                                                                <span>Load map or simulation</span>
+                                                                <span>Import map or simulation</span>
                                                             </a>
                                                         </div>
                                                     </div>
@@ -135,7 +137,9 @@
                         </div>
                     </div>
                 </div>
+                <!--intro-->
                 
+                <!--game-->
                 <div id="screen-game" class="screen screen-game">
                     <!--screen coords-->
                     <div id="coords">
@@ -186,6 +190,43 @@
                     </div>
                     <!--sidebar-->
                 </div>
+                <!--game-->
+                
+                <!--import map-->
+                <div id="screen-import" class="screen screen-import">
+                    <div class="pixel-overlay"></div>
+                    <div class="fullscreen-content">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="import-box box">
+                                        <div class="box-content">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <h2>
+                                                        Paste map data into the textarea below
+                                                    </h2>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <textarea class="box" id="import-data" style="height: 30vh; font-size: 14px;" placeholder="data goes here"></textarea>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="row">
+                                                <div class="col-xs-12" style="text-align: center;">
+                                                    <a onclick="Interface.getScreen('import').import();" class="btn green" style="display: inline-block;margin-top: 30px;float: none;">Import</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--import map-->
             </div>
         </div>
 

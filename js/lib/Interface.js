@@ -34,6 +34,13 @@ var Interface = {
     goTo: function(id, o) {
         if(!id) {
             console.error('Missing parameter "id" for goToScreen.');
+            console.trace();
+            return false;
+        }
+        
+        if(!(id in this.screens)) {
+            console.error("Screen id '"+id+"' nor registered in Interface.js");
+            console.trace();
             return false;
         }
         
@@ -44,19 +51,30 @@ var Interface = {
                 this.screens[this.currentScreen].onLeave(id, o);
             }
             /* hides last screen */
-            document.querySelector('.screen.screen-' + this.currentScreen).style.display = 'none';
+            let lastScreenElement = document.querySelector('.screen.screen-' + this.currentScreen);
+            if(lastScreenElement) {
+                lastScreenElement.style.display = 'none';
+            }
         }
         
         /* shows next screen */
-        document.querySelector('.screen.screen-' + id).style.display = 'block';
+        let currentScreenElement = document.querySelector('.screen.screen-' + id);
+        if(currentScreenElement) {
+            currentScreenElement.style.display = 'block';
+        }
         this.currentScreen = id;
         this.screens[id].onInit(o);
     },
     
-    /* registers a new step
+    /* registers a new screen
      * TODO: define 'o' param 
      * defined events for 'o' so far: onInit (not optional), onLeave */
     addScreen: function(id, o) {
         this.screens[id] = o;
+    },
+    
+    
+    getScreen: function(id) {
+        return this.screens[id];
     }
 };

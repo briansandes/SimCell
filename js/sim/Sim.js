@@ -1,6 +1,7 @@
 var Sim = {
     running: true,
     logging: true,
+    isReady: false,
     init: function (o) {
         this.Loading.show();
         
@@ -31,8 +32,6 @@ var Sim = {
         this.History.init();
         
         this.Clock.start();
-        
-        this.Loading.hide();
 
         document.addEventListener('dblclick', function (e) {
             if(e.target.id === 'canvas-cells') {
@@ -61,6 +60,12 @@ var Sim = {
             // resizes cells canvas
             Sim.Cells.resize();
         });
+        
+        this.isReady = true;
+        
+        setTimeout(function() {
+            Sim.Loading.hide();
+        }, 500);
     },
 
     tick: function () {
@@ -123,6 +128,17 @@ var Sim = {
         //Sim.Clock.start();
     },
     
+    importMap: function(mapInfo) {
+        if(!this.isReady) {
+            this.init({
+                map: mapInfo
+            });
+        } else {
+            this.World.importMap(mapInfo);
+        }
+    },
+    
+    /* Supposedly the only static 'component' of this whole thing */
     Loading: {
         show: function () {
             document.getElementById('loading-overlay').style.display = 'table';

@@ -32,13 +32,43 @@ Interface.addScreen('intro', {
     }
 });
 
-/* game screen */
-Interface.addScreen('game', {
+/* new map screen */
+Interface.addScreen('new-map', {
     onInit: function (o) {
-        Sim.init();
+        Sim.Loading.show();
+        if(!Sim.isReady) {
+            Sim.init();
+        } else {
+            Sim.newMap();
+        }
+
+        Interface.goTo('game');
+
+        setTimeout(function() {
+            Sim.Loading.hide();
+        }, 600);
     }
 });
 
+/* game screen */
+Interface.addScreen('game', {
+    onInit: function (o) {}
+});
+
+/* import map screen */
+Interface.addScreen('import', {
+    onInit: function (o) {
+        
+    },
+    import: function() {
+        var data = JSON.parse(document.getElementById('import-data').value);
+        Sim.importMap(data);
+        Interface.goTo('game');
+    }
+});
+
+
+/* initializes Interface component */
 Interface.init({
     firstScreen: 'intro'
 });
