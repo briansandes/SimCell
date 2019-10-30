@@ -4,6 +4,8 @@ Sim.Minimap = {
     context: null,
     rectCanvas: null,
     rectContext: null,
+    cellsCanvas: null,
+    cellsContext: null,
     
     isReady: false,
     
@@ -29,16 +31,25 @@ Sim.Minimap = {
             zIndex: 1
         });
         
-        Sim.Canvas.add('minimap-area', {
+        Sim.Canvas.add('alive-cells', {
             width: Sim.config.minimap.width,
             height: Sim.config.minimap.height,
             appendTo: this.element,
             zIndex: 2
         });
         
+        Sim.Canvas.add('minimap-area', {
+            width: Sim.config.minimap.width,
+            height: Sim.config.minimap.height,
+            appendTo: this.element,
+            zIndex: 3
+        });
+        
         this.context = Sim.Canvas.layers['minimap'].context;
         this.rectContext = Sim.Canvas.layers['minimap-area'].context;
         this.rectContext.strokeStyle = '#ffffff';
+        
+        this.cellsContext = Sim.Canvas.layers['alive-cells'].context;
         
         this.setRatio();
         this.setRectangleSize();
@@ -89,11 +100,31 @@ Sim.Minimap = {
     drawRectangle: function () {
         this.rectContext.clearRect(0, 0, Sim.config.minimap.width, Sim.config.minimap.height);
         this.rectContext.strokeRect(
-            Math.floor((Sim.Screen.coords.x / Sim.World.width) * Sim.config.minimap.width),
-            Math.floor((Sim.Screen.coords.y / Sim.World.height) * Sim.config.minimap.height),
+            Math.floor((Sim.Screen.coords.x / Sim.World.width) * Sim.config.minimap.width) + 0.5,
+            Math.floor((Sim.Screen.coords.y / Sim.World.height) * Sim.config.minimap.height) + 0.5,
             this.rectangle.width,
             this.rectangle.height,
         );
+    },
+    drawCellsTick: function() {
+        if(Sim.Cells.alive.length > 0) {
+            if(Sim.Clock.ticks % 30 === 0) {
+                this.drawCells();
+            }
+        } else {
+            this.cellsContext.clearRect(0, 0, Sim.config.minimap.width, Sim.config.minimap.height);
+        }
+    },
+    drawCells: function() {
+        this.cellsContext.clearRect(0, 0, Sim.config.minimap.width, Sim.config.minimap.height);
+        for(let i = 0; i < Sim.Cells.alive.length; i++) {
+            let cell = Sim.Cells.bag[Sim.Cells.alive[i]];
+            let x = mapNumbers(cell.pixelCoords.x, 0, Sim.World.pixelWidth, 0, Sim.config.minimap.width);
+            let y = mapNumbers(cell.pixelCoords.y, 0, Sim.World.pixelHeight, 0, Sim.config.minimap.height);
+            
+            this.cellsContext.fillStyle = cell.color;
+            this.cellsContext.fillRect(x + 1.5, y + 1.5, 3, 3);
+        }
     },
     draw: function () {
         let tmpCanvas = document.createElement('canvas');

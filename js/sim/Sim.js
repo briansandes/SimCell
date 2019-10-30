@@ -76,6 +76,7 @@ var Sim = {
         this.World.tick();
         this.Screen.moved = false;
         this.Screen.mouse.moved = false;
+        this.Minimap.drawCellsTick();
         
         if(Sim.logging === true) {
             if(Sim.Clock.ticks % 30 === 0) {

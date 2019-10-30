@@ -132,6 +132,11 @@ function lerpColor(a, b, amount) {
     return '#' + ((1 << 24) + (rr << 16) + (rg << 8) + rb | 0).toString(16).slice(1);
 }
 
+/* map function from p5.js I think */
+function mapNumbers(n, start1, stop1, start2, stop2) {
+    return ((n - start1) / (stop1 - start1)) * (stop2 - start2) + start2;
+}
+
 Array.prototype.clone = function () {
     return this.slice(0);
 };
