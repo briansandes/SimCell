@@ -7,6 +7,9 @@
 }
 
 body {
+    font-smooth: never;
+    -webkit-font-smoothing: never;
+    
     background-color: var(--blue);
     margin: 0;
     overflow-x: hidden;
@@ -44,7 +47,7 @@ a {
 #actions {
     position: absolute;
     bottom: 10px;
-    width: 290px;
+    width: 244px;
 }
 
 #coords {
@@ -61,7 +64,7 @@ a {
 #sidebar {
     background-color: #1c1a9a;
     position: absolute;
-    width: 330px;
+    width: 280px;
     height: 100vh;
     right: 0;
     top: 0;
@@ -87,17 +90,23 @@ a {
 }
 
 #sidebar .title {
-    font-size: 20px;
+    font-size: 18px;
     text-align: center;
     color: white;
     text-shadow: 3px 3px 0px rgba(0, 0, 0, 1);
+    margin-top: 0px;
+    
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
     margin-bottom: 20px;
 }
 
 #sidebar #minimap {
     margin: 0 auto 20px;
-    width: 280px;
-    height: 160px;
+    width: 235px;
+    height: 150px;
     box-shadow: 3px 3px 0px rgba(0, 0, 0, 1);
     position: absolute;
     bottom: 95px;
@@ -221,7 +230,7 @@ a {
     font-family: 'Press Start 2P';
     padding: 10px 10px;
     font-size: 12px;
-    margin: 8px 8px;
+    margin: 8px 4px;
     float: right;
     box-shadow: 3px 3px 0px rgba(0, 0, 0, 1);
     cursor: pointer;

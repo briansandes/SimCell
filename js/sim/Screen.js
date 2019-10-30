@@ -93,7 +93,7 @@ Sim.Screen = {
     },
     
     sidebarWidth: function() {
-        return window.innerWidth < 768 ? 0 : 330 ;
+        return window.innerWidth < 768 ? 0 : 280 ;
     },
     
     /* TODO find a better way to get this value

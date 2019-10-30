@@ -9,8 +9,8 @@ Sim.config = {
         foodGrows: 50
     },
     minimap: {
-        width: 280,
-        height: 160
+        width: 235,
+        height: 150
     },
     screen: {
         width: 800,
