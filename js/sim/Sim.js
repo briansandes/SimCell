@@ -1,13 +1,20 @@
 var Sim = {
     running: true,
     logging: true,
-    init: function () {
+    init: function (o) {
         this.Loading.show();
         
         // inits screen reference
         this.Screen.init();
 
-        this.World.init();
+        /* initializes map */
+        var mapOptions = o;
+        if(o) {
+            if('map' in o) {
+                mapOptions = o.map;
+            }
+        }
+        this.World.init(mapOptions);
 
         this.Grid.init();
 
@@ -106,6 +113,16 @@ var Sim = {
             }, 200);
         }, 100);
     },
+    
+    newMap: function() {
+        //Sim.Clock.stop();
+        Sim.Cells.reset();
+        Sim.History.reset();
+        Sim.World.importMap(Sim.World.newMap());
+        Sim.Clock.reset();
+        //Sim.Clock.start();
+    },
+    
     Loading: {
         show: function () {
             document.getElementById('loading-overlay').style.display = 'table';

@@ -31,6 +31,10 @@ Sim.Clock = {
             }
         }
     },
+    reset: function() {
+        this.tasks = [];
+        this.ticks = 0;
+    },
 
     tasks: [],
     queue: function(task, when) {

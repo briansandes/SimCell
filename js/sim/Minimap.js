@@ -5,6 +5,8 @@ Sim.Minimap = {
     rectCanvas: null,
     rectContext: null,
     
+    isReady: false,
+    
     mousePressed: false,
     ratio: {
         x: 0,
@@ -60,38 +62,47 @@ Sim.Minimap = {
         Sim.Canvas.layers['minimap-area'].canvas.addEventListener('mouseout', function (e) {
             Sim.Minimap.mousePressed = false;
         });
+        
+        this.isReady = true;
     },
     tick: function() {
         if(Sim.Screen.moved === true) {
             this.drawRectangle();
         }
     },
+    
+    onChangeMap: function() {
+        this.setRatio();
+        this.setRectangleSize();
+        this.draw();
+        this.drawRectangle();
+    },
 
     setRatio: function () {
-        this.ratio.x = Sim.config.minimap.width / Sim.config.map.width;
-        this.ratio.y = Sim.config.minimap.height / Sim.config.map.height;
+        this.ratio.x = Sim.config.minimap.width / Sim.World.width;
+        this.ratio.y = Sim.config.minimap.height / Sim.World.height;
     },
     setRectangleSize: function () {
-        this.rectangle.width = Math.floor((Sim.Screen.width / Sim.config.map.pixelWidth) * Sim.config.minimap.width);
-        this.rectangle.height = Math.floor((Sim.Screen.height / Sim.config.map.pixelHeight) * Sim.config.minimap.height);
+        this.rectangle.width = Math.floor((Sim.Screen.width / Sim.World.pixelWidth) * Sim.config.minimap.width);
+        this.rectangle.height = Math.floor((Sim.Screen.height / Sim.World.pixelHeight) * Sim.config.minimap.height);
     },
     drawRectangle: function () {
         this.rectContext.clearRect(0, 0, Sim.config.minimap.width, Sim.config.minimap.height);
         this.rectContext.strokeRect(
-            Math.floor((Sim.Screen.coords.x / Sim.config.map.width) * Sim.config.minimap.width),
-            Math.floor((Sim.Screen.coords.y / Sim.config.map.height) * Sim.config.minimap.height),
+            Math.floor((Sim.Screen.coords.x / Sim.World.width) * Sim.config.minimap.width),
+            Math.floor((Sim.Screen.coords.y / Sim.World.height) * Sim.config.minimap.height),
             this.rectangle.width,
             this.rectangle.height,
         );
     },
     draw: function () {
         let tmpCanvas = document.createElement('canvas');
-        tmpCanvas.width = Sim.config.map.width;
-        tmpCanvas.height = Sim.config.map.height;
+        tmpCanvas.width = Sim.World.width;
+        tmpCanvas.height = Sim.World.height;
         let tmpContext = tmpCanvas.getContext('2d');
         
-        for (let r = 0; r < Sim.config.map.height; r++) {
-            for (let c = 0; c < Sim.config.map.width; c++) {
+        for (let r = 0; r < Sim.World.height; r++) {
+            for (let c = 0; c < Sim.World.width; c++) {
                 tmpContext.fillStyle = Sim.Tiles[Sim.World.data[r][c]].hex;
                 tmpContext.fillRect(
                     c,
@@ -114,15 +125,15 @@ Sim.Minimap = {
         if (x < 0) {
             x = 0;
         } else
-        if (x > Sim.config.map.width - Sim.Screen.tiles.x) {
-            x = Sim.config.map.width - Sim.Screen.tiles.x;
+        if (x > Sim.World.width - Sim.Screen.tiles.x) {
+            x = Sim.World.width - Sim.Screen.tiles.x;
         }
 
         if (y < 0) {
             y = 0;
         } else
-        if (y > Sim.config.map.height - Sim.Screen.tiles.y) {
-            y = Sim.config.map.height - Sim.Screen.tiles.y;
+        if (y > Sim.World.height - Sim.Screen.tiles.y) {
+            y = Sim.World.height - Sim.Screen.tiles.y;
         }
 
         Sim.Screen.setCoords(x, y);

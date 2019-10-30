@@ -64,9 +64,9 @@ Sim.Screen = {
             this.element = document.getElementById('coords')
         },
         print: function() {
-            if(Sim.Screen.mouse.coords.x > -1 && Sim.Screen.mouse.coords.x < Sim.config.map.width
+            if(Sim.Screen.mouse.coords.x > -1 && Sim.Screen.mouse.coords.x < Sim.World.width
                     &&
-            Sim.Screen.mouse.coords.y > -1 && Sim.Screen.mouse.coords.y < Sim.config.map.height) {
+            Sim.Screen.mouse.coords.y > -1 && Sim.Screen.mouse.coords.y < Sim.World.height) {
                 let currentTile = Sim.World.tiles[Sim.Screen.mouse.coords.y][Sim.Screen.mouse.coords.x];
                 var food = '';
                 if('food' in currentTile) {
@@ -87,6 +87,11 @@ Sim.Screen = {
         this.log.init();
     },
     
+    reset: function() {
+        this.setCoords(0, 0);
+        this.setSize();
+    },
+    
     sidebarWidth: function() {
         return window.innerWidth < 768 ? 0 : 330 ;
     },
@@ -99,22 +104,26 @@ Sim.Screen = {
     
     // sets available size of screen
     setSize: function() {
+        /* screen dimensions  minus top bar menu and sidebar (sidebar is not shown on mobile devices)  */
         Sim.Screen.width = window.innerWidth - this.sidebarWidth();
         Sim.Screen.height = window.innerHeight - this.topbarHeight();
             
+        /* sets the amount of tiles the screen can display at once on current avaliable dimensions */
         Sim.Screen.tiles.x = Math.ceil(Sim.Screen.width / Sim.config.map.tileSize);
         Sim.Screen.tiles.y = Math.ceil(Sim.Screen.height / Sim.config.map.tileSize);
         
-        if(Sim.Screen.width > Sim.config.map.pixelWidth) {
+        /* disables map horizontal scroll if the map's width is smaller than the screen's width */
+        if(Sim.Screen.width > Sim.World.pixelWidth) {
             Sim.Screen.maxCoords.x = 0;
         } else {
-            Sim.Screen.maxCoords.x = Sim.config.map.width - Sim.Screen.tiles.x;
+            Sim.Screen.maxCoords.x = Sim.World.width - Sim.Screen.tiles.x;
         }
         
-        if(Sim.Screen.height > Sim.config.map.pixelHeight) {
+        /* disables map vertical scroll if the map's height is smaller than the screen's height */
+        if(Sim.Screen.height > Sim.World.pixelHeight) {
             Sim.Screen.maxCoords.y = 0;
         } else {
-            Sim.Screen.maxCoords.y = Sim.config.map.height - Sim.Screen.tiles.y;
+            Sim.Screen.maxCoords.y = Sim.World.height - Sim.Screen.tiles.y;
         }
     },
     

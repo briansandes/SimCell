@@ -140,10 +140,10 @@ Sim.Cells = {
             startY--;
         }
 
-        if (endX < Sim.config.map.width - 1) {
+        if (endX < Sim.World.width - 1) {
             endX++;
         }
-        if (endY < Sim.config.map.height - 1) {
+        if (endY < Sim.World.height - 1) {
             endY++;
         }
 
@@ -170,5 +170,16 @@ Sim.Cells = {
     },
     getOldest: function () {
         return this.bag[this.alive[0]];
+    },
+    
+    /* erase all data */
+    reset: function() {
+        this.alive = [];
+        this.bag = [];
+        
+        this.species.alive = {};
+        this.species.aliveList = [];
+        this.species.list = [];
+        this.species.members = {};
     }
 };

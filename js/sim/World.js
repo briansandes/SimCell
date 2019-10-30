@@ -14,31 +14,60 @@ Sim.World = {
     entities: {},
     tileChanges: [],
 
-    init: function () {
-        // TODO add options to initialize worlds
-        this.importMap({data: WorldMap.data});
-        this.width = Sim.config.map.width;
-        this.height = Sim.config.map.height;
-
-        // adds map canvas to screen
-        Sim.Canvas.add('map', {
-            zIndex: 1
-        });
-
-        this.context = Sim.Canvas.layers['map'].context;
-
-        this.pixelWidth = coordToPixel(this.width);
-        this.pixelHeight = coordToPixel(this.height);
+    init: function (o) {
+        // adds map canvas to screen and sets context
+        this.addCanvas();
+        
+        if(o) {
+            this.importMap(o);
+        } else {
+            this.importMap(this.newMap());
+        }
 
         // sets map's size acoording to Screen size
         this.resize();
     },
 
+    addCanvas: function() {
+        Sim.Canvas.add('map', {
+            zIndex: 1
+        });
+
+        this.context = Sim.Canvas.layers['map'].context;
+    },
+    
+    /* generates new world with default params of NoiseMap.js */
+    newMap: function(params) {
+        return NoiseMap.generate(params);
+    },
+
+    /* clears all data from current map */
+    reset: function() {
+        this.data = [];
+        this.tiles = [];
+        this.tileTypes = {
+            food: [],
+            dirt: [],
+            water: []
+        };
+        this.entities = {};
+        this.tileChanges = [];
+    },
+
     importMap: function (o) {
-        this.data = unpack(o.data);
+        if(!o) {
+            console.error('Parameter missing for Sim.World.importMap');
+            return false;
+        }
+        this.reset();
         
-        Sim.config.map.height = this.data.length;
-        Sim.config.map.width = this.data[0].length;
+        this.data = typeof o.data === 'string' ? unpack(o.data) : o.data;
+        
+        this.height = this.data.length;
+        this.width = this.data[0].length;
+        
+        this.pixelHeight = this.data.length * Sim.config.map.tileSize;
+        this.pixelWidth = this.data[0].length * Sim.config.map.tileSize;
         
         for (let r = 0; r < this.data.length; r++) {
             this.tiles.push([]);
@@ -73,6 +102,12 @@ Sim.World = {
                     });
                 }
             }
+        }
+        Sim.Screen.setSize();
+        this.draw();
+        
+        if(Sim.Minimap.isReady) {
+            Sim.Minimap.onChangeMap();
         }
         //Sim.Minimap.import();
     },
@@ -165,10 +200,10 @@ Sim.World = {
             startY--;
         }
 
-        if (endX < Sim.config.map.width - 1) {
+        if (endX < Sim.World.width - 1) {
             endX++;
         }
-        if (endY < Sim.config.map.height - 1) {
+        if (endY < Sim.World.height - 1) {
             endY++;
         }
 

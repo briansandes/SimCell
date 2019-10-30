@@ -17,6 +17,14 @@ Sim.History = {
         }
     },
     
+    reset: function() {
+        this.data = [];
+        this.species.data = [];
+        for(let i = 0; i < this.species.elements.length; i++) {
+            this.species.elements[i].outerHTML = '';
+        }
+        this.species.elements = [];
+    },
     
     log: function() {
         var obj = {

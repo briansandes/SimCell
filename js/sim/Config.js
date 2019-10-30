@@ -2,11 +2,6 @@ Sim.config = {
     cache: true,
     topBarHeight: 37,
     map: {
-        name: '',
-        width: 200,
-        height: 120,
-        pixelWidth: 200 * 25,
-        pixelHeight: 120 * 25,
         tileSize: 25,
         chunkSize: 20,
         initialFood: 2000,

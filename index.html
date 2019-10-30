@@ -21,17 +21,17 @@
                             </a>
                             <ul class="submenu">
                                 <li>
-                                    <a onclick="Editor.newMap();">
+                                    <a onclick="Sim.newMap();">
                                         New
                                     </a>
                                 </li>
                                 <li>
-                                    <a onclick="Editor.importMap('Earth');">
+                                    <a onclick="Sim.save();">
                                         Save
                                     </a>
                                 </li>
                                 <li>
-                                    <a onclick="Editor.exportMap();">
+                                    <a onclick="Sim.load();">
                                         Load
                                     </a>
                                 </li>
@@ -198,11 +198,12 @@
         <script src="js/lib/Input.js" type="text/javascript"></script>
         <script src="js/lib/Touch.js" type="text/javascript"></script>
         <script src="js/lib/Interface.js" type="text/javascript"></script>
+        <script src="js/lib/perlin.js" type="text/javascript"></script>
+        <script src="js/lib/noise-map-generator.js" type="text/javascript"></script>
 
         <!--SimCell files-->
         <script src="js/sim/Sim.js" type="text/javascript"></script>
         <script src="js/sim/Config.js" type="text/javascript"></script>
-        <script src="js/sim/Map.js" type="text/javascript"></script>
         <script src="js/sim/Canvas.js" type="text/javascript"></script>
         <script src="js/sim/Cells.js" type="text/javascript"></script>
         <script src="js/sim/Cell.js" type="text/javascript"></script>
