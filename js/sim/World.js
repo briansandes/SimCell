@@ -36,6 +36,10 @@ Sim.World = {
 
     importMap: function (o) {
         this.data = unpack(o.data);
+        
+        Sim.config.map.height = this.data.length;
+        Sim.config.map.width = this.data[0].length;
+        
         for (let r = 0; r < this.data.length; r++) {
             this.tiles.push([]);
             for (let c = 0; c < this.data[r].length; c++) {
@@ -70,6 +74,7 @@ Sim.World = {
                 }
             }
         }
+        //Sim.Minimap.import();
     },
 
     resize: function () {
