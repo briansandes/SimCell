@@ -202,6 +202,7 @@
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <div class="box">
+                                            <a onclick="Sim.HistoryWindow.hide()" class="close">[X]</a>
                                             <div class="box-content">
                                                 <div class="population-history">
                                                     <div class="row">
@@ -214,6 +215,7 @@
                                                     <div class="row">
                                                         <div class="col-xs-12">
                                                             <div id="population-chart-holder">
+                                                                <div id="no-data-msg">No data to display yet. Try adding a couple cells on screen.</div>
                                                                 <div id="population-chart"></div>
                                                             </div>
                                                         </div>
@@ -341,78 +343,6 @@
 
         <!--attempt to use google charts on population history-->
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-        <script type="text/javascript">
-                                                        google.charts.load('current', {'packages': ['corechart']});
-                                                        google.charts.setOnLoadCallback(drawChart);
-
-                                                        function drawChart() {
-                                                            var data = google.visualization.arrayToDataTable([
-                                                                ['tick', '#111111', '#222222', '#333333'],
-                                                                ['1000', 5, 6, 10],
-                                                                ['2000', 7, 20, 11],
-                                                                ['3000', 22, 6, 13],
-                                                                ['4000', 13, 3, 16],
-                                                                ['5000', 15, 8, 8],
-                                                                ['6000', 30, 16, 6],
-                                                                ['7000', 25, 20, 2],
-                                                                ['8000', 27, 16, 0],
-                                                                ['9000', 30, 12, 0]
-                                                            ]);
-
-                                                            var options = {
-                                                                width: '1072',
-                                                                height: '300',
-                                                                chartArea: {'width': '90%'},
-                                                                legend: {
-                                                                    position: "none"
-                                                                },
-                                                                hAxis: {
-                                                                    title: 'Ticks (1000 ticks ~= 16.666 seconds)',
-                                                                    titleTextStyle: {
-                                                                        color: "#000000",
-                                                                        fontName: "Press Start 2P",
-                                                                        fontSize: 12,
-                                                                        bold: false,
-                                                                        italic: false
-                                                                    }
-                                                                },
-                                                                vAxis: {
-                                                                    title: 'Population',
-                                                                    titleTextStyle: {
-                                                                        color: "#000000",
-                                                                        fontName: "Press Start 2P",
-                                                                        fontSize: 12,
-                                                                        bold: false,
-                                                                        italic: false
-                                                                    }
-                                                                },
-                                                                annotations: {
-                                                                    alwaysOutside: true,
-                                                                    textStyle: {
-                                                                        fontSize: 14,
-                                                                        auraColor: 'none'
-                                                                    }
-                                                                },
-                                                                backgroundColor: '#eeeeee',
-                                                                isStacked: true,
-//                                                                tooltip: { isHtml: true, textStyle: { fontSize: 8, fontFamily:' Press Start 2P', fontWeight: 'normal' } }
-                                                            };
-
-                                                            var chart = new google.visualization.AreaChart(document.getElementById('population-chart'));
-                                                            chart.draw(data, options);
-                                                        }
-        </script>
+        <script type="text/javascript">google.charts.load('current', {'packages': ['corechart']});</script>
     </body>
 </html>
-<!--
-<div class="google-visualization-tooltip" style="width: 77px; height: 78px; left: 440px; top: 40.7px;">
-    <ul class="google-visualization-tooltip-item-list" style="">
-        <li class="google-visualization-tooltip-item" style="">
-            <span style="font-family: Arial; font-size: 8px; color: rgb(0, 0, 0); opacity: 1; margin: 0px; text-decoration: none; font-weight: bold;">4000</span>
-        </li>
-        <li class="google-visualization-tooltip-item" style="">
-            <span style="font-family: Arial; font-size: 8px; color: rgb(0, 0, 0); opacity: 1; margin: 0px; text-decoration: none;">#222222:</span>
-            <span style="font-family: Arial; font-size: 8px; color: rgb(0, 0, 0); opacity: 1; margin: 0px; text-decoration: none; font-weight: bold;"> 3</span>
-        </li>
-    </ul>
-</div>-->

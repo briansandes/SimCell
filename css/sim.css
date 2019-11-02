@@ -125,7 +125,7 @@ a {
 }
 
 #specieList {
-    height: 260px;
+    height: 470px;
     overflow-y: auto;
 }
 
@@ -161,8 +161,31 @@ a {
     box-shadow: 0 0 0 5px, 8px 8px 0 4px black;
     color: #bbbbbb;
     border: solid 2px black;
+    min-height: 304px;
 }
 #game-history #population-chart {
+    position: absolute;
+    z-index: 20;
+    top: 2px;
+}
+    
+#game-history .close {
+    font-size: 20px;
+    text-shadow: 3px 3px 0 black;
+    color: white;
+    display: block;
+    position: absolute;
+    right: 50px;
+    z-index: 100;
+    cursor: pointer;
+}
+
+#game-history #no-data-msg {
+    font-size: 16px;
+    width: 100%;
+    color: white;
+    text-shadow: 3px 3px 0 black;
+    margin-top: 120px;
 }
 
 #game-history .box text {

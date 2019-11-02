@@ -1,7 +1,7 @@
 Sim.config = {
     cache: true,
     topBarHeight: 37,
-    cellsToAddOnClick: 1,
+    cellsToAddOnClick: 3,
     map: {
         tileSize: 25,
         chunkSize: 20,
