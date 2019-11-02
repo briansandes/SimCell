@@ -1,7 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>index.html</url>
+            <bookmark id="1">
+                <name/>
+                <line>349</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/xampp/htdocs/SimCell/index.html</file>
+            <file>file:/C:/xampp/htdocs/SimCell/js/lib/Charts8.js</file>
+            <file>file:/C:/xampp/htdocs/SimCell/js/sim/Cells.js</file>
+            <file>file:/C:/xampp/htdocs/SimCell/css/sim.css</file>
+            <file>file:/C:/xampp/htdocs/SimCell/js/sim/HistoryWindow.js</file>
+            <file>file:/C:/xampp/htdocs/SimCell/js/sim/History.js</file>
+        </group>
     </open-files>
 </project-private>

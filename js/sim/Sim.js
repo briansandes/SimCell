@@ -35,7 +35,9 @@ var Sim = {
 
         document.addEventListener('dblclick', function (e) {
             if(e.target.id === 'canvas-cells') {
-                Sim.Cells.add(pixelToCoord(e.pageX) + Sim.Screen.coords.x, pixelToCoord(e.pageY - Sim.config.topBarHeight) + Sim.Screen.coords.y);
+                for(let i = 0; i < Sim.config.cellsToAddOnClick; i++) {
+                    Sim.Cells.add(pixelToCoord(e.pageX) + Sim.Screen.coords.x, pixelToCoord(e.pageY - Sim.config.topBarHeight) + Sim.Screen.coords.y);
+                }
             }
         });
 

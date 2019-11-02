@@ -52,8 +52,11 @@ function randInt(start, end) {
     return Rand;
 }
 
+/* this motherfucking function had been returning out of bounds 
+ * values ever since it has been written 
+ * TODO check in the future if it is really working */
 function pickOne(array) {
-    return array[Math.floor(randInt(0, array.length))];
+    return array[Math.round(randInt(0, array.length -1))];
 }
 
 function randStr(length = 32) {

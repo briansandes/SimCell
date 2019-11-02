@@ -27,8 +27,6 @@ Input.init([
 /* intro screen */
 Interface.addScreen('intro', {
     onInit: function (o) {
-        console.log('called intro');
-        //Interface.goTo('game');
     }
 });
 
@@ -69,6 +67,7 @@ Interface.addScreen('import', {
 
 
 /* initializes Interface component */
+/* goes to the 'intro' screen defined above, displays its content on screen */
 Interface.init({
     firstScreen: 'intro'
 });

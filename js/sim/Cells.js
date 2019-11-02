@@ -1,4 +1,27 @@
 Sim.Cells = {
+    getNewSpecieId: function() {
+        
+        /* any default colors left? if so pick one */
+        if(Sim.config.defaultSpecies.length > this.species.list.length) {
+            /* picks a random item from distinct looking colors */
+            var randSpecie = pickOne(Sim.config.defaultSpecies);
+            if(this.species.list.indexOf(randSpecie.name) > -1) {
+                randSpecie = this.getNewSpecieId();
+            }
+        } else {
+            /* no colors left, proceed to generate a random hex string */
+            /* generates random Hex string */
+            var specieHex = '#' + randStr(6);
+            /* if it already exists ou ot the 16777216 posibilities, damn */
+            if(this.species.list.indexOf(specieHex) > -1) {
+                randSpecie = this.getNewSpecieId();
+            } else {
+                randSpecie = {name: specieHex, color: specieHex};
+            }
+        }
+
+        return randSpecie;
+    },
     alive: [],
     bag: [],
     species: {
@@ -10,18 +33,16 @@ Sim.Cells = {
         members: {},
         // list of species
         list: [],
-        register: function (specie) {
-            this.list.push(specie);
-            this.members[specie] = [];
-            Sim.Cells.addCache(specie);
+        colors: {},
+        register: function (specieData) {
+            this.list.push(specieData.name);
+            this.members[specieData.name] = [];
+            this.colors[specieData.name] = specieData.color;
+            Sim.Cells.addCache(specieData);
         }
     },
-    speciesData: {
-
-    },
-    cache: {
-
-    },
+    speciesData: {},
+    cache: {},
     // context to the cells canvas
     context: null,
 
@@ -54,9 +75,11 @@ Sim.Cells = {
         }
 
         // possible function for checking cache shall be added here
+        Sim.History.records.compare(cellId);
     },
 
-    addCache: function (specie) {
+    addCache: function (specieData) {
+        var specie = specieData.name;
         // cells shouldnt be drawn here, but..
         this.cache[specie] = [];
 
@@ -88,7 +111,7 @@ Sim.Cells = {
             // circle drawn
 
             // fills circle
-            tempContext.fillStyle = specie;
+            tempContext.fillStyle = specieData.color;
             tempContext.fill();
 
             // draws border

@@ -53,6 +53,7 @@ function Cell(x, y, o) {
             this.mutationRate = o.parent.mutationRate;
             this.parent = o.parent.cellId;
             this.specie = o.parent.specie;
+            this.color = o.parent.color;
             this.speed = o.parent.speed + parseFloat((rand(-o.parent.speed * this.mutationRate, o.parent.speed * this.mutationRate)).toFixed(2));
             this.speedOnWater = o.parent.speedOnWater + parseFloat(((o.parent.ticksOnWater / o.parent.ticks) * o.parent.speed).toFixed(2));
             this.vision = o.parent.vision + parseFloat((rand(-o.parent.vision * this.mutationRate, o.parent.vision * this.mutationRate)).toFixed(2));
@@ -60,10 +61,13 @@ function Cell(x, y, o) {
     }
 
     if (!this.specie) {
-        this.specie = '#' + randStr(6);
+        // now using actual color names for cells species
+        var newSpecie = Sim.Cells.getNewSpecieId();
+        console.log(newSpecie);
+        this.specie = newSpecie.name;
+        this.color = newSpecie.color;
     }
 
-    this.color = this.specie;
     this.energy = Sim.config.cells.initialEnergy;
 
     this.angle = parseInt(randInt(359));
@@ -75,7 +79,7 @@ function Cell(x, y, o) {
 
     if (Sim.Cells.species.list.indexOf(this.specie) === -1) {
         // generates cache
-        Sim.Cells.species.register(this.specie);
+        Sim.Cells.species.register({name: this.specie, color: this.color});
     }
 
     this.entityId = 'cell_' + Sim.Cells.bag.length;

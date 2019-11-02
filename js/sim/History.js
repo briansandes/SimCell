@@ -2,6 +2,46 @@ Sim.History = {
     data: [],
     aliveCells: null,
     totalCells: null,
+    
+    records: {
+        current: {
+            fastestOnDirt: null,
+            fastestOnWater: null,
+            oldest: null,
+            mostChildren: null
+        },
+        
+        /* not using allTime records at this moment
+         * TODO check when cell on records.current dies */
+        allTime: {
+            fastestOnDirt: null,
+            fastestOnWater: null,
+            oldest: null,
+            mostChildren: null
+        },
+        compare: function(cellId) {
+            var cell = Sim.Cells.bag[cellId];
+            
+            /* compare speed on land */
+            if(!this.current.fastestOnDirt) {
+                this.current.fastestOnDirt = cellId;
+            } else
+            if(cell.speed > Sim.Cells.bag[this.current.fastestOnDirt].speed) {
+                this.current.fastestOnDirt = cellId;
+            }
+            
+            /* compare speed on water */
+            if(!this.current.fastestOnWater) {
+                this.current.fastestOnWater = cellId;
+            } else
+            if(cell.speedOnWater > Sim.Cells.bag[this.current.fastestOnWater].speedOnWater) {
+                this.current.fastestOnWater = cellId;
+            }
+            
+            /* there isnt much sense comparing the amount children of age of new born cells */
+        }
+    },
+    
     init: function() {
         this.aliveCells = document.getElementById('aliveCells');
         this.totalCells = document.getElementById('totalCells');
@@ -32,7 +72,10 @@ Sim.History = {
             cellsAlive: Sim.Cells.alive.length,
             species: Sim.Cells.species.list.clone(),
             aliveList: Sim.Cells.species.aliveList.clone(),
-            alive: JSON.parse(JSON.stringify(Sim.Cells.species.alive))  // fastest way to clone an object in my shit opinion
+            alive: JSON.parse(JSON.stringify(Sim.Cells.species.alive)),  // fastest way to clone an object in my shit opinion,
+            records: {
+                current: Object.assign({}, this.records.current)
+            }
         };
         this.data.push(obj);
     },
@@ -67,5 +110,10 @@ Sim.History = {
             }
             this.species.element.innerHTML = html;
         }
+    },
+    
+    /* displays history window */
+    show: function() {
+        
     }
 };

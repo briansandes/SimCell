@@ -50,6 +50,11 @@
                             </ul>
                         </li>
                         <li>
+                            <a onclick="Sim.HistoryWindow.show();">
+                                Data/chart
+                            </a>
+                        </li>
+                        <li>
                             <a onclick="Editor.config.display();">
                                 Settings
                             </a>
@@ -68,9 +73,9 @@
             </div>
             <!--loading overlay-->
 
-            
+
             <div id="interface-screens">
-                
+
                 <!--intro-->
                 <div id="screen-intro" class="screen screen-intro">
                     <div class="pixel-overlay"></div>
@@ -87,7 +92,7 @@
                                                 </div>
                                             </div>
                                             <!--title-->
-                                            
+
                                             <!--text-->
                                             <div class="row">
                                                 <div class="col-xs-12">
@@ -97,8 +102,8 @@
                                                 </div>
                                             </div>
                                             <!--text-->
-                                            
-                                            
+
+
                                             <!--buttons-->
                                             <div class="row">
                                                 <div class="col-sm-push-1 col-sm-10 col-xs-12">
@@ -139,7 +144,7 @@
                     </div>
                 </div>
                 <!--intro-->
-                
+
                 <!--game-->
                 <div id="screen-game" class="screen screen-game">
                     <!--screen coords-->
@@ -151,9 +156,6 @@
                     <!--canvases-->
                     <div id="canvas-holder"></div>
                     <!--canvases-->
-
-
-
 
                     <!--sidebar-->
                     <div id="sidebar">
@@ -190,9 +192,44 @@
                         </div>
                     </div>
                     <!--sidebar-->
+
+
+                    <!--history window-->
+                    <div id="game-history">
+                        <div class="pixel-overlay"></div>
+                        <div class="fullscreen-content">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="box">
+                                            <div class="box-content">
+                                                <div class="population-history">
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <h2 class="text-left">
+                                                                Population history
+                                                            </h2>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <div id="population-chart-holder">
+                                                                <div id="population-chart"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--history window-->
                 </div>
                 <!--game-->
-                
+
                 <!--import map-->
                 <div id="screen-import" class="screen screen-import">
                     <div class="pixel-overlay"></div>
@@ -214,7 +251,7 @@
                                                     <textarea class="box" id="import-data" style="height: 30vh; font-size: 14px;" placeholder="data goes here"></textarea>
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="row">
                                                 <div class="col-xs-12" style="text-align: center;">
                                                     <a onclick="Interface.getScreen('import').import();" class="btn green" style="display: inline-block;margin-top: 30px;float: none;">Import</a>
@@ -235,28 +272,147 @@
         <!--general functions-->
         <script src="js/sim/functions.js" type="text/javascript"></script>
 
-        <!--libs-->
+        <!--libs o'Brian!-->
+        <!--library for map data compression-->
         <script src="js/lib/Mapacker.js" type="text/javascript"></script>
+
+        <!--tracks any given input's state-->
+        <!--ideal for triggering events on every 'tick' whether a key has been kept pressed-->
         <script src="js/lib/Input.js" type="text/javascript"></script>
+
+        <!--lib for mobile scrolling-->
+        <!--TODO improvements, as the last commit dates to early 2018-->
         <script src="js/lib/Touch.js" type="text/javascript"></script>
+
+        <!--new lib for screen management-->
+        <!--TODO could be replaced by a static slider without animations-->
         <script src="js/lib/Interface.js" type="text/javascript"></script>
+
+        <!--charts-->
+        <script src="js/lib/Charts8.js" type="text/javascript"></script>
+
+        <!--beloved Perlin noise, many thanks to Ken Perlin and Stefan Gustavson-->
         <script src="js/lib/perlin.js" type="text/javascript"></script>
+
+
         <script src="js/lib/noise-map-generator.js" type="text/javascript"></script>
 
         <!--SimCell files-->
+        <!--holds almost all objects-->
         <script src="js/sim/Sim.js" type="text/javascript"></script>
+        <!--initial and default config-->
         <script src="js/sim/Config.js" type="text/javascript"></script>
+
+        <!-- TODO upgrade to https://github.com/briansandes/Canvas, as we're currently using a prototype version of the library -->
         <script src="js/sim/Canvas.js" type="text/javascript"></script>
+
+        <!--Cells management-->
+        <!--TODO make dictionary for cell data and export methods-->
         <script src="js/sim/Cells.js" type="text/javascript"></script>
+        <!--the Cell's object itself-->
         <script src="js/sim/Cell.js" type="text/javascript"></script>
+
+        <!--clock for ticking-->
+        <!--TODO make it a library, check for new versions on projects-->
         <script src="js/sim/Clock.js" type="text/javascript"></script>
+        <!--ALSO TODO make it a library, check for new versions on projects-->
         <script src="js/sim/Grid.js" type="text/javascript"></script>
+
+        <!--TODO check compatibilty with new Canvas library methods-->
         <script src="js/sim/Screen.js" type="text/javascript"></script>
+
+        <!--TODO clarify functions, make standard map object--> 
         <script src="js/sim/World.js" type="text/javascript"></script>
         <script src="js/sim/Minimap.js" type="text/javascript"></script>
-        <script src="js/sim/Tiles.js" type="text/javascript"></script>
-        <script src="js/sim/History.js" type="text/javascript"></script>
 
+        <!--tile info (shall be moved to a general config file soon)-->
+        <script src="js/sim/Tiles.js" type="text/javascript"></script>
+
+
+        <script src="js/sim/History.js" type="text/javascript"></script>
+        <script src="js/sim/HistoryWindow.js" type="text/javascript"></script>
+
+        <!--the file you're looking for-->
+        <!--initializes the whole thing-->
         <script src="js/sim/Init.js" type="text/javascript"></script>
+
+
+
+
+        <!--attempt to use google charts on population history-->
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+                                                        google.charts.load('current', {'packages': ['corechart']});
+                                                        google.charts.setOnLoadCallback(drawChart);
+
+                                                        function drawChart() {
+                                                            var data = google.visualization.arrayToDataTable([
+                                                                ['tick', '#111111', '#222222', '#333333'],
+                                                                ['1000', 5, 6, 10],
+                                                                ['2000', 7, 20, 11],
+                                                                ['3000', 22, 6, 13],
+                                                                ['4000', 13, 3, 16],
+                                                                ['5000', 15, 8, 8],
+                                                                ['6000', 30, 16, 6],
+                                                                ['7000', 25, 20, 2],
+                                                                ['8000', 27, 16, 0],
+                                                                ['9000', 30, 12, 0]
+                                                            ]);
+
+                                                            var options = {
+                                                                width: '1072',
+                                                                height: '300',
+                                                                chartArea: {'width': '90%'},
+                                                                legend: {
+                                                                    position: "none"
+                                                                },
+                                                                hAxis: {
+                                                                    title: 'Ticks (1000 ticks ~= 16.666 seconds)',
+                                                                    titleTextStyle: {
+                                                                        color: "#000000",
+                                                                        fontName: "Press Start 2P",
+                                                                        fontSize: 12,
+                                                                        bold: false,
+                                                                        italic: false
+                                                                    }
+                                                                },
+                                                                vAxis: {
+                                                                    title: 'Population',
+                                                                    titleTextStyle: {
+                                                                        color: "#000000",
+                                                                        fontName: "Press Start 2P",
+                                                                        fontSize: 12,
+                                                                        bold: false,
+                                                                        italic: false
+                                                                    }
+                                                                },
+                                                                annotations: {
+                                                                    alwaysOutside: true,
+                                                                    textStyle: {
+                                                                        fontSize: 14,
+                                                                        auraColor: 'none'
+                                                                    }
+                                                                },
+                                                                backgroundColor: '#eeeeee',
+                                                                isStacked: true,
+//                                                                tooltip: { isHtml: true, textStyle: { fontSize: 8, fontFamily:' Press Start 2P', fontWeight: 'normal' } }
+                                                            };
+
+                                                            var chart = new google.visualization.AreaChart(document.getElementById('population-chart'));
+                                                            chart.draw(data, options);
+                                                        }
+        </script>
     </body>
 </html>
+<!--
+<div class="google-visualization-tooltip" style="width: 77px; height: 78px; left: 440px; top: 40.7px;">
+    <ul class="google-visualization-tooltip-item-list" style="">
+        <li class="google-visualization-tooltip-item" style="">
+            <span style="font-family: Arial; font-size: 8px; color: rgb(0, 0, 0); opacity: 1; margin: 0px; text-decoration: none; font-weight: bold;">4000</span>
+        </li>
+        <li class="google-visualization-tooltip-item" style="">
+            <span style="font-family: Arial; font-size: 8px; color: rgb(0, 0, 0); opacity: 1; margin: 0px; text-decoration: none;">#222222:</span>
+            <span style="font-family: Arial; font-size: 8px; color: rgb(0, 0, 0); opacity: 1; margin: 0px; text-decoration: none; font-weight: bold;"> 3</span>
+        </li>
+    </ul>
+</div>-->
