@@ -28,8 +28,33 @@ Sim.HistoryWindow = {
     drawChart: function (chartData) {
         var data = google.visualization.arrayToDataTable(chartData.data);
 
+        var mobileOptions  = {
+            chartArea: {'width': '70%'},
+            hAxis: {
+                title: 'Ticks (1000 ticks ~= 16 seconds)',
+                titleTextStyle: {
+                    color: "#000000",
+                    fontName: "Press Start 2P",
+                    fontSize: 8,
+                    bold: false,
+                    italic: false
+                }
+            },
+            vAxis: {
+                title: 'Population',
+                titleTextStyle: {
+                    color: "#000000",
+                    fontName: "Press Start 2P",
+                    fontSize: 8,
+                    bold: false,
+                    italic: false
+                }
+            }
+        };
+
+
         var options = {
-            width: '1072',
+            width: '100%',
             height: '300',
             chartArea: {'width': '90%'},
             legend: {
@@ -66,7 +91,11 @@ Sim.HistoryWindow = {
             isStacked: true
         };
         
-        options = Object.assign(options, chartData.options);
+        if(window.innerWidth < 768) {
+            options = Object.assign(options, chartData.options, mobileOptions);
+        } else {
+            options = Object.assign(options, chartData.options);
+        }
 
         var chart = new google.visualization.AreaChart(document.getElementById('population-chart'));
         chart.draw(data, options);

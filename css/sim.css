@@ -9,7 +9,7 @@
 body {
     font-smooth: never;
     -webkit-font-smoothing: never;
-    
+
     background-color: var(--blue);
     margin: 0;
     overflow-x: hidden;
@@ -55,10 +55,11 @@ a {
     color: white;
     bottom: 5px;
     left: 5px;
-    z-index: 50;
+    z-index: 4;
     font-size: 16px;
     width: 280px;
     line-height: 20px;
+    text-shadow: 1px 1px 0 black;
 }
 
 #sidebar {
@@ -95,7 +96,7 @@ a {
     color: white;
     text-shadow: 3px 3px 0px rgba(0, 0, 0, 1);
     margin-top: 0px;
-    
+
     margin-block-start: 0;
     margin-block-end: 0;
     margin-inline-start: 0;
@@ -167,8 +168,9 @@ a {
     position: absolute;
     z-index: 20;
     top: 2px;
+    width: calc(100% - 34px);
 }
-    
+
 #game-history .close {
     font-size: 20px;
     text-shadow: 3px 3px 0 black;
@@ -217,25 +219,25 @@ a {
     font-size: 24px;
     margin-bottom: 30px;
     margin-top: 0px;
-    
+
     text-shadow: 3px 3px 0px rgba(0, 0, 0, 1);
 }
 .box .box-content h2 {
     font-size: 20px;
     margin-bottom: 30px;
-    
+
     text-shadow: 3px 3px 0px rgba(0, 0, 0, 1);
 }
 
 .box .box-content p {
     font-size: 14px;
-    
+
     text-shadow: 3px 3px 0px rgba(0, 0, 0, 1);
 }
 .box .box-content a {
     font-size: 14px;
     line-height: 24px;
-    
+
     text-shadow: 2px 2px 0px rgba(0, 0, 0, 1);
 }
 .box .box-content a span {
@@ -315,4 +317,41 @@ textarea.box {
     height: 30vh;
     background-image: url('../img/pixel.gif');
     padding: 15px;
+}
+
+
+/* mobile media queries */
+
+@media screen and (max-width: 767px) {
+    #screen-intro .box {
+        padding: 16px;
+        margin-top: 10vh;
+    }
+    #screen-intro .box h1 {
+        margin-bottom: 10px;
+    }
+    #screen-intro .box p {
+        margin-top: 0;
+        line-height: 18px;
+        font-size: 10px;
+    }
+
+    #screen-intro .box .btn.box-btn {
+        padding: 10px;
+        font-size: 8px;
+        line-height: 16px;
+        margin-bottom: 16px;
+    }
+
+    #topbar .menu li a {
+        padding: 0 20px 0 4px;
+        line-height: 32px;
+        font-size: 10px;
+    }
+
+    #coords {
+        font-size: 10px;
+        width: 170px;
+        line-height: 16px;
+    }
 }

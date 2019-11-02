@@ -73,9 +73,9 @@ Sim.Screen = {
                     food = ' ' + currentTile.food;
                 }
                     
-                this.element.textContent = 'Screen: ' + Sim.Screen.coords.x + 'x' + Sim.Screen.coords.y +
-                        ' Mouse: ' + Sim.Screen.mouse.coords.x + 'x' +  Sim.Screen.mouse.coords.y +
-                ' Tile: ' + Sim.Tiles[Sim.World.data[Sim.Screen.mouse.coords.y][Sim.Screen.mouse.coords.x]].name + food;
+                this.element.innerHTML = 'Screen: ' + Sim.Screen.coords.x + 'x' + Sim.Screen.coords.y + '<br />' +
+                        'Mouse: ' + Sim.Screen.mouse.coords.x + 'x' +  Sim.Screen.mouse.coords.y + '<br />' +
+                'Tile: ' + Sim.Tiles[Sim.World.data[Sim.Screen.mouse.coords.y][Sim.Screen.mouse.coords.x]].name + food;
             }
             
         }
