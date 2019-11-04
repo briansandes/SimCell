@@ -30,6 +30,10 @@ function randInt(start, end) {
     }
 
     var Rand = 0;
+    if(end === undefined) {
+        end = start;
+        start = 0;
+    }
 
     /* negative numbers */
     if (start < 1 && end < 1) {
