@@ -72,15 +72,25 @@ var Sim = {
 
     tick: function () {
         if(this.Screen.drawing === true) {
+            /* checks for scrolling */
             this.Screen.tick();
         }
+        /* moves cells and calculate changes */
         this.Cells.tick();
+        
+        /* grows food basically */
         this.World.tick();
-        this.Screen.moved = false;
-        this.Screen.mouse.moved = false;
+        
+        /* draws cells over minimap */
         this.Minimap.drawCellsTick();
         
+        
+        /* reseting state */
+        this.Screen.moved = false;
+        this.Screen.mouse.moved = false;
+        
         if(Sim.logging === true) {
+            /* updates cells info on screen every 30 ticks */
             if(Sim.Clock.ticks % 30 === 0) {
                 Sim.History.updateScreen();
             }

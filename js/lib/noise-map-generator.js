@@ -13,7 +13,7 @@ var NoiseMap = {
         height: 160,
         noiseWidth: 70,
         noiseHeight: 50,
-        waterLine: 48,
+        waterLine: 70,
         someValue: 4,
         func: 'abs',
         top: 160,

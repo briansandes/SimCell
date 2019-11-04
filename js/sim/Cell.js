@@ -2,6 +2,7 @@ function Cell(x, y, o) {
     this.width = Sim.config.cells.width;
     this.height = Sim.config.cells.height;
     this.ticks = 0;
+    this.nextTack = Sim.config.tack;
     this.ticksOnWater = 0;
     this.experience = 0;
     this.level = 1;
@@ -145,21 +146,23 @@ Cell.prototype.move = function () {
     }
 };
 
+/* called every tack interval as defined in sim.config.tack */
+Cell.prototype.tack = function() {
+    this.energy -= Sim.config.cells.energyPerTack;
+    this.nextTack = this.ticks + Sim.config.tack;
+};
+
+/*  */
 Cell.prototype.live = function () {
     this.ticks++;
-    this.energy -= Sim.config.cells.energyPerTick;
+    
+    if(this.ticks === this.nextTack) {
+        this.tack();
+    }
     
     // TODO implement kill function
     if(this.energy < 1) {
-        Sim.World.removeEntity(this.cellId, this.coords);
-        this.energy = 0;
-        Sim.Cells.alive.splice(Sim.Cells.alive.indexOf(this.cellId), 1);
-        
-        Sim.Cells.species.alive[this.specie].splice(Sim.Cells.species.alive[this.specie].indexOf(this.cellId), 1);
-        if(Sim.Cells.species.alive[this.specie].length === 0) {
-            delete Sim.Cells.species.alive[this.specie];
-            Sim.Cells.species.aliveList.splice(Sim.Cells.species.aliveList.indexOf(this.specie), 1);
-        }
+        this.die();
     } else {
         let keepMoving = true;
         if(this.isOn('food')) {
@@ -197,6 +200,20 @@ Cell.prototype.divide = function() {
     this.energy = Sim.config.cells.initialEnergy;
     this.addXp(Sim.config.cells.xp.divide);
     this.children++;
+};
+
+/* serie of instructions to be called whenever a cell dies */
+/* this function can also be called to kill a given cell */
+Cell.prototype.die = function() {
+    Sim.World.removeEntity(this.cellId, this.coords);
+    this.energy = 0;
+    Sim.Cells.alive.splice(Sim.Cells.alive.indexOf(this.cellId), 1);
+
+    Sim.Cells.species.alive[this.specie].splice(Sim.Cells.species.alive[this.specie].indexOf(this.cellId), 1);
+    if(Sim.Cells.species.alive[this.specie].length === 0) {
+        delete Sim.Cells.species.alive[this.specie];
+        Sim.Cells.species.aliveList.splice(Sim.Cells.species.aliveList.indexOf(this.specie), 1);
+    }
 };
 
 Cell.prototype.addXp = function(xp) {

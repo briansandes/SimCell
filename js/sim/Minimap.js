@@ -107,12 +107,14 @@ Sim.Minimap = {
         );
     },
     drawCellsTick: function() {
-        if(Sim.Cells.alive.length > 0) {
-            if(Sim.Clock.ticks % 30 === 0) {
-                this.drawCells();
+        if(Sim.Screen.drawing === true) {
+            if(Sim.Cells.alive.length > 0) {
+                if(Sim.Clock.ticks % 30 === 0) {
+                    this.drawCells();
+                }
+            } else {
+                this.cellsContext.clearRect(0, 0, Sim.config.minimap.width, Sim.config.minimap.height);
             }
-        } else {
-            this.cellsContext.clearRect(0, 0, Sim.config.minimap.width, Sim.config.minimap.height);
         }
     },
     drawCells: function() {

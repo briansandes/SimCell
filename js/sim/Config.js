@@ -1,7 +1,8 @@
 Sim.config = {
     cache: true,
     topBarHeight: 37,
-    cellsToAddOnClick: 3,
+    cellsToAddOnClick: 1,
+    tack: 12,// interval every X ticks
     map: {
         tileSize: 25,
         chunkSize: 20,
@@ -29,8 +30,8 @@ Sim.config = {
         visionAngle: 48, // never gonna forget that name again
         numberOfAnglesToCache: 30, // never gonna forget that name again
         angleStep: 360 / 30, // has to be one of the 24 divisors of 360 https://en.wikipedia.org/wiki/360_(number)
-        foodPerTick: 250,
-        energyPerTick: 60,
+        foodPerTick: 250, // amount of food that can be eaten on every tick
+        energyPerTack: 500,
         mutationRate: {min: 0.03, max: 0.1},
         xp: {
             divide: 10
