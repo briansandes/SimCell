@@ -125,7 +125,7 @@ Sim.Minimap = {
             let y = mapNumbers(cell.pixelCoords.y, 0, Sim.World.pixelHeight, 0, Sim.config.minimap.height);
             
             this.cellsContext.fillStyle = cell.color;
-            this.cellsContext.fillRect(x + 1.5, y + 1.5, 3, 3);
+            this.cellsContext.fillRect(x - 0.5, y - 0.5, 1, 1);
         }
     },
     draw: function () {

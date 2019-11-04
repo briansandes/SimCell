@@ -8,7 +8,7 @@ Sim.config = {
         chunkSize: 20,
         initialFood: 2000,
         maxFood: 20000,
-        foodGrows: 50
+        foodGrows: 40
     },
     minimap: {
         width: 235,
@@ -31,8 +31,8 @@ Sim.config = {
         numberOfAnglesToCache: 30, // never gonna forget that name again
         angleStep: 360 / 30, // has to be one of the 24 divisors of 360 https://en.wikipedia.org/wiki/360_(number)
         foodPerTick: 250, // amount of food that can be eaten on every tick
-        energyPerTack: 500,
-        mutationRate: {min: 0.03, max: 0.1},
+        energyPerTack: 400,
+        mutationRate: {min: 0.03, max: 0.12},
         xp: {
             divide: 10
         }
