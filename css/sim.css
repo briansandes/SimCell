@@ -128,6 +128,7 @@ a {
 #specieList {
     height: 470px;
     overflow-y: auto;
+    padding-right: 6px;
 }
 
 #loading-overlay {

@@ -64,7 +64,6 @@ function Cell(x, y, o) {
     if (!this.specie) {
         // now using actual color names for cells species
         var newSpecie = Sim.Cells.getNewSpecieId();
-        console.log(newSpecie);
         this.specie = newSpecie.name;
         this.color = newSpecie.color;
     }

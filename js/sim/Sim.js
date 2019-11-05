@@ -71,19 +71,22 @@ var Sim = {
     },
 
     tick: function () {
-        if(this.Screen.drawing === true) {
-            /* checks for scrolling */
-            this.Screen.tick();
-        }
         /* moves cells and calculate changes */
         this.Cells.tick();
         
         /* grows food basically */
         this.World.tick();
         
-        /* draws cells over minimap */
-        this.Minimap.drawCellsTick();
-        
+        /* TODO move drawing functions here */
+        if(this.Screen.drawing === true) {
+            /* checks for scrolling */
+            this.Screen.tick();
+            
+            this.World.drawTick();
+            
+            /* draws cells over minimap */
+            this.Minimap.drawCellsTick();
+        }
         
         /* reseting state */
         this.Screen.moved = false;
@@ -99,6 +102,11 @@ var Sim = {
             Sim.History.log();
         }
     },
+    
+    draw: function() {
+        
+    },
+    
     fastTicks: function (ticks) {
         this.Clock.stop();
         this.Loading.show();

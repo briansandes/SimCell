@@ -5,15 +5,14 @@
             <url>index.html</url>
             <bookmark id="1">
                 <name/>
-                <line>334</line>
+                <line>347</line>
                 <key/>
             </bookmark>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/SimCell/js/sim/Config.js</file>
-            <file>file:/C:/xampp/htdocs/SimCell/js/sim/Screen.js</file>
+            <file>file:/C:/xampp/htdocs/SimCell/js/sim/Cells.js</file>
             <file>file:/C:/xampp/htdocs/SimCell/js/sim/Clock.js</file>
             <file>file:/C:/xampp/htdocs/SimCell/js/sim/Sim.js</file>
         </group>

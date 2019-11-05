@@ -4,9 +4,13 @@ Sim.Clock = {
     running: false,
     busy: false,
     ticks: 0,
+    speed: 1,
+    fastTicks: 0,
     start: function () {
-        this.running = true;
-        this.tick();
+        if(this.running === false) {
+            this.running = true;
+            this.tick();
+        }
     },
     stop: function () {
         this.running = false;
@@ -22,7 +26,20 @@ Sim.Clock = {
 
             // IF the clock isnt busy then run ticks
             if(Sim.Clock.busy === false) {
-                Sim.tick(Sim.Clock.ticks);
+                if(Sim.Clock.speed === 1) {
+                    Sim.tick(Sim.Clock.ticks);
+                } else {
+                    /* draw stuff on first tick */
+                    Sim.tick(Sim.Clock.ticks);
+                    Sim.Screen.drawing = false;
+                    
+                    for(Sim.Clock.fastTicks = 0; Sim.Clock.fastTicks < Sim.Clock.speed; Sim.Clock.fastTicks++) {
+                        Sim.Clock.ticks++;
+                        Sim.tick(Sim.Clock.ticks);
+                    }
+                    Sim.Screen.drawing = true;
+                    Sim.Clock.fastTicks = 0;
+                }
             }
 
             // Request next tick if value of running hasnt been changed

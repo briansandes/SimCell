@@ -56,6 +56,7 @@ Sim.Minimap = {
         
 
         Sim.Canvas.layers['minimap-area'].canvas.addEventListener('mousedown', function (e) {
+            Sim.Minimap.click(e);
             Sim.Minimap.mousePressed = true;
         });
 
@@ -66,7 +67,6 @@ Sim.Minimap = {
         });
 
         Sim.Canvas.layers['minimap-area'].canvas.addEventListener('mouseup', function (e) {
-            Sim.Minimap.click(e);
             Sim.Minimap.mousePressed = false;
         });
 
@@ -107,14 +107,10 @@ Sim.Minimap = {
         );
     },
     drawCellsTick: function() {
-        if(Sim.Screen.drawing === true) {
-            if(Sim.Cells.alive.length > 0) {
-                if(Sim.Clock.ticks % 30 === 0) {
-                    this.drawCells();
-                }
-            } else {
-                this.cellsContext.clearRect(0, 0, Sim.config.minimap.width, Sim.config.minimap.height);
-            }
+        if(Sim.Cells.alive.length > 0) {
+            this.drawCells();
+        } else {
+            this.cellsContext.clearRect(0, 0, Sim.config.minimap.width, Sim.config.minimap.height);
         }
     },
     drawCells: function() {

@@ -136,6 +136,22 @@ Sim.Screen = {
     },
     
     tick: function() {
+        this.checkKeyboardScrolling();
+        
+        this.checkTouchScrolling();
+        
+        if(this.moved === true || this.mouse.moved === true) {
+            Sim.Screen.mouse.update();
+            Sim.Minimap.tick();
+            this.log.print();
+        }
+    },
+    isInViewPort: function(x, y) {
+        return (x >= Sim.Screen.coords.x && x < Sim.Screen.coords.x + Sim.Screen.tiles.x) &&
+               (y >= Sim.Screen.coords.y && y < Sim.Screen.coords.y + Sim.Screen.tiles.y);
+    },
+    
+    checkKeyboardScrolling: function() {
         if(Input.isGroupPressed('arrows') === true) {
             if(Input.isPressed('left_arrow')) {
                 this.coords.x--;
@@ -179,7 +195,9 @@ Sim.Screen = {
                 }
             }
         }
-        
+    },
+    
+    checkTouchScrolling: function() {
         if(Touch.isPressed() === true) {
             if(Touch.direction.x === 'left') {
                 this.coords.x--;
@@ -223,15 +241,5 @@ Sim.Screen = {
                 }
             }
         }
-        
-        if(this.moved === true || this.mouse.moved === true) {
-            Sim.Screen.mouse.update();
-            Sim.Minimap.tick();
-            this.log.print();
-        }
-    },
-    isInViewPort: function(x, y) {
-        return (x >= Sim.Screen.coords.x && x < Sim.Screen.coords.x + Sim.Screen.tiles.x) &&
-               (y >= Sim.Screen.coords.y && y < Sim.Screen.coords.y + Sim.Screen.tiles.y);
     }
 };

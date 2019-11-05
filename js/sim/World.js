@@ -211,13 +211,6 @@ Sim.World = {
         for (let r = startY; r < endY; r++) {
             for (let c = startX; c < endX; c++) {
                 this.drawTile(c, r);
-                /* this.context.fillStyle = 'rgb(' + Sim.Tiles[this.data[r][c]].rgb + ')';
-                 this.context.fillRect(
-                 (c - Sim.Screen.coords.x) * Sim.config.map.tileSize,
-                 (r - Sim.Screen.coords.y) * Sim.config.map.tileSize,
-                 Sim.config.map.tileSize,
-                 Sim.config.map.tileSize
-                 );*/
             }
         }
     },
@@ -303,16 +296,15 @@ Sim.World = {
         if (Sim.Clock.ticks % 30 === 0) {
             this.growFood();
         }
-
-        if (Sim.Screen.drawing === true) {
-            if (Sim.Screen.moved === true) {
-                this.draw();
-            }
-            if (this.tileChanges.length > 0) {
-                for (let i = 0; i < this.tileChanges.length; i++) {
-                    this.drawTile(this.tileChanges[i].x, this.tileChanges[i].y, true);
-                    this.tiles[this.tileChanges[i].y][this.tileChanges[i].x].changed = false;
-                }
+    },
+    drawTick: function() {
+        if (Sim.Screen.moved === true) {
+            this.draw();
+        }
+        if (this.tileChanges.length > 0) {
+            for (let i = 0; i < this.tileChanges.length; i++) {
+                this.drawTile(this.tileChanges[i].x, this.tileChanges[i].y, true);
+                this.tiles[this.tileChanges[i].y][this.tileChanges[i].x].changed = false;
             }
         }
         this.tileChanges = [];
