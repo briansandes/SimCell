@@ -51,6 +51,7 @@ Sim.Clock = {
     reset: function() {
         this.tasks = [];
         this.ticks = 0;
+        this.speed = 1;
     },
 
     tasks: [],
@@ -75,5 +76,20 @@ Sim.Clock = {
         for(let i = remove.length -1; i > -1; i--) {
             this.tasks.splice(remove[i], 1);
         }
+    },
+    
+    fastForward: function() {
+        if(this.speed < 128) {
+            this.speed *= 2;
+        }
+        
+        if(this.speed > 1) {
+            document.getElementById('speed').textContent = 'Speed: ' + this.speed + 'X';
+        }
+    },
+    
+    normalSpeed: function() {
+        this.speed = 1;
+        document.getElementById('speed').textContent = '';
     }
 };

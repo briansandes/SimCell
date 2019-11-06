@@ -156,6 +156,8 @@
                         Mouse 0x0
                     </div>
                     <!--screen coords-->
+                    
+                    <div id="speed"></div>
 
                     <!--canvases-->
                     <div id="canvas-holder"></div>
@@ -176,11 +178,11 @@
                         <div id="minimap"></div>
 
                         <div id="actions">
-                            <button id="stopButton" class="btn danger" onclick="Sim.Clock.stop();">
-                                Stop
+                            <button id="stopButton" class="btn danger" onclick="Sim.Clock.normalSpeed();">
+                                1x
                             </button>
-                            <button onclick="Sim.Clock.start();" class="btn green">
-                                Start
+                            <button onclick="Sim.Clock.fastForward();" class="btn green">
+                                Fast Forward
                             </button>
                             <div class="clear"></div>
 
