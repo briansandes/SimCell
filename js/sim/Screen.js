@@ -106,7 +106,12 @@ Sim.Screen = {
     setSize: function() {
         /* screen dimensions  minus top bar menu and sidebar (sidebar is not shown on mobile devices)  */
         Sim.Screen.width = window.innerWidth - this.sidebarWidth();
-        Sim.Screen.height = window.innerHeight - this.topbarHeight();
+        if(window.innerWidth < 768) {
+            Sim.Screen.height = window.innerHeight - this.topbarHeight() - 210;
+        } else {
+            Sim.Screen.height = window.innerHeight - this.topbarHeight();
+        }
+        
             
         /* sets the amount of tiles the screen can display at once on current avaliable dimensions */
         Sim.Screen.tiles.x = Math.ceil(Sim.Screen.width / Sim.config.map.tileSize);
