@@ -47,17 +47,17 @@ function Cell(x, y, o) {
     this.speed = 1;
     this.speedOnWater = 1;
     this.vision = Sim.config.cells.visionAngle;
-    this.mutationRate = rand(Sim.config.cells.mutationRate.min, Sim.config.cells.mutationRate.max);
+    this.mutationRate = parseFloat(rand(Sim.config.cells.mutationRate.min, Sim.config.cells.mutationRate.max).toFixed(3));
 
     if (o) {
         if ('parent' in o) {
-            this.mutationRate = o.parent.mutationRate;
+            this.mutationRate = parseFloat(o.parent.mutationRate.toFixed(3));
             this.parent = o.parent.cellId;
             this.specie = o.parent.specie;
             this.color = o.parent.color;
-            this.speed = o.parent.speed + parseFloat((rand(-o.parent.speed * this.mutationRate, o.parent.speed * this.mutationRate)).toFixed(2));
-            this.speedOnWater = o.parent.speedOnWater + parseFloat(((o.parent.ticksOnWater / o.parent.ticks) * o.parent.speed).toFixed(2));
-            this.vision = o.parent.vision + parseFloat((rand(-o.parent.vision * this.mutationRate, o.parent.vision * this.mutationRate)).toFixed(2));
+            this.speed = parseFloat((o.parent.speed + parseFloat((rand(-o.parent.speed * this.mutationRate, o.parent.speed * this.mutationRate)).toFixed(2))).toFixed(3));
+            this.speedOnWater = parseFloat((o.parent.speedOnWater + parseFloat(((o.parent.ticksOnWater / o.parent.ticks) * o.parent.speed).toFixed(2))).toFixed(3));
+            this.vision = parseFloat((o.parent.vision + parseFloat((rand(-o.parent.vision * this.mutationRate, o.parent.vision * this.mutationRate)).toFixed(2))).toFixed(3));
         }
     }
 

@@ -79,12 +79,25 @@ Sim.Clock = {
     },
     
     fastForward: function() {
-        if(this.speed < 128) {
+        if(this.speed < 256) {
             this.speed *= 2;
         }
         
         if(this.speed > 1) {
             document.getElementById('speed').textContent = 'Speed: ' + this.speed + 'X';
+        }
+    },
+    
+    decreaseSpeed: function() {
+        if(this.speed >= 2) {
+            this.speed = this.speed / 2;
+        }
+        
+        if(this.speed > 1) {
+            document.getElementById('speed').textContent = 'Speed: ' + this.speed + 'X';
+        } else
+        if(this.speed === 1) {
+            document.getElementById('speed').textContent = '';
         }
     },
     

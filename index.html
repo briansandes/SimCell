@@ -197,11 +197,14 @@
 
                         <div class="sidetab sidetab-actions">
                             <div id="actions">
-                                <button id="stopButton" class="btn danger" onclick="Sim.Clock.normalSpeed();">
+                                <button onclick="Sim.Clock.fastForward();" class="btn green">
+                                    +x2
+                                </button>
+                                <button id="stopButton" class="btn" onclick="Sim.Clock.normalSpeed();">
                                     1x
                                 </button>
-                                <button onclick="Sim.Clock.fastForward();" class="btn green">
-                                    Fast Forward
+                                <button onclick="Sim.Clock.decreaseSpeed();" class="btn danger">
+                                    -x2
                                 </button>
                                 <div class="clear"></div>
 
@@ -353,6 +356,8 @@
         <!--tile info (shall be moved to a general config file soon)-->
         <script src="js/sim/Tiles.js" type="text/javascript"></script>
 
+        <!--user interective actions supposedly-->
+        <script src="js/sim/Actions.js" type="text/javascript"></script>
 
         <script src="js/sim/History.js" type="text/javascript"></script>
         <script src="js/sim/HistoryWindow.js" type="text/javascript"></script>

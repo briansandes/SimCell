@@ -146,8 +146,13 @@ Sim.Screen = {
         this.checkTouchScrolling();
         
         if(this.moved === true || this.mouse.moved === true) {
+            /* updates coords on mouse object */
             Sim.Screen.mouse.update();
+            
+            /* moves rectacle on minimap */
             Sim.Minimap.tick();
+            
+            /* shows mouse hover information on screen */
             this.log.print();
         }
     },

@@ -236,12 +236,17 @@ Sim.World = {
                 );
     },
 
+    /* loops on this.tileTypes.food (tiles registered as food) and
+     * adds food to their objects, up to a limit defined in Sim.config.map.maxFood */
+    /* the addFood function triggers some events */
     growFood: function () {
         for (let i = 0; i < this.tileTypes.food.length; i++) {
             let tile = this.tileTypes.food[i];
             this.addFood(tile[0], tile[1], Sim.config.map.foodGrows);
         }
     },
+    
+    
     addFood: function (x, y, food) {
         var newFood = this.tiles[y][x].food + food;
 
@@ -297,6 +302,7 @@ Sim.World = {
             this.growFood();
         }
     },
+    
     drawTick: function() {
         if (Sim.Screen.moved === true) {
             this.draw();

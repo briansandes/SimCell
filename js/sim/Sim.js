@@ -23,7 +23,7 @@ var Sim = {
 
         this.Minimap.init();
         
-        this.World.draw();
+        //this.World.draw();
         
         this.Minimap.draw();
 
@@ -79,6 +79,7 @@ var Sim = {
         
         /* TODO move drawing functions here */
         if(this.Screen.drawing === true) {
+            //console.log('in drawing');
             /* checks for scrolling */
             this.Screen.tick();
             
@@ -103,9 +104,7 @@ var Sim = {
         }
     },
     
-    draw: function() {
-        
-    },
+    draw: function() {},
     
     fastTicks: function (ticks) {
         this.Clock.stop();
