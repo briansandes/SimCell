@@ -70,11 +70,11 @@ function Cell(x, y, o) {
 
     this.energy = Sim.config.cells.initialEnergy;
 
-    this.angle = parseInt(randInt(359));
+    this.angle = randInt(359);
 
     this.visionVariation = {
-        left: this.vision / -2,
-        right: this.vision / 2
+        left: this.vision * -1,
+        right: this.vision * 1
     };
 
     if (Sim.Cells.species.list.indexOf(this.specie) === -1) {
@@ -87,6 +87,20 @@ function Cell(x, y, o) {
     Sim.World.indexEntity(this.cellId, this.coords);
 }
 
+Cell.prototype.changeDirection = function() {
+    /* Cell 'deciding' which angle should it move */
+    let angleVariation = this.angle + randInt(this.visionVariation.left, this.visionVariation.right);
+
+    let correctedAngle = correctAngle(angleVariation);
+
+    if(correctedAngle < 0) {
+        throw this;
+        console.log('-1 angle');
+        Sim.Clock.stop();
+    }
+    this.angle = correctedAngle;
+};
+
 Cell.prototype.move = function () {
     let currentTile = Sim.Tiles[Sim.World.data[this.coords.y][this.coords.x]];
 
@@ -94,14 +108,8 @@ Cell.prototype.move = function () {
         this.ticksOnWater++;
     }
 
-    /* Cell 'deciding' which angle should it move */
-    let angleVariation = Math.round(randInt(this.visionVariation.left, this.visionVariation.right));
-
-    let newAngle = correctAngle(this.angle + angleVariation);
-    /* Correcting angle */
-
     /* Converting angle to radians in order to calc sen and cos */
-    let radiansAngle = newAngle * TO_RADIANS;
+    let radiansAngle = this.angle * TO_RADIANS;
 
     /* distance of next point related to angle */
     let pointX = Math.cos(radiansAngle) * this.speed * currentTile.speed;
@@ -124,7 +132,6 @@ Cell.prototype.move = function () {
     }
 
     /* updating cell info */
-    this.angle = newAngle;
     this.pixelCoords.x = centerX;
     this.pixelCoords.y = centerY;
 
@@ -147,7 +154,11 @@ Cell.prototype.move = function () {
 
 /* called every tack interval as defined in sim.config.tack */
 Cell.prototype.tack = function() {
-    this.energy -= Sim.config.cells.energyPerTack;
+    let energyToDecrease = (Sim.config.cells.energyPerTack + (Sim.config.cells.energyPerTack * this.speed)) / 2;
+    
+    this.changeDirection();
+    
+    this.energy -= energyToDecrease;
     this.nextTack = this.ticks + Sim.config.tack;
 };
 
@@ -155,14 +166,19 @@ Cell.prototype.tack = function() {
 Cell.prototype.live = function () {
     this.ticks++;
     
+    // tack contains functions to be processed every X seconds
+    // defined in Sim.config.tack
     if(this.ticks === this.nextTack) {
         this.tack();
     }
     
-    // TODO implement kill function
+    // kills the cell if its energy is below 1
     if(this.energy < 1) {
         this.die();
-    } else {
+    }
+    
+    // gotta make sure the energy is above zero to give the cell a chance to eat
+    if(this.energy > 0) {
         let keepMoving = true;
         if(this.isOn('food')) {
             if(Sim.World.tiles[this.coords.y][this.coords.x].food > 0) {

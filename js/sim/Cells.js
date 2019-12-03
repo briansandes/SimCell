@@ -178,11 +178,16 @@ Sim.Cells = {
                         let cell = this.bag[Sim.World.entities[r + '_' + c][i]];
                         let drawingAngle = Math.floor(cell.angle / Sim.config.cells.angleStep);
 
-                        this.context.drawImage(
-                                this.cache[cell.specie][drawingAngle],
-                                cell.drawingCoords.x - Sim.Screen.pixelCoords.x,
-                                cell.drawingCoords.y - Sim.Screen.pixelCoords.y
-                                );
+                        try {
+                            this.context.drawImage(
+                                    this.cache[cell.specie][drawingAngle],
+                                    cell.drawingCoords.x - Sim.Screen.pixelCoords.x,
+                                    cell.drawingCoords.y - Sim.Screen.pixelCoords.y
+                                    );
+                        } catch (exception) {
+                            console.log(exception, cell.specie, drawingAngle);
+                        }
+
                     }
                 }
             }

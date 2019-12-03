@@ -22,31 +22,42 @@ function rand(min, max) {
 
         return rand * (max - min) + min;
     }
-}
-;
+};
+
 function randInt(start, end) {
-    if (start > end) {
-        throw new Exception("Start shall be smaller than the end");
+    if(end !== undefined && end !== null) {
+        if (start > end) {
+            throw new Exception("Start shall be smaller than the end");
+        }
     }
 
     var Rand = 0;
-    if(end === undefined) {
+    if(!end && end !== 0) {
         end = start;
         start = 0;
     }
 
-    /* negative numbers */
-    if (start < 1 && end < 1) {
-        Rand = Math.floor((Math.random() * (start * -1)) + (end * -1));
-        Rand = Rand * -1;
+    /* negative start */
+    if (start < 0) {
+        let startAbs = Math.abs(start);
+        let totalNumbers = startAbs + end + 1;
+
+        Rand = Math.floor(totalNumbers * Math.random());
+
+        Rand = Rand - startAbs;
     } else
-    /* positive numbers */
-    if (start > -1 && end > -1) {
-        Rand = Math.floor(Math.random() * (end - start + 1) + start);
+    // screw it
+    // from zero to anything
+    if (start === 0 && end > 0) {
+        //console.log('here');
+        let totalNumbers = end + 1;
+        Rand = Math.floor(Math.random() * totalNumbers);
     } else
-    /* both positive and numbers */
-    if (start < 0 && end > 0) {
-        Rand = Math.floor((Math.random() * (end + (start * -1))) + start);
+    /* both numbers above zero */
+    if (start > 0 && end > 0) {
+        
+        let totalNumbers = end - start + 1;
+        Rand = Math.floor(Math.random() * totalNumbers) + start;
     }
 
     if (Rand === -0) {
@@ -82,49 +93,24 @@ function pixelToCoord(coord) {
 }
 
 function correctAngle(angle) {
+    if(angle === null || angle === undefined) {
+        console.trace();
+        Sim.Clock.stop();
+    }
+
     if (angle < 0) {
         angle = angle + 360;
     } else
-    if (angle > 359) {
+    if (angle >= 360) {
         angle = angle - 360;
     }
+  
     return angle;
 }
 
 const TO_RADIANS = Math.PI / 180;
 
 const FULL_CIRCLE = 2 * Math.PI;
-
-function randTest() {
-
-
-    var min = 0;
-    var max = 10;
-    var loop = 1000;
-
-    var r1 = {}, r2 = {};
-
-    for (let i = 0; i < loop; i++) {
-        var n1 = Math.floor(rand(min, max));
-        var n2 = rand2(min, max);
-
-        if (n1 in r1) {
-            r1[n1]++;
-        } else {
-            r1[n1] = 1;
-        }
-
-        if (n2 in r2) {
-            r2[n2]++;
-        } else {
-            r2[n2] = 1;
-        }
-    }
-    ;
-
-    console.table(r1);
-    console.table(r2);
-}
 
 function lerpColor(a, b, amount) {
 
@@ -156,3 +142,93 @@ HTMLCanvasElement.prototype.mouseCoords = function (event) {
         y: Math.round(event.clientY - rect.top)
     };
 };
+
+
+function checkRandomness(fn, rangeMin, rangeMax, iterations) {
+    if(!iterations) {
+        iterations = 1000000;
+    }
+    var results = {};
+    
+    let randomNumber = 0;
+    for(let i = 0; i < iterations; i++) {
+        randomNumber = fn(rangeMin, rangeMax);
+        
+        if(!(randomNumber in results)) {
+            results[randomNumber] = 1;
+        } else {
+            results[randomNumber]++;
+        }
+    }
+    
+    var negativeNumbers = 0;
+    var positiveNumbers = 0;
+    var zeroes = 0;
+    var undefineds = 0;
+    var sumToHalfOfIterations = 0;
+    var numbersToHalfOfIterations = 0;
+    
+    /* keys of generated numbers */
+    var numberKeys = Object.keys(results);
+    
+    numberKeys.sort(function(a, b) {
+        return results[b] - results[a];
+    });
+    
+    /* loops on keys and adds them to either positive, negative or zeroes */
+    for(let i = 0; i < numberKeys.length; i++) {
+        if(numberKeys.length < 30) {
+            console.log(results[numberKeys[i]] + ' of '+ numberKeys[i] +' generated.');
+        }
+        
+        if(sumToHalfOfIterations < (iterations / 2)) {
+            sumToHalfOfIterations += results[numberKeys[i]];
+            numbersToHalfOfIterations++;
+        }
+
+        let number = new Number(numberKeys[i]);
+        let amount = results[numberKeys[i]];
+        
+        if(number < 0) {
+            negativeNumbers += amount;
+        } else 
+        if(number > 0) {
+            positiveNumbers += amount;
+        } else
+        if(number === 0) {
+            zeroes += amount;
+        } else {
+            undefineds += amount;
+        }
+    }
+    
+    console.log('------');
+    
+    console.log(numbersToHalfOfIterations + '('+ ((numbersToHalfOfIterations / numberKeys.length) * 100).toFixed(2) +'%) numbers got ' + ((sumToHalfOfIterations / iterations) * 100).toFixed(2) + '% of iterations');
+    
+    console.log('');
+    console.log('------');
+    
+    var highest = results[numberKeys[0]];
+    var lowest = results[numberKeys[numberKeys.length -1]];
+    
+    var difference = ((highest - lowest) / lowest) * 100 ;
+    
+    console.log('+'+difference.toFixed(2) + '% lowest / highest ratio');
+    
+    console.log('------');
+    
+    if(negativeNumbers > positiveNumbers) {
+        console.log(((negativeNumbers - positiveNumbers) / iterations) * 100 + '% more of negative numbers');
+    } else
+    if(negativeNumbers < positiveNumbers) {
+        console.log(((positiveNumbers - negativeNumbers) / iterations) * 100 + '% more of positive numbers');
+    } else
+    if(negativeNumbers === positiveNumbers) {
+        console.log('same amount of positive and negative numbers generated');
+    }
+
+    if(zeroes) {
+        console.log(zeroes + ((zeroes / iterations) * 100).toFixed(2) + ' zeores');
+    }
+}

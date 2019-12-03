@@ -31,7 +31,7 @@ Sim.Clock = {
                 } else {
                     /* draw stuff on first tick */
                     Sim.tick(Sim.Clock.ticks);
-                    Sim.Screen.drawing = false;
+                    //Sim.Screen.drawing = false;
                     
                     for(Sim.Clock.fastTicks = 0; Sim.Clock.fastTicks < Sim.Clock.speed; Sim.Clock.fastTicks++) {
                         Sim.Clock.ticks++;

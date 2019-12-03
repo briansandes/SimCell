@@ -376,6 +376,12 @@
         
         <!--temp sidebar controller-->
         <script type="text/javascript">
+            var movements = {
+                '-1': 0,
+                '0': 0,
+                '1': 0
+            };
+            
             var Sidetab = {
                 show: function(tab) {
                     var lastTab = document.querySelector('.sidetab.active');
