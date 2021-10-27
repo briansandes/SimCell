@@ -3,36 +3,46 @@ var Sim = {
     logging: true,
     isReady: false,
     init: function (o) {
+        /* displays loading overlay */
         this.Loading.show();
         
         // inits screen reference
         this.Screen.init();
 
-        /* initializes map */
-        var mapOptions = o;
+        /* parses map configuration (if available) */
+        var mapOptions;
         if(o) {
             if('map' in o) {
                 mapOptions = o.map;
             }
         }
+        
+        /* either generates a map based of mapOptions */
+        /* or a new random map using this.World.newMap(); */
         this.World.init(mapOptions);
 
+        /* initializes the Grid manager object */
         this.Grid.init();
 
+        /* initializes the Cells object, which manages and holds Cells information */
         this.Cells.init();
 
+        /* initializes the Minimap object */
         this.Minimap.init();
         
         //this.World.draw();
         
+        /* draws minimap (assuming the map has been already loaded) */
         this.Minimap.draw();
 
+        /* initializes Touch object for events on mobile devices */
         Touch.init();
-
-        this.History.init();
         
-        this.Clock.start();
+        /* initializes Cells historic manager object */
+        this.History.init();
 
+        /* this event adds a new Cell to the map when the mouse gets double clicked */
+        /* TODO move this event to a contextmenu */
         document.addEventListener('dblclick', function (e) {
             if(e.target.id === 'canvas-cells') {
                 for(let i = 0; i < Sim.config.cellsToAddOnClick; i++) {
@@ -41,6 +51,7 @@ var Sim = {
             }
         });
 
+        /* keeps an eye on mouse movement for all events */
         document.addEventListener('mousemove', Sim.Screen.mouse.handleMovement);
 
 
@@ -63,8 +74,13 @@ var Sim = {
             Sim.Cells.resize();
         });
         
+        /* SIMULATION ABOUT TO START */
         this.isReady = true;
         
+        /* tick-tack tick-tack */
+        this.Clock.start();
+        
+        /* hides loading overlay */
         setTimeout(function() {
             Sim.Loading.hide();
         }, 500);
@@ -95,10 +111,15 @@ var Sim = {
         
         if(Sim.logging === true) {
             /* updates cells info on screen every 30 ticks */
+            /* TODO improve this condition's performance */
+            /* TODO move 30 to a config value */
             if(Sim.Clock.ticks % 30 === 0) {
                 Sim.History.updateScreen();
             }
         }
+        
+        /* TODO improve this condition's performance */
+        /* TODO move 1000 to a config value */
         if(Sim.Clock.ticks % 1000 === 0) {
             Sim.History.log();
         }
