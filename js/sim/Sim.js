@@ -2,6 +2,7 @@ var Sim = {
     running: true,
     logging: true,
     isReady: false,
+    firstRun: true,
     init: function (o) {
         /* displays loading overlay */
         this.Loading.show();
@@ -179,6 +180,11 @@ var Sim = {
         }
     },
     
+    
+    /* Static objects */
+    /* TODO move this somewhere else in the future */
+    
+    
     /* Supposedly the only static 'component' of this whole thing */
     Loading: {
         show: function () {
@@ -189,6 +195,30 @@ var Sim = {
         },
         isVisible: function () {
             return document.getElementById('loading-overlay').style.display === 'table';
+        }
+    },
+    
+    Help: {
+        show: function () {
+            document.getElementById('help-overlay').style.display = 'table';
+        },
+        hide: function () {
+            document.getElementById('help-overlay').style.display = 'none';
+        },
+        isVisible: function () {
+            return document.getElementById('help-overlay').style.display === 'table';
+        }
+    },
+    
+    About: {
+        show: function () {
+            document.getElementById('about-overlay').style.display = 'table';
+        },
+        hide: function () {
+            document.getElementById('about-overlay').style.display = 'none';
+        },
+        isVisible: function () {
+            return document.getElementById('about-overlay').style.display === 'table';
         }
     }
 };

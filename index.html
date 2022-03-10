@@ -9,16 +9,18 @@
         <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet" />
         <link href="css/sim.css" rel="stylesheet" />
         <link href="css/lib/bootstrap.css" rel="stylesheet" />
-        
+
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113019854-1"></script>
         <script type="text/javascript">
-            if(window.location.hostname !== 'localhost') {
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
+            if (window.location.hostname !== 'localhost') {
+                window.dataLayer = window.dataLayer || [];
+                function gtag() {
+                    dataLayer.push(arguments);
+                }
+                gtag('js', new Date());
 
-              gtag('config', 'UA-113019854-1');
+                gtag('config', 'UA-113019854-1');
             }
         </script>
 
@@ -27,7 +29,7 @@
         <div id="SimCell">
 
             <!--top bar menu, always shown-->
-            <div id="topbar">
+            <div id="topbar"> 
                 <div class="menu-container">
                     <ul class="menu">
                         <li>
@@ -54,7 +56,7 @@
                         </li>
                         <li>
                             <a onclick="Sim.HistoryWindow.show();">
-                                Data/chart
+                                Data
                             </a>
                         </li>
                         <li>
@@ -62,19 +64,198 @@
                                 Settings
                             </a>
                         </li>
+                        <li>
+                            <a>
+                                ?
+                            </a>
+                            <ul class="submenu">
+                                <li>
+                                    <a onclick="Sim.Help.show();">
+                                        Help
+                                    </a>
+                                </li>
+                                <li>
+                                    <a onclick="Sim.About.show();">
+                                        About
+                                    </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        SimCell v0.0.0
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>
             <!--top bar menu, always shown-->
 
 
-            <!--loading overlay-->
-            <div id="loading-overlay" class="pixel-overlay">
-                <div style="display: table-cell;vertical-align: middle;">
-                    Loading...
+            <div id="overlays">
+                <!--loading overlay-->
+                <div id="loading-overlay" class="pixel-overlay">
+                    <div style="display: table-cell;vertical-align: middle;">
+                        Loading...
+                    </div>
                 </div>
+                <!--loading overlay-->
+
+
+                <!-- about overlay -->
+                <div id="about-overlay" style="display: none;">
+                    <div class="pixel-overlay"></div>
+                    <div class="fullscreen-content">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="box">
+                                        <a onclick="Sim.About.hide();" class="close">[X]</a>
+                                        <div class="box-content">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <h2>
+                                                        About
+                                                    </h2>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <!-- item 1 -->
+                                                <div class="col-xs-12" style="margin-bottom: 30px; text-align: left; line-height: 24px;">
+                                                    <p>
+                                                        SimCell is an evolution simulator written in JavaScript where the 'individuals' (so called 'cells')
+                                                        are meant to outlive other species by adapting/evolving into the most optimized form in order to survive in a procedurally generated map.<br />
+                                                        Generaly speaking, it is an animated genetic algorythm with a couple extra actions available to be taken by the observer.
+                                                    </p>
+
+                                                    <p>
+                                                        Scenarios may include:<br />
+                                                        - Famine by overpopulation<br />
+                                                        - Overpopulation by the excess of food available, sometimes leading to extinction<br />
+                                                        - Superoptimization of species, that eventually lead to either: overpopulation, extinction of its own specie, or, other species due to 'colonization' of lands<br />
+                                                        - And many other random scenarios.
+                                                    </p>
+
+                                                    <p>
+                                                        Huge thanks to:<br />
+                                                        - @carykh for the initial inspiration - you may want to check his very own evolution simulator.<br />
+                                                        - @Underpower Jet - for helping me understand back in 2016 what a tick was.
+                                                    </p>
+                                                </div>
+                                                <!-- item 3 -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- about overlay -->
+
+
+                <!-- help overlay -->
+                <div id="help-overlay" style="display: none;">
+                    <div class="pixel-overlay"></div>
+                    <div class="fullscreen-content">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="box">
+                                        <a onclick="Sim.Help.hide()" class="close">[X]</a>
+                                        <div class="box-content">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <h2>
+                                                        Help
+                                                    </h2>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <!-- item 1 -->
+                                                <div class="col-xs-12 col-sm-4" style="margin-bottom: 30px;">
+                                                    <div>
+                                                        <div>
+                                                            <h4>
+                                                                Use keyboard keys to move around
+                                                            </h4>
+                                                        </div>
+                                                        <div>
+                                                            <div class="row">
+                                                                <div class="col-xs-12">
+                                                                    <table align="center">
+                                                                        <tr>
+                                                                            <td colspan="3"><span class="btn keyboard">&#8593;</span></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td><span class="btn keyboard"><span style="transform: rotate(-90deg);display: block;">&#8593;</span></span></td>
+                                                                            <td><span class="btn keyboard">&#8595;</span></td>
+                                                                            <td><span class="btn keyboard"><span style="transform: rotate(90deg);display: block;">&#8593;</span></span></td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- item 1 -->
+
+                                                <!-- item 2 -->
+                                                <div class="col-xs-12 col-sm-4" style="margin-bottom: 30px;">
+                                                    <div>
+                                                        <div>
+                                                            <h4>
+                                                                Double click to add new cells
+                                                            </h4>
+                                                        </div>
+                                                        <div>
+                                                            <div class="row">
+                                                                <div class="col-xs-12">
+                                                                    <img src="img/mouse.png" class="img-responsive" alt="Mouse" title="Mouse" style="width: 100px; display: inline-block;"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- item 2 -->
+
+                                                <!-- item 3 -->
+                                                <div class="col-xs-12 col-sm-4">
+                                                    <div>
+                                                        <div>
+                                                            <h4>
+                                                                Increase or decrease the simulation speed using time controls
+                                                            </h4>
+                                                        </div>
+                                                        <div>
+                                                            <div class="row">
+                                                                <div class="col-xs-12">
+                                                                    <img src="img/time-buttons.png" class="img-responsive" alt="Time controls" title="Time controls" style="width: 200px; display: inline-block;"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- item 3 -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- help overlay -->
+
+
+                <!-- about overlay
+                <div id="about-overlay" class="pixel-overlay">
+                    <div style="display: table-cell;vertical-align: middle;">
+                        about window goes here
+                    </div>
+                </div>
+                about overlay -->
             </div>
-            <!--loading overlay-->
 
 
             <div id="interface-screens">
@@ -156,7 +337,7 @@
                         Mouse 0x0
                     </div>
                     <!--screen coords-->
-                    
+
                     <div id="speed"></div>
 
                     <!--canvases-->
@@ -165,8 +346,8 @@
 
                     <!--sidebar-->
                     <div id="sidebar">
-                        
-                        
+
+
                         <div class="sidetab-nav">
                             <a class="sidetab-a sidetab-a-minimap btn active" onclick="Sidetab.show('minimap');">
                                 Minimap
@@ -178,7 +359,7 @@
                                 Actions
                             </a>
                         </div>
-                        
+
                         <div class="sidetab sidetab-species">
                             <h1 class="title">SimCell Alpha</h1>
                             <div id="species">
@@ -193,21 +374,27 @@
                         <div class="sidetab sidetab-minimap active">
                             <div id="minimap"></div>
                         </div>
-                            
+
 
                         <div class="sidetab sidetab-actions">
                             <div id="actions">
+                                <div>
+                                    <div class="sec-title" style="font-size: 12px; text-align: right; margin-bottom: 5px;">
+                                        Speed up time
+                                    </div>
+                                </div>
                                 <button onclick="Sim.Clock.fastForward();" class="btn green">
-                                    +x2
+                                    &gt;&gt;
                                 </button>
                                 <button id="stopButton" class="btn" onclick="Sim.Clock.normalSpeed();">
-                                    1x
+                                    &gt;
                                 </button>
                                 <button onclick="Sim.Clock.decreaseSpeed();" class="btn danger">
-                                    -x2
+                                    &lt;&lt;
                                 </button>
                                 <div class="clear"></div>
 
+                                <!--
                                 <button onclick="Sim.fastTicks(200000);" class="btn">
                                     +200K
                                 </button>
@@ -217,6 +404,7 @@
                                 <button onclick="Sim.fastTicks(2000);" class="btn">
                                     +2K
                                 </button>
+                                -->
                             </div>
                         </div>
                     </div>
@@ -370,8 +558,8 @@
         <!--attempt to use google charts on population history-->
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">google.charts.load('current', {'packages': ['corechart']});</script>
-        
-        
+
+
         <!--temp sidebar controller-->
         <script type="text/javascript">
             var movements = {
@@ -379,18 +567,18 @@
                 '0': 0,
                 '1': 0
             };
-            
+
             var Sidetab = {
-                show: function(tab) {
+                show: function (tab) {
                     var lastTab = document.querySelector('.sidetab.active');
                     lastTab.classList.remove('active');
-                    
-                    var nextTab = document.querySelector('.sidetab-'+tab);
+
+                    var nextTab = document.querySelector('.sidetab-' + tab);
                     nextTab.classList.add('active');
-                    
+
                     document.querySelector('.sidetab-a.active').classList.remove('active');
-                    
-                    document.querySelector('.sidetab-a-'+tab).classList.add('active');
+
+                    document.querySelector('.sidetab-a-' + tab).classList.add('active');
                 }
             };
         </script>

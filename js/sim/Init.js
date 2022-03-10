@@ -51,6 +51,11 @@ Interface.addScreen('new-map', {
         // hides loading overlay
         setTimeout(function() {
             Sim.Loading.hide();
+            // displays help dialog on first run
+            if(Sim.firstRun === true) {
+                Sim.firstRun = false;
+                Sim.Help.show();
+            }
         }, 600);
     }
 });
