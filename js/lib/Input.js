@@ -40,6 +40,12 @@ window.Input = {
         var keyCode = Input.key_ids[id];
         return Input.keys[keyCode].pressed;
     },
+
+    /* used to check wheter a group of keys' callback is down */
+    isCallbackPressed: function(id, callback) {
+        var keyCode = Input.key_ids[id];
+        return Input.keys[keyCode][callback];
+    },
     
     
     

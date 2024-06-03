@@ -2,20 +2,44 @@
 Input.init([
     {
         id: 'left_arrow',
+        callback: 'left_arrow',
         group: 'arrows',
         keyCode: 37
     }, {
-        id: 'up_arrow',
+        id: 'down_arrow',
+        callback: 'down_arrow',
         group: 'arrows',
-        keyCode: 38
+        keyCode: 40
     }, {
         id: 'right_arrow',
+        callback: 'right_arrow',
         group: 'arrows',
         keyCode: 39
     }, {
-        id: 'down_arrow',
+        id: 'up_arrow',
+        callback: 'up_arrow',
         group: 'arrows',
-        keyCode: 40
+        keyCode: 38
+    }, {
+        id: 'left_arrow_a',
+        callback: 'left_arrow',
+        group: 'arrows',
+        keyCode: 65
+    }, {
+        id: 'down_arrow_s',
+        callback: 'down_arrow',
+        group: 'arrows',
+        keyCode: 83
+    }, {
+        id: 'right_arrow_d',
+        callback: 'right_arrow',
+        group: 'arrows',
+        keyCode: 68
+    }, {
+        id: 'up_arrow_w',
+        callback: 'up_arrow',
+        group: 'arrows',
+        keyCode: 87
     }
 ]);
 
