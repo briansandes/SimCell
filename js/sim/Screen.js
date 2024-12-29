@@ -209,6 +209,40 @@ Sim.Screen = {
         }
     },
     
+    moveTo: function(x, y) {
+        this.moved = true;
+        if(x < 0) {
+            this.coords.x = 0;
+            this.pixelCoords.x = 0;
+        } else
+        if(x > this.maxCoords.x) {
+           this.coords.x = this.maxCoords.x; 
+           this.pixelCoords.x = this.maxCoords.x * Sim.config.map.tileSize;
+        } else {
+            this.coords.x = x;
+           this.pixelCoords.x = x * Sim.config.map.tileSize;
+        }
+        
+        if(y < 0) {
+            this.coords.y = 0;
+            this.pixelCoords.y = 0;
+        } else
+        if(y > this.maxCoords.y) {
+           this.coords.y = this.maxCoords.y; 
+           this.pixelCoords.y = this.maxCoords.y * Sim.config.map.tileSize;
+        } else {
+            this.coords.y = y;
+            this.pixelCoords.y = y * Sim.config.map.tileSize;
+        }
+    },
+
+    centerOn: function(x, y) {
+        let x_tile = x - (Math.round(this.tiles.x / 2));
+        let y_tile = y - (Math.round(this.tiles.y / 2));
+
+        Sim.Screen.moveTo(x_tile, y_tile);
+    },
+    
     checkTouchScrolling: function() {
         if(Touch.isPressed() === true) {
             if(Touch.direction.x === 'left') {

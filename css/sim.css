@@ -127,7 +127,9 @@ a {
     position: absolute;
 }
 #sidebar #species .specie {
+    display: block;
     margin-bottom: 16px;
+    cursor: pointer;
 }
 
 #sidebar #species .specie .bar {

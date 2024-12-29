@@ -1,7 +1,7 @@
 Sim.config = {
     cache: true,
     topBarHeight: 37,
-    cellsToAddOnClick: 1,
+    cellsToAddOnClick: 20,
     tack: 12,// interval every X ticks
     map: {
         tileSize: 25,

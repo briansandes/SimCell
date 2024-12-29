@@ -118,7 +118,7 @@ Sim.History = {
             var html = '';
 
             for (let i = 0; i < species.length; i++) {
-                html += '<div class="specie">\n\
+                html += '<div class="specie" onclick="Sim.Interactions.focusOnSpecie(\'' + species[i].specie + '\');">\n\
                             <div class="name">' + species[i].specie + '\n\
 <span>' + (species[i].alive !== 1 ? species[i].alive + ' cells' : species[i].alive + ' cell') + '</span></div>\n\
                             <div class="bar" style="width: ' + species[i].percentage + '%;background-color: ' + species[i].color + ';">\n\
