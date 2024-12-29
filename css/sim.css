@@ -128,8 +128,14 @@ a {
 }
 #sidebar #species .specie {
     display: block;
-    margin-bottom: 16px;
+    padding-bottom: 12px;
+    padding-left: 8px;
+    padding-top: 4px;
+    margin-bottom: 4px;
     cursor: pointer;
+}
+#sidebar #species .specie:hover {
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 #sidebar #species .specie .bar {
@@ -415,6 +421,34 @@ textarea.box {
     right: 50px;
     z-index: 100;
     cursor: pointer;
+}
+
+
+#context-menu {
+    position: absolute;
+    display: none;
+    z-index: 1000;
+}
+
+#context-menu ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background-color: #bbbbbb;
+    box-shadow: 5px 5px 0px 0px black;
+    box-shadow: 5px 5px 0px 0px black;
+    box-shadow: 5px 5px 0px 0px black;
+}
+
+#context-menu li {
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    color: black;
+}
+
+#context-menu li:hover {
+    background-color: #f0f0f0;
 }
 
 /* mobile media queries */

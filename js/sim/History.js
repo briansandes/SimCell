@@ -118,10 +118,10 @@ Sim.History = {
             var html = '';
 
             for (let i = 0; i < species.length; i++) {
-                html += '<div class="specie" onclick="Sim.Interactions.focusOnSpecie(\'' + species[i].specie + '\');">\n\
-                            <div class="name">' + species[i].specie + '\n\
-<span>' + (species[i].alive !== 1 ? species[i].alive + ' cells' : species[i].alive + ' cell') + '</span></div>\n\
-                            <div class="bar" style="width: ' + species[i].percentage + '%;background-color: ' + species[i].color + ';">\n\
+                html += '<div class="specie specie-context-menu" data-specie="' + species[i].specie + '" onclick="Sim.Interactions.focusOnSpecie(\'' + species[i].specie + '\');">\n\
+                            <div class="name specie-context-menu" data-specie="' + species[i].specie + '">' + species[i].specie + '\n\
+<span class="specie-context-menu" data-specie="' + species[i].specie + '">' + (species[i].alive !== 1 ? species[i].alive + ' cells' : species[i].alive + ' cell') + '</span></div>\n\
+                            <div class="bar specie-context-menu" data-specie="' + species[i].specie + '" style="width: ' + species[i].percentage + '%;background-color: ' + species[i].color + ';">\n\
                             </div>\n\
                         </div>';
             }

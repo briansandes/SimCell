@@ -1,149 +1,174 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=0">
-        <title>SimCell</title>
-        <link rel="shortcut icon" type="image/png" href="favicon.ico"/>
-        <meta name="theme-color" content="#1c1a9a" />
-        <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet" />
-        <link href="css/sim.css" rel="stylesheet" />
-        <link href="css/lib/bootstrap.css" rel="stylesheet" />
 
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113019854-1"></script>
-        <script type="text/javascript">
-            if (window.location.hostname !== 'localhost') {
-                window.dataLayer = window.dataLayer || [];
-                function gtag() {
-                    dataLayer.push(arguments);
-                }
-                gtag('js', new Date());
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=0">
+    <title>SimCell</title>
+    <link rel="shortcut icon" type="image/png" href="favicon.ico" />
+    <meta name="theme-color" content="#1c1a9a" />
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet" />
+    <link href="css/sim.css" rel="stylesheet" />
+    <link href="css/lib/bootstrap.css" rel="stylesheet" />
 
-                gtag('config', 'UA-113019854-1');
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113019854-1"></script>
+    <script type="text/javascript">
+        if (window.location.hostname !== 'localhost') {
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
             }
-        </script>
+            gtag('js', new Date());
 
-    </head>
-    <body>
-        <div id="SimCell">
+            gtag('config', 'UA-113019854-1');
+        }
+    </script>
 
-            <!--top bar menu, always shown-->
-            <div id="topbar"> 
-                <div class="menu-container">
-                    <ul class="menu">
-                        <li>
-                            <a>
-                                Game
-                            </a>
-                            <ul class="submenu">
-                                <li>
-                                    <a onclick="Interface.goTo('new-map');">
-                                        New World
-                                    </a>
-                                </li>
-                                <li>
-                                    <a onclick="Sim.save();">
-                                        Save
-                                    </a>
-                                </li>
-                                <li>
-                                    <a onclick="Interface.goTo('import');">
-                                        Load
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a onclick="Sim.HistoryWindow.show();">
-                                Data
-                            </a>
-                        </li>
-                        <li>
-                            <a onclick="Editor.config.display();">
-                                Settings
-                            </a>
-                        </li>
-                        <li>
-                            <a>
-                                ?
-                            </a>
-                            <ul class="submenu">
-                                <li>
-                                    <a onclick="Sim.Help.show();">
-                                        Help
-                                    </a>
-                                </li>
-                                <li>
-                                    <a onclick="Sim.About.show();">
-                                        About
-                                    </a>
-                                </li>
-                                <li>
-                                    <a>
-                                        SimCell v0.0.0
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+</head>
+
+<body>
+    <div id="SimCell">
+
+        <div id="context-menu">
+            <ul>
+                <li onclick="Sim.SpeciesMenu.kill(1);">Kill 1</li>
+                <li onclick="Sim.SpeciesMenu.kill(10);">Kill 10</li>
+                <li onclick="Sim.SpeciesMenu.kill(25);">Kill 25</li>
+                <li onclick="Sim.SpeciesMenu.kill(50);">Kill 50</li>
+                <li onclick="Sim.SpeciesMenu.kill(100);">Kill 100</li>
+                <li onclick="Sim.SpeciesMenu.killPercent(10);">Kill 10%</li>
+                <li onclick="Sim.SpeciesMenu.killPercent(25);">Kill 25%</li>
+                <li onclick="Sim.SpeciesMenu.killPercent(50);">Kill 50%</li>
+                <li onclick="Sim.SpeciesMenu.killPercent(100);">Kill All</li>
+            </ul>
+        </div>
+
+        <!--top bar menu, always shown-->
+        <div id="topbar">
+            <div class="menu-container">
+                <ul class="menu">
+                    <li>
+                        <a>
+                            Game
+                        </a>
+                        <ul class="submenu">
+                            <li>
+                                <a onclick="Interface.goTo('new-map');">
+                                    New World
+                                </a>
+                            </li>
+                            <li>
+                                <a onclick="Sim.save();">
+                                    Save
+                                </a>
+                            </li>
+                            <li>
+                                <a onclick="Interface.goTo('import');">
+                                    Load
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a onclick="Sim.HistoryWindow.show();">
+                            Data
+                        </a>
+                    </li>
+                    <li>
+                        <a onclick="Editor.config.display();">
+                            Settings
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            ?
+                        </a>
+                        <ul class="submenu">
+                            <li>
+                                <a onclick="Sim.Help.show();">
+                                    Help
+                                </a>
+                            </li>
+                            <li>
+                                <a onclick="Sim.About.show();">
+                                    About
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    SimCell v0.0.0
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--top bar menu, always shown-->
+
+
+        <div id="overlays">
+            <!--loading overlay-->
+            <div id="loading-overlay" class="pixel-overlay">
+                <div style="display: table-cell;vertical-align: middle;">
+                    Loading...
                 </div>
             </div>
-            <!--top bar menu, always shown-->
+            <!--loading overlay-->
 
 
-            <div id="overlays">
-                <!--loading overlay-->
-                <div id="loading-overlay" class="pixel-overlay">
-                    <div style="display: table-cell;vertical-align: middle;">
-                        Loading...
-                    </div>
-                </div>
-                <!--loading overlay-->
-
-
-                <!-- about overlay -->
-                <div id="about-overlay" style="display: none;">
-                    <div class="pixel-overlay"></div>
-                    <div class="fullscreen-content">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <div class="box">
-                                        <a onclick="Sim.About.hide();" class="close">[X]</a>
-                                        <div class="box-content">
-                                            <div class="row">
-                                                <div class="col-xs-12">
-                                                    <h2>
-                                                        About
-                                                    </h2>
-                                                </div>
+            <!-- about overlay -->
+            <div id="about-overlay" style="display: none;">
+                <div class="pixel-overlay"></div>
+                <div class="fullscreen-content">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="box">
+                                    <a onclick="Sim.About.hide();" class="close">[X]</a>
+                                    <div class="box-content">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <h2>
+                                                    About
+                                                </h2>
                                             </div>
-                                            <div class="row">
-                                                <!-- item 1 -->
-                                                <div class="col-xs-12" style="margin-bottom: 30px; text-align: left; line-height: 24px;">
-                                                    <p>
-                                                        SimCell is an evolution simulator written in JavaScript where the 'individuals' (so called 'cells')
-                                                        are meant to outlive other species by adapting/evolving into the most optimized form in order to survive in a procedurally generated map.<br />
-                                                        Generaly speaking, it is an animated genetic algorythm with a couple extra actions available to be taken by the observer.
-                                                    </p>
+                                        </div>
+                                        <div class="row">
+                                            <!-- item 1 -->
+                                            <div class="col-xs-12"
+                                                style="margin-bottom: 30px; text-align: left; line-height: 24px;">
+                                                <p>
+                                                    SimCell is an evolution simulator written in JavaScript where the
+                                                    'individuals' (so called 'cells')
+                                                    are meant to outlive other species by adapting/evolving into the
+                                                    most optimized form in order to survive in a procedurally generated
+                                                    map.<br />
+                                                    Generaly speaking, it is an animated genetic algorythm with a couple
+                                                    extra actions available to be taken by the observer.
+                                                </p>
 
-                                                    <p>
-                                                        Scenarios may include:<br />
-                                                        - Famine by overpopulation<br />
-                                                        - Overpopulation by the excess of food available, sometimes leading to extinction<br />
-                                                        - Superoptimization of species, that eventually lead to either: overpopulation, extinction of its own specie, or, other species due to 'colonization' of lands<br />
-                                                        - And many other random scenarios.
-                                                    </p>
+                                                <p>
+                                                    Scenarios may include:<br />
+                                                    - Famine by overpopulation<br />
+                                                    - Overpopulation by the excess of food available, sometimes leading
+                                                    to extinction<br />
+                                                    - Superoptimization of species, that eventually lead to either:
+                                                    overpopulation, extinction of its own specie, or, other species due
+                                                    to 'colonization' of lands<br />
+                                                    - And many other random scenarios.
+                                                </p>
 
-                                                    <p>
-                                                        Huge thanks to:<br />
-                                                        - @carykh for the initial inspiration - you may want to check his very own evolution simulator.<br />
-                                                        - @Underpower Jet - for helping me understand back in 2016 what a tick was.
-                                                    </p>
-                                                </div>
-                                                <!-- item 3 -->
+                                                <p>
+                                                    Huge thanks to:<br />
+                                                    - @carykh for the initial inspiration - you may want to check his
+                                                    very own evolution simulator.<br />
+                                                    - @Underpower Jet - for helping me understand back in 2016 what a
+                                                    tick was.
+                                                </p>
                                             </div>
+                                            <!-- item 3 -->
                                         </div>
                                     </div>
                                 </div>
@@ -151,175 +176,103 @@
                         </div>
                     </div>
                 </div>
-                <!-- about overlay -->
-
-
-                <!-- help overlay -->
-                <div id="help-overlay" style="display: none;">
-                    <div class="pixel-overlay"></div>
-                    <div class="fullscreen-content">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <div class="box">
-                                        <a onclick="Sim.Help.hide()" class="close">[X]</a>
-                                        <div class="box-content">
-                                            <div class="row">
-                                                <div class="col-xs-12">
-                                                    <h2>
-                                                        Help
-                                                    </h2>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <!-- item 1 -->
-                                                <div class="col-xs-12 col-sm-4" style="margin-bottom: 30px;">
-                                                    <div>
-                                                        <div>
-                                                            <h4>
-                                                                Use keyboard keys or arrows to move around
-                                                            </h4>
-                                                        </div>
-                                                        <div>
-                                                            <div class="row">
-                                                                <div class="col-xs-12">
-                                                                    <table align="center">
-                                                                        <tr>
-                                                                            <td colspan="3"><span class="btn keyboard">W</span></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td><span class="btn keyboard"><span style="display: block;">A</span></span></td>
-                                                                            <td><span class="btn keyboard">S</span></td>
-                                                                            <td><span class="btn keyboard"><span style="display: block;">D</span></span></td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- item 1 -->
-
-                                                <!-- item 2 -->
-                                                <div class="col-xs-12 col-sm-4" style="margin-bottom: 30px;">
-                                                    <div>
-                                                        <div>
-                                                            <h4>
-                                                                Double click to add new cells
-                                                            </h4>
-                                                        </div>
-                                                        <div>
-                                                            <div class="row">
-                                                                <div class="col-xs-12">
-                                                                    <img src="img/mouse.png" class="img-responsive" alt="Mouse" title="Mouse" style="width: 100px; display: inline-block;"/>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- item 2 -->
-
-                                                <!-- item 3 -->
-                                                <div class="col-xs-12 col-sm-4">
-                                                    <div>
-                                                        <div>
-                                                            <h4>
-                                                                Increase or decrease the simulation speed using time controls
-                                                            </h4>
-                                                        </div>
-                                                        <div>
-                                                            <div class="row">
-                                                                <div class="col-xs-12">
-                                                                    <img src="img/time-buttons.png" class="img-responsive" alt="Time controls" title="Time controls" style="width: 200px; display: inline-block;"/>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- item 3 -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- help overlay -->
-
-
-                <!-- about overlay
-                <div id="about-overlay" class="pixel-overlay">
-                    <div style="display: table-cell;vertical-align: middle;">
-                        about window goes here
-                    </div>
-                </div>
-                about overlay -->
             </div>
+            <!-- about overlay -->
 
 
-            <div id="interface-screens">
-
-                <!--intro-->
-                <div id="screen-intro" class="screen screen-intro">
-                    <div class="pixel-overlay"></div>
-                    <div class="fullscreen-content">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <div class="box">
-                                        <div class="box-content">
-                                            <!--title-->
-                                            <div class="row">
-                                                <div class="col-xs-12">
-                                                    <h1>SimCell</h1>
-                                                </div>
+            <!-- help overlay -->
+            <div id="help-overlay" style="display: none;">
+                <div class="pixel-overlay"></div>
+                <div class="fullscreen-content">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="box">
+                                    <a onclick="Sim.Help.hide()" class="close">[X]</a>
+                                    <div class="box-content">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <h2>
+                                                    Help
+                                                </h2>
                                             </div>
-                                            <!--title-->
-
-                                            <!--text-->
-                                            <div class="row">
-                                                <div class="col-xs-12">
-                                                    <p>
-                                                        A cell evolution simulation written in JavaScript.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <!--text-->
-
-
-                                            <!--buttons-->
-                                            <div class="row">
-                                                <div class="col-sm-push-1 col-sm-10 col-xs-12">
-                                                    <div class="row">
-                                                        <div class="col-xs-6 col-sm-4">
-                                                            <a onclick="Interface.goTo('new-map');" class="btn box-btn">
-                                                                <span class="img-holder">
-                                                                    <img src="img/new-game.gif" class="img-responsive"/>
-                                                                </span>
-                                                                <span>Start a new simulation</span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="col-xs-6 col-sm-4">
-                                                            <a href="/noise-map-generator" target="_blank" class="btn box-btn">
-                                                                <span class="img-holder">
-                                                                    <img src="img/edit-map.gif" class="img-responsive"/>
-                                                                </span>
-                                                                <span>Generate or edit a map</span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="col-xs-6 col-sm-4">
-                                                            <a onclick="Interface.goTo('import');" class="btn box-btn">
-                                                                <span class="img-holder">
-                                                                    <img src="img/import.png" class="img-responsive"/>
-                                                                </span>
-                                                                <span>Import map or simulation</span>
-                                                            </a>
+                                        </div>
+                                        <div class="row">
+                                            <!-- item 1 -->
+                                            <div class="col-xs-12 col-sm-4" style="margin-bottom: 30px;">
+                                                <div>
+                                                    <div>
+                                                        <h4>
+                                                            Use keyboard keys or arrows to move around
+                                                        </h4>
+                                                    </div>
+                                                    <div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <table align="center">
+                                                                    <tr>
+                                                                        <td colspan="3"><span
+                                                                                class="btn keyboard">W</span></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><span class="btn keyboard"><span
+                                                                                    style="display: block;">A</span></span>
+                                                                        </td>
+                                                                        <td><span class="btn keyboard">S</span></td>
+                                                                        <td><span class="btn keyboard"><span
+                                                                                    style="display: block;">D</span></span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!--buttons-->
+                                            <!-- item 1 -->
+
+                                            <!-- item 2 -->
+                                            <div class="col-xs-12 col-sm-4" style="margin-bottom: 30px;">
+                                                <div>
+                                                    <div>
+                                                        <h4>
+                                                            Double click to add new cells
+                                                        </h4>
+                                                    </div>
+                                                    <div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <img src="img/mouse.png" class="img-responsive"
+                                                                    alt="Mouse" title="Mouse"
+                                                                    style="width: 100px; display: inline-block;" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- item 2 -->
+
+                                            <!-- item 3 -->
+                                            <div class="col-xs-12 col-sm-4">
+                                                <div>
+                                                    <div>
+                                                        <h4>
+                                                            Increase or decrease the simulation speed using time
+                                                            controls
+                                                        </h4>
+                                                    </div>
+                                                    <div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <img src="img/time-buttons.png" class="img-responsive"
+                                                                    alt="Time controls" title="Time controls"
+                                                                    style="width: 200px; display: inline-block;" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- item 3 -->
                                         </div>
                                     </div>
                                 </div>
@@ -327,74 +280,149 @@
                         </div>
                     </div>
                 </div>
-                <!--intro-->
-
-                <!--game-->
-                <div id="screen-game" class="screen screen-game">
-                    <!--screen coords-->
-                    <div id="coords">
-                        Screen 0x0<br />
-                        Mouse 0x0
-                    </div>
-                    <!--screen coords-->
-
-                    <div id="speed"></div>
-
-                    <!--canvases-->
-                    <div id="canvas-holder"></div>
-                    <!--canvases-->
-
-                    <!--sidebar-->
-                    <div id="sidebar">
+            </div>
+            <!-- help overlay -->
+        </div>
 
 
-                        <div class="sidetab-nav">
-                            <a class="sidetab-a sidetab-a-minimap btn active" onclick="Sidetab.show('minimap');">
-                                Minimap
-                            </a>
-                            <a class="sidetab-a sidetab-a-species btn" onclick="Sidetab.show('species');">
-                                Cells
-                            </a>
-                            <a class="sidetab-a sidetab-a-actions btn" onclick="Sidetab.show('actions');">
-                                Actions
-                            </a>
-                        </div>
+        <div id="interface-screens">
 
-                        <div class="sidetab sidetab-species">
-                            <h1 class="title">SimCell Alpha</h1>
-                            <div id="species">
-                                <div class="sec-title">
-                                    Alive Cells: <span id="aliveCells">0</span>
-                                </div>
+            <!--intro-->
+            <div id="screen-intro" class="screen screen-intro">
+                <div class="pixel-overlay"></div>
+                <div class="fullscreen-content">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="box">
+                                    <div class="box-content">
+                                        <!--title-->
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <h1>SimCell</h1>
+                                            </div>
+                                        </div>
+                                        <!--title-->
 
-                                <div id="specieList"></div>
-                            </div>
-                        </div>
+                                        <!--text-->
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <p>
+                                                    A cell evolution simulation written in JavaScript.
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <!--text-->
 
-                        <div class="sidetab sidetab-minimap active">
-                            <div id="minimap"></div>
-                        </div>
 
-
-                        <div class="sidetab sidetab-actions">
-                            <div id="actions">
-                                <div>
-                                    <div class="sec-title" style="font-size: 12px; text-align: right; margin-bottom: 5px;">
-                                        Speed up time
+                                        <!--buttons-->
+                                        <div class="row">
+                                            <div class="col-sm-push-1 col-sm-10 col-xs-12">
+                                                <div class="row">
+                                                    <div class="col-xs-6 col-sm-4">
+                                                        <a onclick="Interface.goTo('new-map');" class="btn box-btn">
+                                                            <span class="img-holder">
+                                                                <img src="img/new-game.gif" class="img-responsive" />
+                                                            </span>
+                                                            <span>Start a new simulation</span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-xs-6 col-sm-4">
+                                                        <a href="/noise-map-generator" target="_blank"
+                                                            class="btn box-btn">
+                                                            <span class="img-holder">
+                                                                <img src="img/edit-map.gif" class="img-responsive" />
+                                                            </span>
+                                                            <span>Generate or edit a map</span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-xs-6 col-sm-4">
+                                                        <a onclick="Interface.goTo('import');" class="btn box-btn">
+                                                            <span class="img-holder">
+                                                                <img src="img/import.png" class="img-responsive" />
+                                                            </span>
+                                                            <span>Import map or simulation</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--buttons-->
                                     </div>
                                 </div>
-                                <button onclick="Sim.Clock.fastForward();" class="btn green">
-                                    &gt;&gt;
-                                </button>
-                                <button id="stopButton" class="btn" onclick="Sim.Clock.normalSpeed();">
-                                    &gt;
-                                </button>
-                                <button onclick="Sim.Clock.decreaseSpeed();" class="btn danger">
-                                    &lt;&lt;
-                                </button>
-                                <div class="clear"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--intro-->
 
-                                <!--
+            <!--game-->
+            <div id="screen-game" class="screen screen-game">
+                <!--screen coords-->
+                <div id="coords">
+                    Screen 0x0<br />
+                    Mouse 0x0
+                </div>
+                <!--screen coords-->
+
+                <div id="speed"></div>
+
+                <!--canvases-->
+                <div id="canvas-holder"></div>
+                <!--canvases-->
+
+                <!--sidebar-->
+                <div id="sidebar">
+
+
+                    <div class="sidetab-nav">
+                        <a class="sidetab-a sidetab-a-minimap btn active" onclick="Sidetab.show('minimap');">
+                            Minimap
+                        </a>
+                        <a class="sidetab-a sidetab-a-species btn" onclick="Sidetab.show('species');">
+                            Cells
+                        </a>
+                        <a class="sidetab-a sidetab-a-actions btn" onclick="Sidetab.show('actions');">
+                            Actions
+                        </a>
+                    </div>
+
+                    <div class="sidetab sidetab-species">
+                        <h1 class="title">SimCell Alpha</h1>
+                        <div id="species">
+                            <div class="sec-title">
+                                Alive Cells: <span id="aliveCells">0</span>
+                            </div>
+
+                            <div id="specieList"></div>
+                        </div>
+                    </div>
+
+                    <div class="sidetab sidetab-minimap active">
+                        <div id="minimap"></div>
+                    </div>
+
+
+                    <div class="sidetab sidetab-actions">
+                        <div id="actions">
+                            <div>
+                                <div class="sec-title" style="font-size: 12px; text-align: right; margin-bottom: 5px;">
+                                    Speed up time
+                                </div>
+                            </div>
+                            <button onclick="Sim.Clock.fastForward();" class="btn green">
+                                &gt;&gt;
+                            </button>
+                            <button id="stopButton" class="btn" onclick="Sim.Clock.normalSpeed();">
+                                &gt;
+                            </button>
+                            <button onclick="Sim.Clock.decreaseSpeed();" class="btn danger">
+                                &lt;&lt;
+                            </button>
+                            <div class="clear"></div>
+
+                            <!--
                                 <button onclick="Sim.fastTicks(200000);" class="btn">
                                     +200K
                                 </button>
@@ -405,75 +433,38 @@
                                     +2K
                                 </button>
                                 -->
-                            </div>
                         </div>
                     </div>
-                    <!--sidebar-->
-
-
-                    <!--history window-->
-                    <div id="game-history">
-                        <div class="pixel-overlay"></div>
-                        <div class="fullscreen-content">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <div class="box">
-                                            <a onclick="Sim.HistoryWindow.hide()" class="close">[X]</a>
-                                            <div class="box-content">
-                                                <div class="population-history">
-                                                    <div class="row">
-                                                        <div class="col-xs-12">
-                                                            <h2 class="text-left">
-                                                                Population
-                                                            </h2>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-xs-12">
-                                                            <div id="population-chart-holder">
-                                                                <div id="no-data-msg">No data to display yet. Try adding a couple cells on screen.</div>
-                                                                <div id="population-chart"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--history window-->
                 </div>
-                <!--game-->
+                <!--sidebar-->
 
-                <!--import map-->
-                <div id="screen-import" class="screen screen-import">
+
+                <!--history window-->
+                <div id="game-history">
                     <div class="pixel-overlay"></div>
                     <div class="fullscreen-content">
                         <div class="container">
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <div class="import-box box">
+                                    <div class="box">
+                                        <a onclick="Sim.HistoryWindow.hide()" class="close">[X]</a>
                                         <div class="box-content">
-                                            <div class="row">
-                                                <div class="col-xs-12">
-                                                    <h2>
-                                                        Paste map data into the textarea below
-                                                    </h2>
+                                            <div class="population-history">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <h2 class="text-left">
+                                                            Population
+                                                        </h2>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-xs-12">
-                                                    <textarea class="box" id="import-data" style="height: 30vh; font-size: 14px;" placeholder="data goes here"></textarea>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-xs-12" style="text-align: center;">
-                                                    <a onclick="Interface.getScreen('import').import();" class="btn green" style="display: inline-block;margin-top: 30px;float: none;">Import</a>
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <div id="population-chart-holder">
+                                                            <div id="no-data-msg">No data to display yet. Try adding a
+                                                                couple cells on screen.</div>
+                                                            <div id="population-chart"></div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -483,106 +474,149 @@
                         </div>
                     </div>
                 </div>
-                <!--import map-->
+                <!--history window-->
             </div>
+            <!--game-->
+
+            <!--import map-->
+            <div id="screen-import" class="screen screen-import">
+                <div class="pixel-overlay"></div>
+                <div class="fullscreen-content">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="import-box box">
+                                    <div class="box-content">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <h2>
+                                                    Paste map data into the textarea below
+                                                </h2>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <textarea class="box" id="import-data"
+                                                    style="height: 30vh; font-size: 14px;"
+                                                    placeholder="data goes here"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-xs-12" style="text-align: center;">
+                                                <a onclick="Interface.getScreen('import').import();" class="btn green"
+                                                    style="display: inline-block;margin-top: 30px;float: none;">Import</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--import map-->
         </div>
+    </div>
 
 
-        <!--general functions-->
-        <script src="js/sim/functions.js" type="text/javascript"></script>
+    <!--general functions-->
+    <script src="js/sim/functions.js" type="text/javascript"></script>
 
-        <!--libs o'Brian!-->
-        <!--library for map data compression-->
-        <script src="js/lib/Mapacker.js" type="text/javascript"></script>
+    <!--libs o'Brian!-->
+    <!--library for map data compression-->
+    <script src="js/lib/Mapacker.js" type="text/javascript"></script>
 
-        <!--tracks any given input's state-->
-        <!--ideal for triggering events on every 'tick' whether a key has been kept pressed-->
-        <script src="js/lib/Input.js" type="text/javascript"></script>
+    <!--tracks any given input's state-->
+    <!--ideal for triggering events on every 'tick' whether a key has been kept pressed-->
+    <script src="js/lib/Input.js" type="text/javascript"></script>
 
-        <!--lib for mobile scrolling-->
-        <!--TODO improvements, as the last commit dates to early 2018-->
-        <script src="js/lib/Touch.js" type="text/javascript"></script>
+    <!--lib for mobile scrolling-->
+    <!--TODO improvements, as the last commit dates to early 2018-->
+    <script src="js/lib/Touch.js" type="text/javascript"></script>
 
-        <!--new lib for screen management-->
-        <!--TODO could be replaced by a static slider without animations-->
-        <script src="js/lib/Interface.js" type="text/javascript"></script>
+    <!--new lib for screen management-->
+    <!--TODO could be replaced by a static slider without animations-->
+    <script src="js/lib/Interface.js" type="text/javascript"></script>
 
-        <!--beloved Perlin noise, many thanks to Ken Perlin and Stefan Gustavson-->
-        <script src="js/lib/perlin.js" type="text/javascript"></script>
-
-
-        <script src="js/lib/noise-map-generator.js" type="text/javascript"></script>
-
-        <!--SimCell files-->
-        <!--holds almost all objects-->
-        <script src="js/sim/Sim.js" type="text/javascript"></script>
-        <!--initial and default config-->
-        <script src="js/sim/Config.js" type="text/javascript"></script>
-
-        <!-- TODO upgrade to https://github.com/briansandes/Canvas, as we're currently using a prototype version of the library -->
-        <script src="js/sim/Canvas.js" type="text/javascript"></script>
-
-        <!--Cells management-->
-        <!--TODO make dictionary for cell data and export methods-->
-        <script src="js/sim/Cells.js" type="text/javascript"></script>
-        <!--the Cell's object itself-->
-        <script src="js/sim/Cell.js" type="text/javascript"></script>
-
-        <!--clock for ticking-->
-        <!--TODO make it a library, check for new versions on projects-->
-        <script src="js/sim/Clock.js" type="text/javascript"></script>
-        <!--ALSO TODO make it a library, check for new versions on projects-->
-        <script src="js/sim/Grid.js" type="text/javascript"></script>
-
-        <!--TODO check compatibilty with new Canvas library methods-->
-        <script src="js/sim/Screen.js" type="text/javascript"></script>
-
-        <!--TODO clarify functions, make standard map object--> 
-        <script src="js/sim/World.js" type="text/javascript"></script>
-        <script src="js/sim/Minimap.js" type="text/javascript"></script>
-
-        <!--tile info (shall be moved to a general config file soon)-->
-        <script src="js/sim/Tiles.js" type="text/javascript"></script>
-
-        <!--user interective actions supposedly-->
-        <script src="js/sim/Actions.js" type="text/javascript"></script>
-        <script src="js/sim/Interactions.js" type="text/javascript"></script>
-        <script src="js/sim/Shortcuts.js" type="text/javascript"></script>
-
-        <script src="js/sim/History.js" type="text/javascript"></script>
-        <script src="js/sim/HistoryWindow.js" type="text/javascript"></script>
-
-        <!-- --------------------------------------------------------------- -->
-        <!--the file you're looking for-->
-        <!--initializes the whole thing-->
-        <script src="js/sim/Init.js" type="text/javascript"></script>
-
-        <!--attempt to use google charts on population history-->
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-        <script type="text/javascript">google.charts.load('current', {'packages': ['corechart']});</script>
+    <!--beloved Perlin noise, many thanks to Ken Perlin and Stefan Gustavson-->
+    <script src="js/lib/perlin.js" type="text/javascript"></script>
 
 
-        <!--temp sidebar controller-->
-        <script type="text/javascript">
-            var movements = {
-                '-1': 0,
-                '0': 0,
-                '1': 0
-            };
+    <script src="js/lib/noise-map-generator.js" type="text/javascript"></script>
 
-            var Sidetab = {
-                show: function (tab) {
-                    var lastTab = document.querySelector('.sidetab.active');
-                    lastTab.classList.remove('active');
+    <!--SimCell files-->
+    <!--holds almost all objects-->
+    <script src="js/sim/Sim.js" type="text/javascript"></script>
+    <!--initial and default config-->
+    <script src="js/sim/Config.js" type="text/javascript"></script>
 
-                    var nextTab = document.querySelector('.sidetab-' + tab);
-                    nextTab.classList.add('active');
+    <!-- TODO upgrade to https://github.com/briansandes/Canvas, as we're currently using a prototype version of the library -->
+    <script src="js/sim/Canvas.js" type="text/javascript"></script>
 
-                    document.querySelector('.sidetab-a.active').classList.remove('active');
+    <!--Cells management-->
+    <!--TODO make dictionary for cell data and export methods-->
+    <script src="js/sim/Cells.js" type="text/javascript"></script>
+    <!--the Cell's object itself-->
+    <script src="js/sim/Cell.js" type="text/javascript"></script>
 
-                    document.querySelector('.sidetab-a-' + tab).classList.add('active');
-                }
-            };
-        </script>
-    </body>
+    <!--clock for ticking-->
+    <!--TODO make it a library, check for new versions on projects-->
+    <script src="js/sim/Clock.js" type="text/javascript"></script>
+    <!--ALSO TODO make it a library, check for new versions on projects-->
+    <script src="js/sim/Grid.js" type="text/javascript"></script>
+
+    <!--TODO check compatibilty with new Canvas library methods-->
+    <script src="js/sim/Screen.js" type="text/javascript"></script>
+
+    <!--TODO clarify functions, make standard map object-->
+    <script src="js/sim/World.js" type="text/javascript"></script>
+    <script src="js/sim/Minimap.js" type="text/javascript"></script>
+
+    <!--tile info (shall be moved to a general config file soon)-->
+    <script src="js/sim/Tiles.js" type="text/javascript"></script>
+
+    <!--user interective actions supposedly-->
+    <script src="js/sim/Actions.js" type="text/javascript"></script>
+    <script src="js/sim/Interactions.js" type="text/javascript"></script>
+    <script src="js/sim/Shortcuts.js" type="text/javascript"></script>
+    <script src="js/sim/SpeciesMenu.js" type="text/javascript"></script>
+
+    <script src="js/sim/History.js" type="text/javascript"></script>
+    <script src="js/sim/HistoryWindow.js" type="text/javascript"></script>
+
+    <!-- --------------------------------------------------------------- -->
+    <!--the file you're looking for-->
+    <!--initializes the whole thing-->
+    <script src="js/sim/Init.js" type="text/javascript"></script>
+
+    <!--attempt to use google charts on population history-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">google.charts.load('current', { 'packages': ['corechart'] });</script>
+
+
+    <!--temp sidebar controller-->
+    <script type="text/javascript">
+        var movements = {
+            '-1': 0,
+            '0': 0,
+            '1': 0
+        };
+
+        var Sidetab = {
+            show: function (tab) {
+                var lastTab = document.querySelector('.sidetab.active');
+                lastTab.classList.remove('active');
+
+                var nextTab = document.querySelector('.sidetab-' + tab);
+                nextTab.classList.add('active');
+
+                document.querySelector('.sidetab-a.active').classList.remove('active');
+
+                document.querySelector('.sidetab-a-' + tab).classList.add('active');
+            }
+        };
+    </script>
+</body>
+
 </html>

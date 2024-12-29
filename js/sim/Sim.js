@@ -30,6 +30,9 @@ var Sim = {
 
         /* initializes the Minimap object */
         this.Minimap.init();
+
+        /* initializes the Context menu object */
+        this.SpeciesMenu.init();
         
         //this.World.draw();
         
