@@ -1,11 +1,11 @@
 Sim.Cells = {
-    getNewSpecieId: function() {
-        
+    getNewSpecieId: function () {
+
         /* any default colors left? if so pick one */
-        if(Sim.config.defaultSpecies.length > this.species.list.length) {
+        if (Sim.config.defaultSpecies.length > this.species.list.length) {
             /* picks a random item from distinct looking colors */
             var randSpecie = pickOne(Sim.config.defaultSpecies);
-            if(this.species.list.indexOf(randSpecie.name) > -1) {
+            if (this.species.list.indexOf(randSpecie.name) > -1) {
                 randSpecie = this.getNewSpecieId();
             }
         } else {
@@ -13,10 +13,10 @@ Sim.Cells = {
             /* generates random Hex string */
             var specieHex = '#' + randStr(6);
             /* if it already exists ou ot the 16777216 posibilities, damn */
-            if(this.species.list.indexOf(specieHex) > -1) {
+            if (this.species.list.indexOf(specieHex) > -1) {
                 randSpecie = this.getNewSpecieId();
             } else {
-                randSpecie = {name: specieHex, color: specieHex};
+                randSpecie = { name: specieHex, color: specieHex };
             }
         }
 
@@ -66,7 +66,7 @@ Sim.Cells = {
         this.alive.push(cellId);
 
         this.species.members[cell.specie].push(cellId);
-        if(cell.specie in this.species.alive) {
+        if (cell.specie in this.species.alive) {
             this.species.alive[cell.specie].push(cellId);
         } else {
             this.species.aliveList.push(cell.specie);
@@ -99,13 +99,13 @@ Sim.Cells = {
             tempContext.beginPath();
 
             tempContext.arc(
-                    Sim.config.cells.half,
-                    Sim.config.cells.half,
-                    Sim.config.cells.radius,
-                    0,
-                    FULL_CIRCLE,
-                    false
-                    );
+                Sim.config.cells.half,
+                Sim.config.cells.half,
+                Sim.config.cells.radius,
+                0,
+                FULL_CIRCLE,
+                false
+            );
 
             tempContext.closePath();
             // circle drawn
@@ -124,9 +124,9 @@ Sim.Cells = {
 
             tempContext.moveTo(Sim.config.cells.half, Sim.config.cells.half);
             tempContext.lineTo(
-                    Sim.config.cells.half + (Sim.config.cells.radius * Math.cos(radians)),
-                    Sim.config.cells.half + (Sim.config.cells.radius * Math.sin(radians))
-                    );
+                Sim.config.cells.half + (Sim.config.cells.radius * Math.cos(radians)),
+                Sim.config.cells.half + (Sim.config.cells.radius * Math.sin(radians))
+            );
             tempContext.stroke();
         }
     },
@@ -180,10 +180,10 @@ Sim.Cells = {
 
                         try {
                             this.context.drawImage(
-                                    this.cache[cell.specie][drawingAngle],
-                                    cell.drawingCoords.x - Sim.Screen.pixelCoords.x,
-                                    cell.drawingCoords.y - Sim.Screen.pixelCoords.y
-                                    );
+                                this.cache[cell.specie][drawingAngle],
+                                cell.drawingCoords.x - Sim.Screen.pixelCoords.x,
+                                cell.drawingCoords.y - Sim.Screen.pixelCoords.y
+                            );
                         } catch (exception) {
                             console.log(exception, cell.specie, drawingAngle);
                         }
@@ -193,18 +193,24 @@ Sim.Cells = {
             }
         }
     },
+
+
+    getCell: function (cell_index) {
+        return cell_index >= 0 && cell_index < this.bag.length
+            ? this.bag[cell_index] : null;
+    },
     getLast: function () {
         return this.bag[this.bag.length - 1];
     },
     getOldest: function () {
         return this.bag[this.alive[0]];
     },
-    
+
     /* erase all data */
-    reset: function() {
+    reset: function () {
         this.alive = [];
         this.bag = [];
-        
+
         this.species.alive = {};
         this.species.aliveList = [];
         this.species.list = [];
