@@ -161,25 +161,27 @@ Sim.Screen = {
                (y >= Sim.Screen.coords.y && y < Sim.Screen.coords.y + Sim.Screen.tiles.y);
     },
     
+    // @TODO move these callbacks to a config callback
+    // that reports coords changes to this controller
     checkKeyboardScrolling: function() {
         if(Input.isGroupPressed('arrows') === true) {
-            if(Input.isPressed('left_arrow')) {
+            if(Input.isPressed('left_arrow') || Input.isPressed('left_arrow_a')) {
                 this.coords.x--;
                 this.pixelCoords.x -= Sim.config.map.tileSize;
                 this.moved = true;
             } else
-            if(Input.isPressed('right_arrow')) {
+            if(Input.isPressed('right_arrow') || Input.isPressed('right_arrow_d')) {
                 this.coords.x++;
                 this.pixelCoords.x += Sim.config.map.tileSize;
                 this.moved = true;
             }
             
-            if(Input.isPressed('up_arrow')) {
+            if(Input.isPressed('up_arrow') || Input.isPressed('up_arrow_w')) {
                 this.coords.y--;
                 this.pixelCoords.y -= Sim.config.map.tileSize;
                 this.moved = true;
             } else
-            if(Input.isPressed('down_arrow')) {
+            if(Input.isPressed('down_arrow') || Input.isPressed('down_arrow_s')) {
                 this.coords.y++;
                 this.pixelCoords.y += Sim.config.map.tileSize;
                 this.moved = true;
