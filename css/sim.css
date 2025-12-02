@@ -369,8 +369,8 @@ a {
     background-color: #53da27;
 }
 
-.btn.keyboard {
-    background-color: #bbbbbb;
+.btn.keyboard, .btn.grey {
+    background-color: #aaaaaa;
 }
 
 #help-overlay h4 {
@@ -610,4 +610,10 @@ textarea.box {
 
 .text-center {
     text-align: center;
+}
+
+#sss {
+    position: absolute;
+    z-index: 234234234234;
+    top: 0;
 }

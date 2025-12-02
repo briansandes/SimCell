@@ -14,6 +14,7 @@ Sim.Clock = {
     },
     stop: function () {
         this.running = false;
+        document.getElementById('speed').textContent = 'Paused';
     },
     tick: function () {
         // checks whether clock is running or not
@@ -79,6 +80,8 @@ Sim.Clock = {
     },
     
     fastForward: function() {
+        let startTick = this.running == false;
+        this.running = true;
         if(this.speed < 256) {
             this.speed *= 2;
         }
@@ -86,9 +89,14 @@ Sim.Clock = {
         if(this.speed > 1) {
             document.getElementById('speed').textContent = 'Speed: ' + this.speed + 'X';
         }
+        if(startTick) {
+            this.tick();
+        }
     },
     
     decreaseSpeed: function() {
+        let startTick = this.running == false;
+        this.running = true;
         if(this.speed >= 2) {
             this.speed = this.speed / 2;
         }
@@ -99,9 +107,21 @@ Sim.Clock = {
         if(this.speed === 1) {
             document.getElementById('speed').textContent = '';
         }
+        if(startTick) {
+            this.tick();
+        }
+    },
+
+    resume: function() {
+        let startTick = this.running == false;
+        this.normalSpeed();
+        if(startTick) {
+            this.tick();
+        }
     },
     
     normalSpeed: function() {
+        this.running = true;
         this.speed = 1;
         document.getElementById('speed').textContent = '';
     }

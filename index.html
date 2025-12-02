@@ -411,15 +411,20 @@
                                     Speed up time
                                 </div>
                             </div>
-                            <button onclick="Sim.Clock.fastForward();" class="btn green">
-                                &gt;&gt;
-                            </button>
-                            <button id="stopButton" class="btn" onclick="Sim.Clock.normalSpeed();">
-                                &gt;
-                            </button>
-                            <button onclick="Sim.Clock.decreaseSpeed();" class="btn danger">
-                                &lt;&lt;
-                            </button>
+                            <div>
+                                <button onclick="Sim.Clock.fastForward();" class="btn green">
+                                    &gt;&gt;
+                                </button>
+                                <button id="stopButton" class="btn" onclick="Sim.Clock.resume();">
+                                    &gt;
+                                </button>
+                                <button onclick="Sim.Clock.decreaseSpeed();" class="btn danger">
+                                    &lt;&lt;
+                                </button>
+                                <button onclick="Sim.Clock.stop();" class="btn grey">
+                                    <b>||</b>
+                                </button>
+                            </div>
                             <div class="clear"></div>
 
                             <!--
