@@ -232,3 +232,115 @@ function checkRandomness(fn, rangeMin, rangeMax, iterations) {
         console.log(zeroes + ((zeroes / iterations) * 100).toFixed(2) + ' zeores');
     }
 }
+
+
+
+
+/* move eslewhere 2025-01-05 */
+
+const birthHeatmap = function (specie) {
+
+    const heatmapTiles = {
+        x: {},
+        y: {},
+        tile: {},
+        topValue: 0
+    };
+
+    for (let i = 0; i < Sim.Cells.bag.length; i++) {
+        let cell = Object.assign({}, Sim.Cells.bag[i]);
+        let skip = false;
+        if (specie) {
+            if (specie !== cell.specie) {
+                skip = true;
+            }
+        }
+
+        if (skip === false) {
+            let x = cell.birthPlace.x;
+            let y = cell.birthPlace.y;
+            let tileCoords = y + '_' + x;
+
+            if (x in heatmapTiles.x) {
+                heatmapTiles.x[x]++;
+            } else {
+                heatmapTiles.x[x] = 1;
+            }
+
+            if (y in heatmapTiles.y) {
+                heatmapTiles.y[y]++;
+            } else {
+                heatmapTiles.y[y] = 1;
+            }
+
+            if (tileCoords in heatmapTiles.tile) {
+                heatmapTiles.tile[tileCoords].count++;
+            } else {
+                heatmapTiles.tile[tileCoords] = { count: 1, id: tileCoords, x, y };
+            }
+
+            if (heatmapTiles.tile[tileCoords].count > heatmapTiles.topValue) {
+                heatmapTiles.topValue = heatmapTiles.tile[tileCoords].count;
+            }
+        }
+
+    }
+
+    return heatmapTiles;
+}
+
+const drawHeatmap = function (data) {
+    const scale = 3;
+    var cellSum = 0;
+    const canvas = document.createElement('canvas');
+    canvas.width = Sim.World.width * scale;
+    canvas.height = Sim.World.height * scale;
+
+
+    const context = canvas.getContext('2d');
+
+    for (let y = 0; y < Sim.World.height; y++) {
+        for (let x = 0; x < Sim.World.width; x++) {
+            context.fillStyle = 'rgb(' + Sim.Tiles[Sim.World.tiles[y][x].tileId].rgb + ')';
+
+            context.fillRect(
+                x * scale,
+                y * scale,
+                1 * scale,
+                1 * scale
+            );
+        }
+    }
+
+    for (let y = 0; y < Sim.World.height; y++) {
+        for (let x = 0; x < Sim.World.width; x++) {
+            let tileCoords = y + '_' + x;
+            if (tileCoords in data.tile) {
+                cellSum += data.tile[tileCoords].count;
+                let alpha = mapNumbers(data.tile[tileCoords].count, 0, data.topValue, 0, 1);
+                context.fillStyle = 'rgba(255, 0, 0, ' + alpha + ')';
+                context.fillRect(
+                    x * scale,
+                    y * scale,
+                    1 * scale,
+                    1 * scale
+                );
+            }
+
+        }
+    }
+
+
+    const dataURL = canvas.toDataURL('image/png'); // MIME type can be 'image/jpeg' or 'image/webp'
+
+    const outputImage = document.createElement('img');
+    outputImage.src = dataURL;
+    outputImage.id = 'sss';
+    outputImage.style.zIndex = '999999999';
+    outputImage.style.position = 'absolute';
+    outputImage.style.top = '0px';
+
+    document.body.appendChild(outputImage);
+    //return canvas;
+}
+
